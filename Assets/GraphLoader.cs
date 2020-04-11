@@ -18,7 +18,7 @@ public class GraphLoader : MonoBehaviour
       sphere.transform.position = node.position;
     }
 
-    var material = Resources.Load<Material>("Edge Material");
+    var material = Resources.Load<Material>("Materials/Edge Material");
     foreach (var edge in graph.edges)
     {
       var node1 = graph.nodes.Single(n => n.id == edge.from);
