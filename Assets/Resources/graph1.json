@@ -71,6 +71,16 @@
       "from": 3,
       "to": 5,
       "weight": 2
+    },
+    {
+      "from": 3,
+      "to": 4,
+      "weight": 2
+    },
+    {
+      "from": 1,
+      "to": 4,
+      "weight": 2
     }
   ]
 }
