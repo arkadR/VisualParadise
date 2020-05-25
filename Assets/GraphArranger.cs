@@ -5,8 +5,8 @@ using UnityEngine;
 public class GraphArranger : MonoBehaviour
 {
     GraphLoader graphLoader;
-    const float equilibriumDistance = 8.0f;
-    const float equilibriumDistance2 = equilibriumDistance * equilibriumDistance;
+    public float repellFunCoefficient = 5.0f;   // safe range <1, 50+)
+    public float attractFunPower = 1.5f;        // safe range <1, 1.5>
 
     private bool arrange = false;
 
@@ -15,8 +15,6 @@ public class GraphArranger : MonoBehaviour
     void Start()
     {
         graphLoader = GameObject.FindObjectOfType<GraphLoader>();
-        Debug.Log("Nodes count: " + graphLoader.physicalNodes.Count);
-        Debug.Log("Edges count: " + graphLoader.physicalEdges.Count);
     }
 
     // Update is called once per frame
@@ -37,71 +35,81 @@ public class GraphArranger : MonoBehaviour
         }
     }
 
-    void HandleArrangeButtonPress()
+    private void HandleArrangeButtonPress()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Arrange"))
         {
             arrange = !arrange;
-            Debug.Log("Presenter " + (arrange ? "on" : "off"));
+            Debug.Log("Arranger " + (arrange ? "on" : "off"));
             StopNodes();
         }
     }
 
     /// <summary>
     /// Repell each Node from every other node
-    /// v(d) = equilibrium2 / d
     /// </summary>
-    void Repell()
+    private void Repell()
     {
         foreach (var n in graphLoader.physicalNodes)
         {
-            Rigidbody nodeRb = n.node.GetComponent<Rigidbody>();
+            Rigidbody nodeRb = n.physicalNode.GetComponent<Rigidbody>();
             foreach (var o in graphLoader.physicalNodes)
             {
                 if (n == o) continue;
-                Rigidbody otherRb = o.node.GetComponent<Rigidbody>();
+                Rigidbody otherRb = o.physicalNode.GetComponent<Rigidbody>();
 
                 Vector3 direction = nodeRb.position - otherRb.position;
                 float distance = direction.magnitude;
 
-                float velocityMagnitude = equilibriumDistance2 / distance;
+                float velocityMagnitude = CalculateRepellVelocityMagnitude(distance);
                 Vector3 velocity = direction.normalized * velocityMagnitude;
                 otherRb.velocity += -velocity;
             }
         }
     }
 
+    private float CalculateRepellVelocityMagnitude(float distance)
+    {
+        float rawResult = repellFunCoefficient / distance;
+        return rawResult;
+    }
+
     /// <summary>
     /// Attract two nodes if there is an edge to connect them
-    /// v(d) = d
     /// </summary>
-    void Attract()
+    private void Attract()
     {
         foreach (var e in graphLoader.physicalEdges)
         {
-            Rigidbody fromRb = e.nodeFrom.node.GetComponent<Rigidbody>();
-            Rigidbody toRb = e.nodeTo.node.GetComponent<Rigidbody>();
+            Rigidbody fromRb = e.nodeFrom.physicalNode.GetComponent<Rigidbody>();
+            Rigidbody toRb = e.nodeTo.physicalNode.GetComponent<Rigidbody>();
 
             Vector3 direction = fromRb.position - toRb.position;
             float distance = direction.magnitude;
 
-            Vector3 velocity = direction.normalized * distance;
+            Vector3 velocity = direction.normalized * CalculateAttractVelocityMagnitude(distance);
 
             fromRb.velocity += -velocity;
             toRb.velocity += velocity;
         }
     }
 
+    private float CalculateAttractVelocityMagnitude(float distance)
+    {
+        float rawResult = Mathf.Pow(distance, attractFunPower);
+        return rawResult;
+    }
+
     /// <summary>
     /// Update edges position based on corresponding nodes
     /// </summary>
-    void FixEdges()
+    private void FixEdges()
     {
         foreach(var e in graphLoader.physicalEdges)
         {
             var lineRenderer = e.edge.GetComponent<LineRenderer>();
-            var positionFrom = e.nodeFrom.node.GetComponent<Rigidbody>().position;
-            var positionTo = e.nodeTo.node.GetComponent<Rigidbody>().position;
+            var positionFrom = e.nodeFrom.physicalNode.GetComponent<Rigidbody>().position;
+            var positionTo = e.nodeTo.physicalNode.GetComponent<Rigidbody>().position;
             lineRenderer.SetPosition(0, positionFrom);
             lineRenderer.SetPosition(1, positionTo);
         }
@@ -110,11 +118,11 @@ public class GraphArranger : MonoBehaviour
     /// <summary>
     /// Set velocity of all nodes to 0
     /// </summary>
-    void StopNodes()
+    private void StopNodes()
     {
         foreach(var n in graphLoader.physicalNodes)
         {
-            Rigidbody nodeRb = n.node.GetComponent<Rigidbody>();
+            Rigidbody nodeRb = n.physicalNode.GetComponent<Rigidbody>();
             nodeRb.velocity = new Vector3(0, 0, 0);
         }
     }

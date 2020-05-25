@@ -13,26 +13,29 @@ public class GraphLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var graph = LoadGraph("graph1");
+        var nodeMaterial = Resources.Load<Material>("Materials/Node Material");
+        var graph = LoadGraph("graph2_small");
         foreach (var node in graph.nodes)
         {
             var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            sphere.transform.position = node.position;
+            sphere.transform.position = node.point.Position();
+            sphere.transform.rotation = node.point.Rotation();
+            sphere.GetComponent<Renderer>().material = nodeMaterial;
             AddNodeRigidbody(sphere);
-            physicalNodes.Add(new PhysicalNode { id = node.id, node = sphere });
+            physicalNodes.Add(new PhysicalNode { id = node.id, node = node, physicalNode = sphere });
         }
 
-        var material = Resources.Load<Material>("Materials/Edge Material");
+        var edgeMaterial = Resources.Load<Material>("Materials/Edge Material");
         foreach (var edge in graph.edges)
         {
             var node1 = graph.nodes.Single(n => n.id == edge.from);
             var node2 = graph.nodes.Single(n => n.id == edge.to);
             var line = new GameObject();
             var lineRenderer = line.AddComponent<LineRenderer>();
-            lineRenderer.SetPosition(0, node1.position);
-            lineRenderer.SetPosition(1, node2.position);
+            lineRenderer.SetPosition(0, node1.point.Position());
+            lineRenderer.SetPosition(1, node2.point.Position());
             lineRenderer.startWidth = 0.2f;
-            lineRenderer.material = material;
+            lineRenderer.material = edgeMaterial;
             physicalEdges.Add(new PhysicalEdge { edge = line, nodeFrom = physicalNodes.Single(pn => pn.id == edge.from), nodeTo = physicalNodes.Single(pn => pn.id == edge.to) });
         }
     }
@@ -64,10 +67,39 @@ public class GraphLoader : MonoBehaviour
     }
 
     [Serializable]
-    class Node
+    public class Node
     {
         public int id;
-        public Vector3 position;
+        public Point point;
+        public VPoint vpoint;
+        public APoint apoint;
+    }
+
+    [Serializable()]
+    public class Point
+    {
+        public float x, y, z, theta, phi, psi;
+
+        public Vector3 Position() => new Vector3(x, y, z);
+        public Quaternion Rotation() => Quaternion.Euler(theta, phi, psi);
+    }
+
+    [Serializable]
+    public class VPoint
+    {
+        public float vx, vy, vz, om_theta, om_phi, om_psi;
+
+        public Vector3 Velocity() => new Vector3(vx, vy, vz);
+        //public Vector3 AngVelocity() => new Vector3(om_theta, om_phi, om_psi);
+    }
+
+    [Serializable]
+    public class APoint
+    {
+        public float ax, ay, az, alpha_theta, alpha_phi, alpha_psi;
+        
+        //public Vector3 Acceleration() => new Vector3(ax, ay, az);
+        //public Vector3 AngAcceleration() => new Vector3(alpha_theta, alpha_phi, alpha_psi);
     }
 
     [Serializable]
@@ -88,6 +120,7 @@ public class GraphLoader : MonoBehaviour
     public class PhysicalNode
     {
         public int id;
-        public GameObject node;
+        public Node node;
+        public GameObject physicalNode;
     }
 }
