@@ -49,6 +49,7 @@ public class GraphLoader : MonoBehaviour
     void AddNodeRigidbody(GameObject node)
     {
         Rigidbody sphereRigidBody = node.AddComponent<Rigidbody>();
+        sphereRigidBody.maxAngularVelocity = 20;
         sphereRigidBody.useGravity = false;
     }
 
@@ -90,16 +91,16 @@ public class GraphLoader : MonoBehaviour
         public float vx, vy, vz, om_theta, om_phi, om_psi;
 
         public Vector3 Velocity() => new Vector3(vx, vy, vz);
-        //public Vector3 AngVelocity() => new Vector3(om_theta, om_phi, om_psi);
+        public Vector3 AngVelocity() => new Vector3(om_theta, om_phi, om_psi);
     }
 
     [Serializable]
     public class APoint
     {
         public float ax, ay, az, alpha_theta, alpha_phi, alpha_psi;
-        
-        //public Vector3 Acceleration() => new Vector3(ax, ay, az);
-        //public Vector3 AngAcceleration() => new Vector3(alpha_theta, alpha_phi, alpha_psi);
+
+        public Vector3 Acceleration() => new Vector3(ax, ay, az);
+        public Vector3 AngAcceleration() => new Vector3(alpha_theta, alpha_phi, alpha_psi);
     }
 
     [Serializable]

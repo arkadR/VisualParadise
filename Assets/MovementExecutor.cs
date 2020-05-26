@@ -28,8 +28,7 @@ public class MovementExecutor : MonoBehaviour
     {
         if (movement)
         {
-            StopNodes();
-            Move();
+            Accelerate();
             FixEdges();
         }
     }
@@ -39,8 +38,16 @@ public class MovementExecutor : MonoBehaviour
         if (Input.GetButtonDown("Move"))
         {
             movement = !movement;
-            Debug.Log("Exectute movement " + (movement ? "on" : "off"));
-            StopNodes();
+            if (movement)
+            {
+                Move();
+                Debug.Log("Exectute movement on");
+            }
+            else
+            {
+                StopNodes();
+                Debug.Log("Exectute movement off");
+            }
         }
     }
 
@@ -51,13 +58,25 @@ public class MovementExecutor : MonoBehaviour
             Rigidbody nodeRb = n.physicalNode.GetComponent<Rigidbody>();
 
             nodeRb.velocity = n.node.vpoint.Velocity();
+            nodeRb.angularVelocity = n.node.vpoint.AngVelocity();
+        }
+    }
+
+    private void Accelerate()
+    {
+        foreach (var n in graphLoader.physicalNodes)
+        {
+            Rigidbody nodeRb = n.physicalNode.GetComponent<Rigidbody>();
+
+            nodeRb.AddForce(n.node.apoint.Acceleration(), ForceMode.Acceleration);
+            nodeRb.angularVelocity += n.node.apoint.AngAcceleration() * Time.deltaTime;
         }
     }
 
     /// <summary>
     /// Update edges position based on corresponding nodes
     /// </summary>
-    private void FixEdges()
+    public void FixEdges()
     {
         foreach (var e in graphLoader.physicalEdges)
         {
@@ -72,12 +91,14 @@ public class MovementExecutor : MonoBehaviour
     /// <summary>
     /// Set velocity of all nodes to 0
     /// </summary>
-    private void StopNodes()
+    public void StopNodes()
     {
         foreach (var n in graphLoader.physicalNodes)
         {
             Rigidbody nodeRb = n.physicalNode.GetComponent<Rigidbody>();
-            nodeRb.velocity = new Vector3(0, 0, 0);
+
+            nodeRb.velocity = Vector3.zero;
+            nodeRb.angularVelocity = Vector3.zero;
         }
     }
 }

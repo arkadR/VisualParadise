@@ -5,16 +5,19 @@ using UnityEngine;
 public class GraphArranger : MonoBehaviour
 {
     GraphLoader graphLoader;
+    MovementExecutor movementExecutor;
     public float repellFunCoefficient = 5.0f;   // safe range <1, 50+)
     public float attractFunPower = 1.5f;        // safe range <1, 1.5>
+    const float maxVelocityMagnitude = 25f;
 
     private bool arrange = false;
 
     // Start is called before the first frame update
-    // needs to be called after GraphLoader.Start()
+    // needs to be called after GraphLoader.Start() and after MovementExecutor.Start()
     void Start()
     {
         graphLoader = GameObject.FindObjectOfType<GraphLoader>();
+        movementExecutor = GameObject.FindObjectOfType<MovementExecutor>();
     }
 
     // Update is called once per frame
@@ -28,10 +31,10 @@ public class GraphArranger : MonoBehaviour
     {
         if (arrange)
         {
-            StopNodes();
+            movementExecutor.StopNodes();
             Repell();
             Attract();
-            FixEdges();
+            movementExecutor.FixEdges();
         }
     }
 
@@ -41,7 +44,7 @@ public class GraphArranger : MonoBehaviour
         {
             arrange = !arrange;
             Debug.Log("Arranger " + (arrange ? "on" : "off"));
-            StopNodes();
+            movementExecutor.StopNodes();
         }
     }
 
@@ -62,7 +65,7 @@ public class GraphArranger : MonoBehaviour
                 float distance = direction.magnitude;
 
                 float velocityMagnitude = CalculateRepellVelocityMagnitude(distance);
-                Vector3 velocity = direction.normalized * velocityMagnitude;
+                Vector3 velocity = direction.normalized * Mathf.Min(maxVelocityMagnitude, velocityMagnitude);
                 otherRb.velocity += -velocity;
             }
         }
@@ -87,7 +90,8 @@ public class GraphArranger : MonoBehaviour
             Vector3 direction = fromRb.position - toRb.position;
             float distance = direction.magnitude;
 
-            Vector3 velocity = direction.normalized * CalculateAttractVelocityMagnitude(distance);
+            float velocityMagnitude = CalculateAttractVelocityMagnitude(distance);
+            Vector3 velocity = direction.normalized * Mathf.Min(maxVelocityMagnitude, velocityMagnitude);
 
             fromRb.velocity += -velocity;
             toRb.velocity += velocity;
@@ -98,33 +102,6 @@ public class GraphArranger : MonoBehaviour
     {
         float rawResult = Mathf.Pow(distance, attractFunPower);
         return rawResult;
-    }
-
-    /// <summary>
-    /// Update edges position based on corresponding nodes
-    /// </summary>
-    private void FixEdges()
-    {
-        foreach(var e in graphLoader.physicalEdges)
-        {
-            var lineRenderer = e.edge.GetComponent<LineRenderer>();
-            var positionFrom = e.nodeFrom.physicalNode.GetComponent<Rigidbody>().position;
-            var positionTo = e.nodeTo.physicalNode.GetComponent<Rigidbody>().position;
-            lineRenderer.SetPosition(0, positionFrom);
-            lineRenderer.SetPosition(1, positionTo);
-        }
-    }
-
-    /// <summary>
-    /// Set velocity of all nodes to 0
-    /// </summary>
-    private void StopNodes()
-    {
-        foreach(var n in graphLoader.physicalNodes)
-        {
-            Rigidbody nodeRb = n.physicalNode.GetComponent<Rigidbody>();
-            nodeRb.velocity = new Vector3(0, 0, 0);
-        }
     }
 }
 
