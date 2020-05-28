@@ -92,6 +92,20 @@ public class GraphLoader : MonoBehaviour
 
         public Vector3 Velocity() => new Vector3(vx, vy, vz);
         public Vector3 AngVelocity() => new Vector3(om_theta, om_phi, om_psi);
+
+        public void SetVelocity(Vector3 velocity)
+        {
+            vx = velocity.x;
+            vy = velocity.y;
+            vz = velocity.z;
+        }
+
+        public void SetAngVelocity(Vector3 angVelocity)
+        {
+            om_theta = angVelocity.x;
+            om_phi = angVelocity.y;
+            om_psi = angVelocity.z;
+        }
     }
 
     [Serializable]
