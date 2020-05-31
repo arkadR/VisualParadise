@@ -6,8 +6,8 @@ public class GraphArranger : MonoBehaviour
 {
     GraphLoader graphLoader;
     MovementExecutor movementExecutor;
-    public float repellFunCoefficient = 5.0f;   // safe range <1, 50+)
-    public float attractFunPower = 1.5f;        // safe range <1, 1.5>
+    public float repellFunCoefficient = 5.0f; // safe range <1, 50+)
+    public float attractFunPower = 1.5f; // safe range <1, 1.5>
     const float maxVelocityMagnitude = 25f;
 
     private bool arrange = false;
@@ -18,12 +18,6 @@ public class GraphArranger : MonoBehaviour
     {
         graphLoader = GameObject.FindObjectOfType<GraphLoader>();
         movementExecutor = GameObject.FindObjectOfType<MovementExecutor>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        HandleArrangeButtonPress();
     }
 
     // Update for physics
@@ -38,14 +32,11 @@ public class GraphArranger : MonoBehaviour
         }
     }
 
-    private void HandleArrangeButtonPress()
+    public void HandleArrangeButtonPress()
     {
-        if (Input.GetButtonDown("Arrange"))
-        {
-            arrange = !arrange;
-            Debug.Log("Arranger " + (arrange ? "on" : "off"));
-            movementExecutor.StopNodes();
-        }
+        arrange = !arrange;
+        Debug.Log("Arranger " + (arrange ? "on" : "off"));
+        movementExecutor.StopNodes();
     }
 
     /// <summary>
@@ -104,5 +95,3 @@ public class GraphArranger : MonoBehaviour
         return rawResult;
     }
 }
-
-
