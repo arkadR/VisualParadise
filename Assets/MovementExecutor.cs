@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MovementExecutor : MonoBehaviour
 {
@@ -12,15 +10,9 @@ public class MovementExecutor : MonoBehaviour
     // needs to be called after GraphLoader.Start()
     void Start()
     {
-        graphLoader = GameObject.FindObjectOfType<GraphLoader>();
+        graphLoader = FindObjectOfType<GraphLoader>();
         Debug.Log("Nodes count: " + graphLoader.physicalNodes.Count);
         Debug.Log("Edges count: " + graphLoader.physicalEdges.Count);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        HandleExecuteMovementButtonPress();
     }
 
     // Update for physics
@@ -33,21 +25,18 @@ public class MovementExecutor : MonoBehaviour
         }
     }
 
-    private void HandleExecuteMovementButtonPress()
+    public void HandleExecuteMovementButtonPress()
     {
-        if (Input.GetButtonDown("Move"))
+        movement = !movement;
+        if (movement)
         {
-            movement = !movement;
-            if (movement)
-            {
-                Move();
-                Debug.Log("Exectute movement on");
-            }
-            else
-            {
-                StopNodes();
-                Debug.Log("Exectute movement off");
-            }
+            Move();
+            Debug.Log("Exectute movement on");
+        }
+        else
+        {
+            StopNodes();
+            Debug.Log("Exectute movement off");
         }
     }
 

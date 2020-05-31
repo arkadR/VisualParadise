@@ -17,12 +17,10 @@ public class GraphLoader : MonoBehaviour
         var graph = LoadGraph("graph2_small");
         foreach (var node in graph.nodes)
         {
-            var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            sphere.transform.position = node.point.Position();
-            sphere.transform.rotation = node.point.Rotation();
-            sphere.GetComponent<Renderer>().material = nodeMaterial;
-            AddNodeRigidbody(sphere);
-            physicalNodes.Add(new PhysicalNode { id = node.id, node = node, physicalNode = sphere });
+            var sphere = NodeGenerator.GenerateNode(node.point.Position(),
+                node.point.Rotation(),
+                nodeMaterial);
+            physicalNodes.Add(new PhysicalNode {id = node.id, node = node, physicalNode = sphere});
         }
 
         var edgeMaterial = Resources.Load<Material>("Materials/Edge Material");
@@ -36,23 +34,18 @@ public class GraphLoader : MonoBehaviour
             lineRenderer.SetPosition(1, node2.point.Position());
             lineRenderer.startWidth = 0.2f;
             lineRenderer.material = edgeMaterial;
-            physicalEdges.Add(new PhysicalEdge { edge = line, nodeFrom = physicalNodes.Single(pn => pn.id == edge.from), nodeTo = physicalNodes.Single(pn => pn.id == edge.to) });
+            physicalEdges.Add(new PhysicalEdge
+            {
+                edge = line, nodeFrom = physicalNodes.Single(pn => pn.id == edge.from),
+                nodeTo = physicalNodes.Single(pn => pn.id == edge.to)
+            });
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-
     }
-
-    void AddNodeRigidbody(GameObject node)
-    {
-        Rigidbody sphereRigidBody = node.AddComponent<Rigidbody>();
-        sphereRigidBody.maxAngularVelocity = 20;
-        sphereRigidBody.useGravity = false;
-    }
-
 
     Graph LoadGraph(string fileName)
     {
