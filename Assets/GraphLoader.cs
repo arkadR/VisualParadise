@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -28,12 +26,7 @@ public class GraphLoader : MonoBehaviour
         {
             var node1 = graph.nodes.Single(n => n.id == edge.from);
             var node2 = graph.nodes.Single(n => n.id == edge.to);
-            var line = new GameObject();
-            var lineRenderer = line.AddComponent<LineRenderer>();
-            lineRenderer.SetPosition(0, node1.point.Position());
-            lineRenderer.SetPosition(1, node2.point.Position());
-            lineRenderer.startWidth = 0.2f;
-            lineRenderer.material = edgeMaterial;
+            var line = EdgeGenerator.CreateGameObjectEdge(node1, node2, edgeMaterial);
             physicalEdges.Add(new PhysicalEdge
             {
                 edge = line, nodeFrom = physicalNodes.Single(pn => pn.id == edge.from),
@@ -42,15 +35,26 @@ public class GraphLoader : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     Graph LoadGraph(string fileName)
     {
         var graphJson = Resources.Load(fileName).ToString();
         return JsonUtility.FromJson<Graph>(graphJson);
+    }
+
+    public PhysicalNode FindPhysicalNodeByGameObject(GameObject gameObjectParam)
+    {
+        return physicalNodes
+            .First(pn => pn.physicalNode == gameObjectParam);
+    }
+
+    public PhysicalEdge FindPhysicalEdgeByPhysicalNodes(PhysicalNode first, PhysicalNode second)
+    {
+        var nodes = new HashSet<PhysicalNode> {first, second};
+        return physicalEdges
+            .FirstOrDefault(
+                edge => nodes.Contains(edge.nodeFrom)
+                        && nodes.Contains(edge.nodeTo)
+            );
     }
 
     [Serializable]

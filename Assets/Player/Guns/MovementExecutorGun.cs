@@ -11,7 +11,7 @@ namespace Player.Guns
             this.movementExecutor = movementExecutor;
         }
 
-        public void OnMoveDown(Transform playerTransform)
+        public void OnMoveDown(Transform playerTransform, Camera camera)
         {
             movementExecutor.HandleExecuteMovementButtonPress();
         }

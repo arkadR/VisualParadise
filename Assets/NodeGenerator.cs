@@ -8,8 +8,16 @@ public static class NodeGenerator
         sphere.transform.position = position;
         sphere.transform.rotation = rotation;
         sphere.GetComponent<Renderer>().material = nodeMaterial;
+        sphere.tag = Tags.PhysicalNodeTag;
         AddNodeRigidbody(sphere);
+        AddColider(sphere);
         return sphere;
+    }
+
+    private static void AddColider(GameObject node)
+    {
+        var collider = node.AddComponent<SphereCollider>();
+        collider.enabled = true;
     }
 
     private static void AddNodeRigidbody(GameObject node)

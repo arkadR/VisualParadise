@@ -6,16 +6,22 @@ namespace Player.Guns
 {
     public class GunController : MonoBehaviour
     {
-        private Material nodeMaterial;
         private IDictionary<KeyCode, IGun> guns;
         private IGun activeGun;
+        private Camera attachedCamera;
+        private GraphLoader graphLoader;
         private void Start()
         {
-            nodeMaterial = Resources.Load<Material>("Materials/Node Material");
+            attachedCamera = Camera.main;
+            graphLoader = FindObjectOfType<GraphLoader>();
+            var nodeMaterial = Resources.Load<Material>("Materials/Node Material");
+            var edgeMaterial = Resources.Load<Material>("Materials/Edge Material");
+
             guns = new Dictionary<KeyCode, IGun>
             {
-                [KeyCode.Alpha1] = new NodeGun(nodeMaterial),
-                [KeyCode.Alpha2] = new MovementExecutorGun(FindObjectOfType<MovementExecutor>())
+                [KeyCode.Alpha1] = new NodeGun(graphLoader, nodeMaterial),
+                [KeyCode.Alpha2] = new MovementExecutorGun(FindObjectOfType<MovementExecutor>()),
+                [KeyCode.Alpha3] = new EdgeGun(graphLoader, edgeMaterial)
             };
             activeGun = guns.First().Value;
         }
@@ -30,7 +36,7 @@ namespace Player.Guns
         {
             if (Input.GetButtonDown("Move"))
             {
-                activeGun.OnMoveDown(transform);
+                activeGun.OnMoveDown(transform, attachedCamera);
             }
         }
 
