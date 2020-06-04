@@ -13,6 +13,8 @@ namespace Player.Guns
             this.nodeMaterial = nodeMaterial;
         }
 
+        public string GetGunName() => "Node";
+
         public void OnMoveDown(Transform playerTransform, Camera camera)
         {
             var transform = camera.transform;

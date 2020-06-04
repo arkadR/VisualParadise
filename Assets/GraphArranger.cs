@@ -26,8 +26,8 @@ public class GraphArranger : MonoBehaviour
         if (arrange)
         {
             movementExecutor.StopNodes();
-            Repell();
             Attract();
+            Repell();
             movementExecutor.FixEdges();
         }
     }
@@ -58,6 +58,7 @@ public class GraphArranger : MonoBehaviour
                 float velocityMagnitude = CalculateRepellVelocityMagnitude(distance);
                 Vector3 velocity = direction.normalized * Mathf.Min(maxVelocityMagnitude, velocityMagnitude);
                 otherRb.velocity += -velocity;
+                n.node.point.SetPosition(nodeRb.position);
             }
         }
     }

@@ -11,6 +11,8 @@ namespace Player.Guns
             this.graphArranger = graphArranger;
         }
 
+        public string GetGunName() => "Arrange";
+
         public void OnMoveDown(Transform playerTransform, Camera camera)
         {
             graphArranger.HandleArrangeButtonPress();
@@ -18,7 +20,7 @@ namespace Player.Guns
 
         public void OnSwitchedAway()
         {
-            
+
         }
     }
 }

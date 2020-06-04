@@ -6,6 +6,8 @@ namespace Player.Guns
     {
         private readonly MovementExecutor movementExecutor;
 
+        public string GetGunName() => "Move";
+
         public MovementExecutorGun(MovementExecutor movementExecutor)
         {
             this.movementExecutor = movementExecutor;

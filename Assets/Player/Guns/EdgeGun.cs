@@ -15,6 +15,8 @@ namespace Player.Guns
             this.edgeMaterial = edgeMaterial;
         }
 
+        public string GetGunName() => "Edge";
+
         public void OnMoveDown(Transform playerTransform, Camera camera)
         {
             var transform = camera.transform;
@@ -37,7 +39,7 @@ namespace Player.Guns
             }
 
             if (EdgeOfNodesAlreadyExists(previouslyHitNode, currentlyHitPhysicalNode)) return;
-            
+
             var physicalEdge = CreatePhysicalEdge(currentlyHitPhysicalNode);
             graphLoader.physicalEdges.Add(physicalEdge);
             previouslyHitNode = null;

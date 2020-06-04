@@ -18,7 +18,7 @@ public class GraphLoader : MonoBehaviour
             var sphere = NodeGenerator.GeneratePhysicalNode(node.point.Position(),
                 node.point.Rotation(),
                 nodeMaterial);
-            physicalNodes.Add(new PhysicalNode {id = node.id, node = node, physicalNode = sphere});
+            physicalNodes.Add(new PhysicalNode { id = node.id, node = node, physicalNode = sphere });
         }
 
         var edgeMaterial = Resources.Load<Material>("Materials/Edge Material");
@@ -29,7 +29,8 @@ public class GraphLoader : MonoBehaviour
             var line = EdgeGenerator.CreateGameObjectEdge(node1, node2, edgeMaterial);
             physicalEdges.Add(new PhysicalEdge
             {
-                edge = line, nodeFrom = physicalNodes.Single(pn => pn.id == edge.from),
+                edge = line,
+                nodeFrom = physicalNodes.Single(pn => pn.id == edge.from),
                 nodeTo = physicalNodes.Single(pn => pn.id == edge.to)
             });
         }
@@ -49,7 +50,7 @@ public class GraphLoader : MonoBehaviour
 
     public PhysicalEdge FindPhysicalEdgeByPhysicalNodes(PhysicalNode first, PhysicalNode second)
     {
-        var nodes = new HashSet<PhysicalNode> {first, second};
+        var nodes = new HashSet<PhysicalNode> { first, second };
         return physicalEdges
             .FirstOrDefault(
                 edge => nodes.Contains(edge.nodeFrom)
@@ -87,13 +88,6 @@ public class GraphLoader : MonoBehaviour
             x = position.x;
             y = position.y;
             z = position.z;
-        }
-
-        public void SetRotation(Vector3 rotation)
-        {
-            theta = rotation.x;
-            phi = rotation.y;
-            psi = rotation.z;
         }
     }
 

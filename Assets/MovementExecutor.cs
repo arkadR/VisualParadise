@@ -60,6 +60,7 @@ public class MovementExecutor : MonoBehaviour
             nodeRb.AddForce(n.node.apoint.Acceleration(), ForceMode.Acceleration);
             nodeRb.angularVelocity += n.node.apoint.AngAcceleration() * Time.deltaTime;
 
+            n.node.point.SetPosition(nodeRb.position);
             n.node.vpoint.SetVelocity(nodeRb.velocity);
             n.node.vpoint.SetAngVelocity(nodeRb.angularVelocity);
         }
