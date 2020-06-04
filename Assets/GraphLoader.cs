@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GraphLoader : MonoBehaviour
 {
+    public string graphFileName;
     public List<PhysicalNode> physicalNodes = new List<PhysicalNode>();
     public List<PhysicalEdge> physicalEdges = new List<PhysicalEdge>();
 
@@ -12,7 +13,7 @@ public class GraphLoader : MonoBehaviour
     void Start()
     {
         var nodeMaterial = Resources.Load<Material>("Materials/Node Material");
-        var graph = LoadGraph("graph2_small");
+        var graph = LoadGraph(graphFileName);
         foreach (var node in graph.nodes)
         {
             var sphere = NodeGenerator.GeneratePhysicalNode(node.point.Position(),

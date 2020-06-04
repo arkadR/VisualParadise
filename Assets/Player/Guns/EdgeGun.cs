@@ -35,6 +35,7 @@ namespace Player.Guns
             if (previouslyHitNode == null)
             {
                 previouslyHitNode = currentlyHitPhysicalNode;
+                SetGlow(previouslyHitNode, true);
                 return;
             }
 
@@ -42,7 +43,22 @@ namespace Player.Guns
 
             var physicalEdge = CreatePhysicalEdge(currentlyHitPhysicalNode);
             graphLoader.physicalEdges.Add(physicalEdge);
+            SetGlow(previouslyHitNode, false);
             previouslyHitNode = null;
+        }
+
+        void SetGlow(GraphLoader.PhysicalNode physicalNode, bool value)
+        {
+            Material physicalNodeMaterial = physicalNode.physicalNode.GetComponent<Renderer>().material;
+            physicalNodeMaterial.SetColor("_EmissionColor", Color.yellow);
+            if (value)
+            {
+                physicalNodeMaterial.EnableKeyword("_EMISSION");
+            }
+            else
+            {
+                physicalNodeMaterial.DisableKeyword("_EMISSION");
+            }
         }
 
         private GraphLoader.PhysicalEdge CreatePhysicalEdge(GraphLoader.PhysicalNode currentlyHitPhysicalNode)
