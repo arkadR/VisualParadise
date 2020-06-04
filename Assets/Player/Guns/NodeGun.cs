@@ -17,27 +17,18 @@ namespace Player.Guns
         {
             var transform = camera.transform;
             var forward = transform.forward;
-            var sphere = NodeGenerator.GenerateNode(
+            var sphere = NodeGenerator.GeneratePhysicalNode(
                 transform.position + forward * 3,
                 transform.rotation,
                 nodeMaterial);
             var position = sphere.transform.position;
-            var node = new GraphLoader.Node
-            {
-                apoint = null,
-                id = 0,
-                point = new GraphLoader.Point
-                {
-                    x = position.x,
-                    y = position.y,
-                    z = position.z
-                },
-                vpoint = null
-            };
+            var id = graphLoader.physicalNodes.Count;
+            var node = GraphLoader.Node.ZeroNode(id);
+            node.point.SetPosition(position);
             graphLoader.physicalNodes.Add(
                 new GraphLoader.PhysicalNode
                 {
-                    id = 0,
+                    id = id,
                     node = node,
                     physicalNode = sphere
                 }

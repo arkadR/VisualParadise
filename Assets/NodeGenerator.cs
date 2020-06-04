@@ -2,7 +2,7 @@ using UnityEngine;
 
 public static class NodeGenerator
 {
-    public static GameObject GenerateNode(Vector3 position, Quaternion rotation, Material nodeMaterial)
+    public static GameObject GeneratePhysicalNode(Vector3 position, Quaternion rotation, Material nodeMaterial)
     {
         var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         sphere.transform.position = position;

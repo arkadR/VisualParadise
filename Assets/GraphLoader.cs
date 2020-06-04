@@ -15,7 +15,7 @@ public class GraphLoader : MonoBehaviour
         var graph = LoadGraph("graph2_small");
         foreach (var node in graph.nodes)
         {
-            var sphere = NodeGenerator.GenerateNode(node.point.Position(),
+            var sphere = NodeGenerator.GeneratePhysicalNode(node.point.Position(),
                 node.point.Rotation(),
                 nodeMaterial);
             physicalNodes.Add(new PhysicalNode {id = node.id, node = node, physicalNode = sphere});
@@ -71,6 +71,8 @@ public class GraphLoader : MonoBehaviour
         public Point point;
         public VPoint vpoint;
         public APoint apoint;
+
+        public static Node ZeroNode(int id) => new Node { id = id, point = new Point(), apoint = new APoint(), vpoint = new VPoint() };
     }
 
     [Serializable()]
@@ -80,6 +82,19 @@ public class GraphLoader : MonoBehaviour
 
         public Vector3 Position() => new Vector3(x, y, z);
         public Quaternion Rotation() => Quaternion.Euler(theta, phi, psi);
+        public void SetPosition(Vector3 position)
+        {
+            x = position.x;
+            y = position.y;
+            z = position.z;
+        }
+
+        public void SetRotation(Vector3 rotation)
+        {
+            theta = rotation.x;
+            phi = rotation.y;
+            psi = rotation.z;
+        }
     }
 
     [Serializable]
