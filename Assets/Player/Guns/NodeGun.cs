@@ -1,14 +1,17 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using static GraphLoader;
 
 namespace Player.Guns
 {
     public class NodeGun : MonoBehaviour, IGun
     {
-        private readonly GraphLoader graphLoader;
-        private readonly Material nodeMaterial;
+        private GraphLoader graphLoader;
+        private Material nodeMaterial;
+
+        private void Start()
+        {
+            nodeMaterial = Resources.Load<Material>("Materials/Node Material");
+            graphLoader = FindObjectOfType<GraphLoader>();
+        }
 
         public NodeGun(GraphLoader graphLoader, Material nodeMaterial)
         {
@@ -20,11 +23,11 @@ namespace Player.Guns
 
         public void OnMoveDown(Transform playerTransform, Camera camera)
         {
-            var transform = camera.transform;
-            var forward = transform.forward;
+            var cameraTransform = camera.transform;
+            var forward = cameraTransform.forward;
             var sphere = NodeGenerator.GeneratePhysicalNode(
-                transform.position + forward * 3,
-                transform.rotation,
+                cameraTransform.position + forward * 3,
+                cameraTransform.rotation,
                 nodeMaterial);
             var position = sphere.transform.position;
             var id = graphLoader.physicalNodes.Count;

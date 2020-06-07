@@ -12,6 +12,7 @@ namespace Player.Guns
         private Camera attachedCamera;
         private GraphLoader graphLoader;
         private IGun _activeGun;
+
         private IGun activeGun
         {
             get => _activeGun;
@@ -27,12 +28,10 @@ namespace Player.Guns
             attachedCamera = Camera.main;
             graphLoader = FindObjectOfType<GraphLoader>();
             gunTypeChange = FindObjectOfType<GunTypeChange>();
-            var nodeMaterial = Resources.Load<Material>("Materials/Node Material");
             var edgeMaterial = Resources.Load<Material>("Materials/Edge Material");
-
             guns = new Dictionary<KeyCode, IGun>
             {
-                [KeyCode.Alpha1] = new NodeGun(graphLoader, nodeMaterial),
+                [KeyCode.Alpha1] = gameObject.AddComponent<NodeGun>(),
                 [KeyCode.Alpha2] = new EdgeGun(graphLoader, edgeMaterial),
                 [KeyCode.Alpha3] = new MovementExecutorGun(FindObjectOfType<MovementExecutor>()),
                 [KeyCode.Alpha4] = new GraphArrangerGun(FindObjectOfType<GraphArranger>())
