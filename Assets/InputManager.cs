@@ -9,13 +9,9 @@ public class InputManager : MonoBehaviour
     {
       var isPaused = GameService.Instance.IsPaused;
       if (isPaused)
-      {
         GameService.Instance.UnPauseGame();
-      }
       else
-      {
         GameService.Instance.PauseGame();
-      }
     }
   }
 }

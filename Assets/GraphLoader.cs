@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class GraphLoader : MonoBehaviour
 {
-
   public GraphService graphService;
 
   void Start()
