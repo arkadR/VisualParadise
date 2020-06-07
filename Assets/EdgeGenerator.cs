@@ -1,10 +1,11 @@
+using Assets.Model;
 using UnityEngine;
 
 public static class EdgeGenerator
 {
     public static GameObject CreateGameObjectEdge(
-        GraphLoader.Node from,
-        GraphLoader.Node to,
+        Node from,
+        Node to,
         Material edgeMaterial)
     {
         var line = new GameObject();

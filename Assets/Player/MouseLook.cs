@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
@@ -19,6 +17,9 @@ public class MouseLook : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
+    if (GameService.Instance.IsPaused)
+      return;
+    
     var mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
     var mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 

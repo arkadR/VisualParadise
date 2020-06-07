@@ -9,18 +9,18 @@ public static class NodeGenerator
         sphere.transform.rotation = rotation;
         sphere.GetComponent<Renderer>().material = nodeMaterial;
         sphere.tag = Tags.PhysicalNodeTag;
-        AddNodeRigidbody(sphere);
-        AddColider(sphere);
+        AddNodeRigidBody(sphere);
+        AddCollider(sphere);
         return sphere;
     }
 
-    private static void AddColider(GameObject node)
+    private static void AddCollider(GameObject node)
     {
         var collider = node.AddComponent<SphereCollider>();
         collider.enabled = true;
     }
 
-    private static void AddNodeRigidbody(GameObject node)
+    private static void AddNodeRigidBody(GameObject node)
     {
         Rigidbody sphereRigidBody = node.AddComponent<Rigidbody>();
         sphereRigidBody.maxAngularVelocity = 20;

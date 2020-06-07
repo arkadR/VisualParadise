@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Scripts;
 using UnityEngine;
 
 public class GraphArranger : MonoBehaviour
 {
-    GraphLoader graphLoader;
+    GraphService graphService;
     MovementExecutor movementExecutor;
-    public float repellFunCoefficient = 5.0f; // safe range <1, 50+)
+    public float repelFunCoefficient = 5.0f; // safe range <1, 50+)
     public float attractFunPower = 1.5f; // safe range <1, 1.5>
     const float maxVelocityMagnitude = 25f;
 
@@ -16,18 +15,21 @@ public class GraphArranger : MonoBehaviour
     // needs to be called after GraphLoader.Start() and after MovementExecutor.Start()
     void Start()
     {
-        graphLoader = GameObject.FindObjectOfType<GraphLoader>();
+        graphService = GameObject.FindObjectOfType<GraphService>();
         movementExecutor = GameObject.FindObjectOfType<MovementExecutor>();
     }
 
     // Update for physics
     void FixedUpdate()
     {
+        if (GameService.Instance.IsPaused)
+          return;
+
         if (arrange)
         {
             movementExecutor.StopNodes();
             Attract();
-            Repell();
+            Repel();
             movementExecutor.FixEdges();
         }
     }
@@ -40,14 +42,14 @@ public class GraphArranger : MonoBehaviour
     }
 
     /// <summary>
-    /// Repell each Node from every other node
+    /// Repel each Node from every other node
     /// </summary>
-    private void Repell()
+    private void Repel()
     {
-        foreach (var n in graphLoader.physicalNodes)
+        foreach (var n in graphService.physicalNodes)
         {
             Rigidbody nodeRb = n.physicalNode.GetComponent<Rigidbody>();
-            foreach (var o in graphLoader.physicalNodes)
+            foreach (var o in graphService.physicalNodes)
             {
                 if (n == o) continue;
                 Rigidbody otherRb = o.physicalNode.GetComponent<Rigidbody>();
@@ -65,7 +67,7 @@ public class GraphArranger : MonoBehaviour
 
     private float CalculateRepellVelocityMagnitude(float distance)
     {
-        float rawResult = repellFunCoefficient / distance;
+        float rawResult = repelFunCoefficient / distance;
         return rawResult;
     }
 
@@ -74,7 +76,7 @@ public class GraphArranger : MonoBehaviour
     /// </summary>
     private void Attract()
     {
-        foreach (var e in graphLoader.physicalEdges)
+        foreach (var e in graphService.physicalEdges)
         {
             Rigidbody fromRb = e.nodeFrom.physicalNode.GetComponent<Rigidbody>();
             Rigidbody toRb = e.nodeTo.physicalNode.GetComponent<Rigidbody>();
