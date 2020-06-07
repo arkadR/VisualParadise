@@ -1,8 +1,7 @@
-﻿using Player.Guns;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.GameObject;
 using UnityEngine;
-using static GraphLoader;
 
 public class ContextMenuHandler : MonoBehaviour
 {
@@ -14,23 +13,22 @@ public class ContextMenuHandler : MonoBehaviour
 
     public GameObject ContextMenu;
 
-    public void SetPhysicalNode(List<PhysicalNode> physicalNodes, List<PhysicalEdge> physicalEdges, GameObject node)
+    public void OpenContextMenu(List<PhysicalNode> physicalNodes, List<PhysicalEdge> physicalEdges, GameObject node)
     {
         var physicalNode = physicalNodes.SingleOrDefault(x => GameObject.ReferenceEquals(x.physicalNode, node));
         PhysicalNode = physicalNode;
         PhysicalNodes = physicalNodes;
         PhysicalEdges = physicalEdges;
         ContextMenu.SetActive(true);
-        MouseLook.SetFreeLookDisabled(true);
-        GunController.InputDisabled = true;
+        GameService.Instance.PauseGame();
     }
 
-    public void OnEditProperties()
+    public void ChangeParametersButtonOnClick()
     {
         FindObjectOfType<PropertiesMenuHandler>().SetPhysicalNode(PhysicalNode);
     }
 
-    public void OnDelete()
+    public void DeleteButtonOnClick()
     {
         PhysicalNodes.Remove(PhysicalNode);
         Destroy(PhysicalNode.physicalNode);
@@ -40,13 +38,12 @@ public class ContextMenuHandler : MonoBehaviour
         {
             Destroy(physicalEdge.edge);
         }
-        OnCloseContextMenu();
+        ExitButtonOnClick();
     }
 
-    public void OnCloseContextMenu()
+    public void ExitButtonOnClick()
     {
         ContextMenu.SetActive(false);
-        MouseLook.SetFreeLookDisabled(false);
-        GunController.InputDisabled = false;
+        GameService.Instance.UnPauseGame();
     }
 }

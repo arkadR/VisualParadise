@@ -25,7 +25,7 @@ public class PauseMenu : MonoBehaviour
 
   public void ResumeButton_OnClick()
   {
-    GameService.Instance.UnPauseGame();
+    GameService.Instance.GlobalUnPauseGame();
   }
 
   public void QuitButton_OnClick()

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Player.Guns
 {
-  public class NodeGun : IGun, MonoBehaviour
+  public class NodeGun : MonoBehaviour, IGun
   {
     private GraphService graphService;
     private Material nodeMaterial;
@@ -29,12 +29,11 @@ namespace Player.Guns
     {
       var ray = camera.ScreenPointToRay(Input.mousePosition);
 
-      if (Physics.Raycast(ray, out var hit))
-      {
-        var node = hit.collider.gameObject;
-        var contextMenuHandler = FindObjectOfType<ContextMenuHandler>();
-        contextMenuHandler.SetPhysicalNode(graphService.physicalNodes, graphService.physicalEdges, node);
-      }
+      if (!Physics.Raycast(ray, out var hit))
+        return;
+      var node = hit.collider.gameObject;
+      var contextMenuHandler = FindObjectOfType<ContextMenuHandler>();
+      contextMenuHandler.OpenContextMenu(graphService.physicalNodes, graphService.physicalEdges, node);
     }
 
     public void OnSwitchedAway()

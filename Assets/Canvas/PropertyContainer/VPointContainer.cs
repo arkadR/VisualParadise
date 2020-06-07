@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Assets.GameObject;
 using UnityEngine;
 using UnityEngine.UI;
-using static GraphLoader;
 
 namespace Assets.Canvas.PropertyContainer
 {

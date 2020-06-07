@@ -10,17 +10,32 @@ public class GameService : MonoBehaviour
   void Awake()
   {
     if (Instance != null)
-      GameObject.Destroy(Instance);
-      
+      Destroy(Instance);
+
     Instance = this;
 
     DontDestroyOnLoad(this);
   }
 
   public bool IsPaused { get; private set; } = false;
+
+  public bool isResumableOnKeyPress = true;
+
+  public void GlobalPauseGame()
+  {
+    isResumableOnKeyPress = true;
+    pauseMenu.SetActive(true);
+    PauseGame();
+  }
+
+  public void GlobalUnPauseGame()
+  {
+    pauseMenu.SetActive(false);
+    UnPauseGame();
+  }
+
   public void PauseGame()
   {
-    pauseMenu.SetActive(true);
     gamePanel.SetActive(false);
     IsPaused = true;
     Cursor.lockState = CursorLockMode.None;
@@ -28,7 +43,6 @@ public class GameService : MonoBehaviour
 
   public void UnPauseGame()
   {
-    pauseMenu.SetActive(false);
     gamePanel.SetActive(true);
     IsPaused = false;
     Cursor.lockState = CursorLockMode.Locked;
