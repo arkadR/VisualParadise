@@ -6,10 +6,11 @@ namespace Player.Guns
 {
     public class EdgeGun : IGun
     {
-        private float hitDistance = 20f;
+        [SerializeField] private float hitDistance = 40f;
         private readonly GraphLoader graphLoader;
         private readonly Material edgeMaterial;
         private GraphLoader.PhysicalNode previouslyHitNode;
+        private float nodeHitGlowStrength;
 
         public EdgeGun(GraphLoader graphLoader, Material edgeMaterial)
         {
@@ -37,7 +38,9 @@ namespace Player.Guns
             if (previouslyHitNode == null)
             {
                 previouslyHitNode = currentlyHitPhysicalNode;
-                SetGlow(previouslyHitNode, true);
+                previouslyHitNode.physicalNode.EnableGlow();
+                nodeHitGlowStrength = 0.5f;
+                previouslyHitNode.physicalNode.SetGlow(nodeHitGlowStrength);
                 return;
             }
 
@@ -45,22 +48,8 @@ namespace Player.Guns
 
             var physicalEdge = CreatePhysicalEdge(currentlyHitPhysicalNode);
             graphLoader.physicalEdges.Add(physicalEdge);
-            SetGlow(previouslyHitNode, false);
+            previouslyHitNode.physicalNode.DisableGlow();
             previouslyHitNode = null;
-        }
-
-        void SetGlow(GraphLoader.PhysicalNode physicalNode, bool value)
-        {
-            Material physicalNodeMaterial = physicalNode.physicalNode.GetComponent<Renderer>().material;
-            physicalNodeMaterial.SetColor("_EmissionColor", Color.yellow);
-            if (value)
-            {
-                physicalNodeMaterial.EnableKeyword("_EMISSION");
-            }
-            else
-            {
-                physicalNodeMaterial.DisableKeyword("_EMISSION");
-            }
         }
 
         private GraphLoader.PhysicalEdge CreatePhysicalEdge(GraphLoader.PhysicalNode currentlyHitPhysicalNode)
