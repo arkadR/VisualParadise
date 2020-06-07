@@ -13,8 +13,8 @@ public class GameService : MonoBehaviour
   {
     if (Instance != null)
       GameObject.Destroy(Instance);
-    else
-      Instance = this;
+      
+    Instance = this;
 
     DontDestroyOnLoad(this);
   }
