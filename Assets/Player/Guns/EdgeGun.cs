@@ -17,7 +17,7 @@ namespace Player.Guns
       this.edgeMaterial = edgeMaterial;
     }
 
-    public string GetGunName() => "Edge";
+    public string GunName => "Edge";
 
     public void OnMoveDown(Transform playerTransform, Camera camera)
     {
@@ -81,7 +81,7 @@ namespace Player.Guns
 
     private static bool IsNotPhysicalNode(GameObject gameObjectHit)
     {
-      return !gameObjectHit.CompareTag(Tags.PhysicalNodeTag);
+      return !gameObjectHit.CompareTag(Constants.PhysicalNodeTag);
     }
 
     public void OnSwitchedAway()

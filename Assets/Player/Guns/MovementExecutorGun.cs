@@ -6,7 +6,7 @@ namespace Player.Guns
     {
         private readonly MovementExecutor movementExecutor;
 
-        public string GetGunName() => "Move";
+        public string GunName => "Move";
 
         public MovementExecutorGun(MovementExecutor movementExecutor)
         {

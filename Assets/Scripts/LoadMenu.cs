@@ -10,7 +10,7 @@ public class LoadMenu : MonoBehaviour
 
   void Start()
   {
-    var files = Directory.GetFiles("savedgraphs/", "*.json");
+    var files = Directory.GetFiles(Constants.GraphFolder, "*.json");
     for (var i = 0; i < files.Length; i++)
     {
       var filePath = files[i];
@@ -24,7 +24,7 @@ public class LoadMenu : MonoBehaviour
 
   private void OnClick(string filePath)
   {
-    PlayerPrefs.SetString("graphFilePath", filePath);
-    SceneManager.LoadScene("GameScene", new LoadSceneParameters());
+    PlayerPrefs.SetString(Constants.GraphFilePathKey, filePath);
+    SceneManager.LoadScene(Constants.GameScene, new LoadSceneParameters());
   }
 }

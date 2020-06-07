@@ -17,7 +17,7 @@ namespace Player.Guns
       get => _activeGun;
       set
       {
-        gunTypeChange.ChangeGunType(value.GetGunName());
+        gunTypeChange.ChangeGunType(value.GunName);
         _activeGun = value;
       }
     }

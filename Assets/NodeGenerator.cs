@@ -8,7 +8,7 @@ public static class NodeGenerator
         sphere.transform.position = position;
         sphere.transform.rotation = rotation;
         sphere.GetComponent<Renderer>().material = nodeMaterial;
-        sphere.tag = Tags.PhysicalNodeTag;
+        sphere.tag = Constants.PhysicalNodeTag;
         AddNodeRigidBody(sphere);
         AddCollider(sphere);
         return sphere;

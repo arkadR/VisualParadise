@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.IO;
 using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,22 +6,21 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
   public GameObject pauseMenu;
-  private GraphLoader graphLoader;
   private GraphService graphService;
 
   void Start()
   {
     pauseMenu.SetActive(false);
 
-    graphLoader = FindObjectOfType<GraphLoader>();
     graphService = FindObjectOfType<GraphService>();
   }
 
   public void SaveButton_OnClick()
   {
-    var filePath = PlayerPrefs.GetString("filePath");
+    var filePath = PlayerPrefs.GetString(Constants.GraphFilePathKey);
     var graph = graphService.Graph;
-    
+    var json = JsonUtility.ToJson(graph);
+    File.WriteAllText(filePath, json);
   }
 
   public void ResumeButton_OnClick()
@@ -32,6 +30,6 @@ public class PauseMenu : MonoBehaviour
 
   public void QuitButton_OnClick()
   {
-    SceneManager.LoadScene("MainMenu");
+    SceneManager.LoadScene(Constants.MainMenuScene);
   }
 }
