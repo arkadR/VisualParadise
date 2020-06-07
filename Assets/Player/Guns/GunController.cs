@@ -6,6 +6,7 @@ namespace Player.Guns
 {
     public class GunController : MonoBehaviour
     {
+        public static bool InputDisabled = false;
         private GunTypeChange gunTypeChange;
         private IDictionary<KeyCode, IGun> guns;
         private Camera attachedCamera;
@@ -41,8 +42,11 @@ namespace Player.Guns
 
         private void Update()
         {
-            HandleChangeGun();
-            HandleFire();
+            if (!InputDisabled)
+            {
+                HandleChangeGun();
+                HandleFire();
+            }
         }
 
         private void HandleFire()
@@ -50,6 +54,10 @@ namespace Player.Guns
             if (Input.GetButtonDown("Fire1"))
             {
                 activeGun.OnMoveDown(transform, attachedCamera);
+            }
+            else if (Input.GetButtonDown("Fire2"))
+            {
+                activeGun.OnRightClick(attachedCamera);
             }
         }
 

@@ -1,8 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static GraphLoader;
 
 namespace Player.Guns
 {
-    public class NodeGun : IGun
+    public class NodeGun : MonoBehaviour, IGun
     {
         private readonly GraphLoader graphLoader;
         private readonly Material nodeMaterial;
@@ -35,6 +38,18 @@ namespace Player.Guns
                     physicalNode = sphere
                 }
             );
+        }
+
+        public void OnRightClick(Camera camera)
+        {
+            var ray = camera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out var hit))
+            {
+                var node = hit.collider.gameObject;
+                var contextMenuHandler = FindObjectOfType<ContextMenuHandler>();
+                contextMenuHandler.SetPhysicalNode(graphLoader.physicalNodes, graphLoader.physicalEdges, node);
+            }
         }
 
         public void OnSwitchedAway()

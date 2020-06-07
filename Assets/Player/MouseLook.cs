@@ -4,28 +4,41 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-  public float mouseSensitivity = 100f;
+    private static bool freeLookDisabled = false;
 
-  public Transform playerBody;
+    public static void SetFreeLookDisabled(bool value)
+    {
+        if (value) Cursor.lockState = CursorLockMode.None;
+        else Cursor.lockState = CursorLockMode.Locked;
 
-  public float yRotation = 0f;
+        freeLookDisabled = value;
+    }
 
-  // Start is called before the first frame update
-  void Start()
-  {
-    Cursor.lockState = CursorLockMode.Locked;
-  }
+    public float mouseSensitivity = 100f;
 
-  // Update is called once per frame
-  void Update()
-  {
-    var mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-    var mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+    public Transform playerBody;
 
-    yRotation -= mouseY;
-    yRotation = Mathf.Clamp(yRotation, -90f, 90f);
+    public float yRotation = 0f;
 
-    transform.localRotation = Quaternion.Euler(yRotation, 0f, 0f);
-    playerBody.Rotate(Vector3.up * mouseX);
-  }
+    // Start is called before the first frame update
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (!freeLookDisabled)
+        {
+            var mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            var mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+            yRotation -= mouseY;
+            yRotation = Mathf.Clamp(yRotation, -90f, 90f);
+
+            transform.localRotation = Quaternion.Euler(yRotation, 0f, 0f);
+            playerBody.Rotate(Vector3.up * mouseX);
+        }
+    }
 }

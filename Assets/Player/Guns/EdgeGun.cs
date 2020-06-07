@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using static GraphLoader;
 
 namespace Player.Guns
 {
@@ -99,6 +101,11 @@ namespace Player.Guns
         public void OnSwitchedAway()
         {
             // noop
+        }
+
+        public void OnRightClick(Camera camera)
+        {
+            
         }
     }
 }

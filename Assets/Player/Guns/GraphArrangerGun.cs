@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using static GraphLoader;
 
 namespace Player.Guns
 {
@@ -16,6 +18,11 @@ namespace Player.Guns
         public void OnMoveDown(Transform playerTransform, Camera camera)
         {
             graphArranger.HandleArrangeButtonPress();
+        }
+
+        public void OnRightClick(Camera camera)
+        {
+            
         }
 
         public void OnSwitchedAway()
