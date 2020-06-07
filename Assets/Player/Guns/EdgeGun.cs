@@ -4,20 +4,21 @@ using UnityEngine;
 
 namespace Player.Guns
 {
-  public class EdgeGun : IGun
-  {
-    private float hitDistance = 20f;
-    private readonly GraphService graphService;
-    private readonly Material edgeMaterial;
-    private PhysicalNode previouslyHitNode;
-
-    public EdgeGun(GraphService graphService, Material edgeMaterial)
+    public class EdgeGun : IGun
     {
-      this.graphService = graphService;
-      this.edgeMaterial = edgeMaterial;
-    }
+        [SerializeField] private float hitDistance = 40f;
+        private readonly GraphService graphService;
+        private readonly Material edgeMaterial;
+        private PhysicalNode previouslyHitNode;
+        private float nodeHitGlowStrength = 0.5f;
 
-    public string GunName => "Edge";
+        public EdgeGun(GraphService graphService, Material edgeMaterial)
+        {
+          this.graphService = graphService;
+          this.edgeMaterial = edgeMaterial;
+        }
+
+        public string GunName => "Edge";
 
     public void OnMoveDown(Transform playerTransform, Camera camera)
     {
@@ -34,38 +35,23 @@ namespace Player.Guns
       if (IsNotPhysicalNode(gameObjectHit)) return;
       if (HitTheSamePhysicalNode(gameObjectHit)) return;
 
-      var currentlyHitPhysicalNode = graphService.FindPhysicalNodeByGameObject(gameObjectHit);
+            var currentlyHitPhysicalNode = graphService.FindPhysicalNodeByGameObject(gameObjectHit);
 
-      if (previouslyHitNode == null)
-      {
-        previouslyHitNode = currentlyHitPhysicalNode;
-        SetGlow(previouslyHitNode, true);
-        return;
-      }
+            if (previouslyHitNode == null)
+            {
+                previouslyHitNode = currentlyHitPhysicalNode;
+                previouslyHitNode.physicalNode.EnableGlow();
+                previouslyHitNode.physicalNode.SetGlow(nodeHitGlowStrength);
+                return;
+            }
 
-      if (EdgeOfNodesAlreadyExists(previouslyHitNode, currentlyHitPhysicalNode)) 
-        return;
+          if (EdgeOfNodesAlreadyExists(previouslyHitNode, currentlyHitPhysicalNode)) 
+            return;
 
-      graphService.AddEdge(currentlyHitPhysicalNode.node, previouslyHitNode.node, edgeMaterial);
-      SetGlow(previouslyHitNode, false);
-      previouslyHitNode = null;
+          graphService.AddEdge(currentlyHitPhysicalNode.node, previouslyHitNode.node, edgeMaterial);
+          previouslyHitNode.physicalNode.DisableGlow();
+          previouslyHitNode = null;
     }
-
-    void SetGlow(PhysicalNode physicalNode, bool value)
-    {
-      Material physicalNodeMaterial = physicalNode.physicalNode.GetComponent<Renderer>().material;
-      physicalNodeMaterial.SetColor("_EmissionColor", Color.yellow);
-      if (value)
-      {
-        physicalNodeMaterial.EnableKeyword("_EMISSION");
-      }
-      else
-      {
-        physicalNodeMaterial.DisableKeyword("_EMISSION");
-      }
-    }
-
-
     private bool EdgeOfNodesAlreadyExists(PhysicalNode first, PhysicalNode second)
     {
       var alreadyExistingEdge = graphService
@@ -86,7 +72,12 @@ namespace Player.Guns
 
     public void OnSwitchedAway()
     {
-      // noop
+        // noop
     }
-  }
+
+    public void OnRightClick(Camera camera)
+    {
+        
+    }
+    }
 }

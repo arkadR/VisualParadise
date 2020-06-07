@@ -11,6 +11,7 @@ namespace Player.Guns
     private IDictionary<KeyCode, IGun> guns;
     private Camera attachedCamera;
     private GraphService graphService;
+    private GraphLoader graphLoader;
     private IGun _activeGun;
     private IGun activeGun
     {
@@ -24,20 +25,19 @@ namespace Player.Guns
 
     private void Start()
     {
-      attachedCamera = Camera.main;
-      graphService = FindObjectOfType<GraphService>();
-      gunTypeChange = FindObjectOfType<GunTypeChange>();
-      var nodeMaterial = Resources.Load<Material>("Materials/Node Material");
-      var edgeMaterial = Resources.Load<Material>("Materials/Edge Material");
+        attachedCamera = Camera.main;
+        graphService = FindObjectOfType<GraphService>();
+        gunTypeChange = FindObjectOfType<GunTypeChange>();
+        var edgeMaterial = Resources.Load<Material>("Materials/Edge Material");
 
-      guns = new Dictionary<KeyCode, IGun>
-      {
-        [KeyCode.Alpha1] = new NodeGun(graphService, nodeMaterial),
-        [KeyCode.Alpha2] = new EdgeGun(graphService, edgeMaterial),
-        [KeyCode.Alpha3] = new MovementExecutorGun(FindObjectOfType<MovementExecutor>()),
-        [KeyCode.Alpha4] = new GraphArrangerGun(FindObjectOfType<GraphArranger>())
-      };
-      activeGun = guns.First().Value;
+        guns = new Dictionary<KeyCode, IGun>
+        {
+            [KeyCode.Alpha1] = gameObject.AddComponent<NodeGun>(),
+            [KeyCode.Alpha2] = new EdgeGun(graphService, edgeMaterial),
+            [KeyCode.Alpha3] = new MovementExecutorGun(FindObjectOfType<MovementExecutor>()),
+            [KeyCode.Alpha4] = new GraphArrangerGun(FindObjectOfType<GraphArranger>())
+        };
+        activeGun = guns.First().Value;
     }
 
     private void Update()
@@ -51,10 +51,14 @@ namespace Player.Guns
 
     private void HandleFire()
     {
-      if (Input.GetButtonDown("Fire1"))
-      {
-        activeGun.OnMoveDown(transform, attachedCamera);
-      }
+        if (Input.GetButtonDown("Fire1"))
+        {
+            activeGun.OnMoveDown(transform, attachedCamera);
+        }
+        else if (Input.GetButtonDown("Fire2"))
+        {
+            activeGun.OnRightClick(attachedCamera);
+        }
     }
 
     private void HandleChangeGun()

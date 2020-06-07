@@ -7,5 +7,6 @@ namespace Player.Guns
     string GunName { get; }
     void OnMoveDown(Transform playerTransform, Camera camera);
     void OnSwitchedAway();
+    void OnRightClick(Camera camera);
   }
 }

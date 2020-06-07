@@ -18,6 +18,11 @@ namespace Player.Guns
       graphArranger.HandleArrangeButtonPress();
     }
 
+    public void OnRightClick(Camera camera)
+    {
+        
+    }
+
     public void OnSwitchedAway()
     {
 

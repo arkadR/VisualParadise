@@ -3,15 +3,15 @@ using UnityEngine;
 
 namespace Player.Guns
 {
-  public class NodeGun : IGun
+  public class NodeGun : IGun, MonoBehaviour
   {
-    private readonly GraphService graphService;
-    private readonly Material nodeMaterial;
+    private GraphService graphService;
+    private Material nodeMaterial;
 
-    public NodeGun(GraphService graphService, Material nodeMaterial)
+    private void Start()
     {
-      this.graphService = graphService;
-      this.nodeMaterial = nodeMaterial;
+        nodeMaterial = Resources.Load<Material>("Materials/Node Material");
+        graphService = FindObjectOfType<GraphService>();
     }
 
     public string GunName => "Node";
@@ -23,6 +23,18 @@ namespace Player.Guns
       var position = transform.position + transform.forward * 3;
 
       graphService.AddNode(position, rotation, nodeMaterial);
+    }
+    
+    public void OnRightClick(Camera camera)
+    {
+      var ray = camera.ScreenPointToRay(Input.mousePosition);
+
+      if (Physics.Raycast(ray, out var hit))
+      {
+        var node = hit.collider.gameObject;
+        var contextMenuHandler = FindObjectOfType<ContextMenuHandler>();
+        contextMenuHandler.SetPhysicalNode(graphService.physicalNodes, graphService.physicalEdges, node);
+      }
     }
 
     public void OnSwitchedAway()
