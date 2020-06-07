@@ -1,19 +1,20 @@
-﻿using Assets.Scripts;
+﻿using System.Linq;
+using Assets.Scripts;
 using UnityEngine;
 
 public class MovementExecutor : MonoBehaviour
 {
   GraphService graphService;
 
-  private bool movement = false;
+  private bool shouldMove = false;
 
   // Start is called before the first frame update
   // needs to be called after GraphLoader.Start()
   void Start()
   {
     graphService = FindObjectOfType<GraphService>();
-    Debug.Log("Nodes count: " + graphService.physicalNodes.Count);
-    Debug.Log("Edges count: " + graphService.physicalEdges.Count);
+    Debug.Log("Nodes count: " + graphService.Graph.nodes.Count);
+    Debug.Log("Edges count: " + graphService.Graph.edges.Count);
   }
 
   // Update for physics
@@ -22,51 +23,46 @@ public class MovementExecutor : MonoBehaviour
     if (GameService.Instance.IsPaused)
       return;
 
-    if (movement)
-    {
-      Accelerate();
-      FixEdges();
-    }
+    if (shouldMove == false)
+      return;
+
+    Move();
+    Accelerate();
+    FixEdges();
   }
 
-  public void HandleExecuteMovementButtonPress()
+  public void ToggleMovement()
   {
-    movement = !movement;
-    if (movement)
-    {
-      Move();
-      Debug.Log("Execute movement on");
-    }
-    else
-    {
+    shouldMove = !shouldMove;
+    
+    Debug.Log(shouldMove ? "Node movement enabled" : "Node movement disabled");
+    if (shouldMove == false)
       StopNodes();
-      Debug.Log("Execute movement off");
+  }
+
+
+
+  private void Accelerate()
+  {
+    foreach (var n in graphService.Graph.nodes)
+    {
+      var newVelocity = n.Velocity + n.Acceleration * Time.deltaTime;
+      var newAngularVelocity = n.AngularVelocity + n.AngularAcceleration * Time.deltaTime;
+
+      n.Velocity = newVelocity;
+      n.AngularVelocity = newAngularVelocity;
     }
   }
 
   private void Move()
   {
-    foreach (var n in graphService.physicalNodes)
+    foreach (var n in graphService.Graph.nodes)
     {
-      Rigidbody nodeRb = n.physicalNode.GetComponent<Rigidbody>();
+      var newPosition = n.Position + n.Velocity * Time.deltaTime;
+      var newRotation = n.Rotation + n.AngularVelocity * Time.deltaTime;
 
-      nodeRb.velocity = n.node.vpoint.Velocity();
-      nodeRb.angularVelocity = n.node.vpoint.AngVelocity();
-    }
-  }
-
-  private void Accelerate()
-  {
-    foreach (var n in graphService.physicalNodes)
-    {
-      Rigidbody nodeRb = n.physicalNode.GetComponent<Rigidbody>();
-
-      nodeRb.AddForce(n.node.apoint.Acceleration(), ForceMode.Acceleration);
-      nodeRb.angularVelocity += n.node.apoint.AngAcceleration() * Time.deltaTime;
-
-      n.node.point.SetPosition(nodeRb.position);
-      n.node.vpoint.SetVelocity(nodeRb.velocity);
-      n.node.vpoint.SetAngVelocity(nodeRb.angularVelocity);
+      n.Position = newPosition;
+      n.Rotation = newRotation;
     }
   }
 
@@ -75,13 +71,13 @@ public class MovementExecutor : MonoBehaviour
   /// </summary>
   public void FixEdges()
   {
-    foreach (var e in graphService.physicalEdges)
+    foreach (var e in graphService.Graph.edges)
     {
-      var lineRenderer = e.edge.GetComponent<LineRenderer>();
-      var positionFrom = e.nodeFrom.physicalNode.GetComponent<Rigidbody>().position;
-      var positionTo = e.nodeTo.physicalNode.GetComponent<Rigidbody>().position;
-      lineRenderer.SetPosition(0, positionFrom);
-      lineRenderer.SetPosition(1, positionTo);
+      var lineRenderer = e.gameObject.GetComponent<LineRenderer>();
+      var startingNode = graphService.Graph.nodes.Single(n => n.id == e.from);
+      var endingNode = graphService.Graph.nodes.Single(n => n.id == e.to);
+      lineRenderer.SetPosition(0, startingNode.Position);
+      lineRenderer.SetPosition(1, endingNode.Position);
     }
   }
 
@@ -90,12 +86,12 @@ public class MovementExecutor : MonoBehaviour
   /// </summary>
   public void StopNodes()
   {
-    foreach (var n in graphService.physicalNodes)
+    foreach (var n in graphService.Graph.nodes)
     {
-      Rigidbody nodeRb = n.physicalNode.GetComponent<Rigidbody>();
-
-      nodeRb.velocity = Vector3.zero;
-      nodeRb.angularVelocity = Vector3.zero;
+      n.Velocity = Vector3.zero;
+      n.AngularVelocity = Vector3.zero;
+      n.Acceleration = Vector3.zero;
+      n.AngularAcceleration = Vector3.zero;
     }
   }
 }

@@ -1,100 +1,100 @@
-﻿using Assets.Scripts;
+﻿using System.Linq;
+using Assets.Scripts;
 using UnityEngine;
 
 public class GraphArranger : MonoBehaviour
 {
-    GraphService graphService;
-    MovementExecutor movementExecutor;
-    public float repelFunCoefficient = 5.0f; // safe range <1, 50+)
-    public float attractFunPower = 1.5f; // safe range <1, 1.5>
-    const float maxVelocityMagnitude = 25f;
+  private GraphService graphService;
+  private MovementExecutor movementExecutor;
 
-    private bool arrange = false;
+  public const float repelFunCoefficient = 5.0f; // safe range <1, 50+)
+  public const float attractFunPower = 1.5f; // safe range <1, 1.5>
+  public const float maxVelocityMagnitude = 25f;
 
-    // Start is called before the first frame update
-    // needs to be called after GraphLoader.Start() and after MovementExecutor.Start()
-    void Start()
+  private bool shouldArrange = false;
+
+  // Start is called before the first frame update
+  // needs to be called after GraphLoader.Start() and after MovementExecutor.Start()
+  void Start()
+  {
+    graphService = GameObject.FindObjectOfType<GraphService>();
+    movementExecutor = GameObject.FindObjectOfType<MovementExecutor>();
+  }
+
+  // Update for physics
+  void FixedUpdate()
+  {
+    if (GameService.Instance.IsPaused)
+      return;
+
+    if (!shouldArrange) 
+      return;
+
+    movementExecutor.StopNodes();
+    Attract();
+    Repel();
+  }
+
+  public void ToggleArrangement()
+  {
+    shouldArrange = !shouldArrange;
+    Debug.Log("Arranger " + (shouldArrange ? "on" : "off"));
+    movementExecutor.StopNodes();
+  }
+
+  /// <summary>
+  /// Repel each Node from every other node
+  /// </summary>
+  private void Repel()
+  {
+    for (var i = 0; i < graphService.Graph.nodes.Count; i++)
     {
-        graphService = GameObject.FindObjectOfType<GraphService>();
-        movementExecutor = GameObject.FindObjectOfType<MovementExecutor>();
-    }
+      for (var j = i+1; j < graphService.Graph.nodes.Count; j++)
+      {
+        var node1 = graphService.Graph.nodes[i];
+        var node2 = graphService.Graph.nodes[j];
 
-    // Update for physics
-    void FixedUpdate()
+        var direction = node1.Position - node2.Position;
+        var distance = direction.magnitude;
+
+        var velocityMagnitude = CalculateRepelVelocityMagnitude(distance);
+        var velocity = direction.normalized * Mathf.Min(maxVelocityMagnitude, velocityMagnitude);
+        node1.Velocity += velocity;
+        node2.Velocity -= velocity;
+      }
+    }
+  }
+
+  private float CalculateRepelVelocityMagnitude(float distance)
+  {
+    var rawResult = repelFunCoefficient / distance;
+    return rawResult;
+  }
+
+  /// <summary>
+  /// Attract two nodes if there is an edge to connect them
+  /// </summary>
+  private void Attract()
+  {
+    foreach (var e in graphService.Graph.edges)
     {
-        if (GameService.Instance.IsPaused)
-          return;
+      var node1 = graphService.Graph.nodes.Single(n => n.id == e.from);
+      var node2 = graphService.Graph.nodes.Single(n => n.id == e.to);
 
-        if (arrange)
-        {
-            movementExecutor.StopNodes();
-            Attract();
-            Repel();
-            movementExecutor.FixEdges();
-        }
+      var direction = node1.Position - node2.Position;
+      var distance = direction.magnitude;
+
+      var velocityMagnitude = CalculateAttractVelocityMagnitude(distance);
+      var velocity = direction.normalized * Mathf.Min(maxVelocityMagnitude, velocityMagnitude);
+
+      node1.Velocity -= velocity;
+      node2.Velocity += velocity;
     }
+  }
 
-    public void HandleArrangeButtonPress()
-    {
-        arrange = !arrange;
-        Debug.Log("Arranger " + (arrange ? "on" : "off"));
-        movementExecutor.StopNodes();
-    }
-
-    /// <summary>
-    /// Repel each Node from every other node
-    /// </summary>
-    private void Repel()
-    {
-        foreach (var n in graphService.physicalNodes)
-        {
-            Rigidbody nodeRb = n.physicalNode.GetComponent<Rigidbody>();
-            foreach (var o in graphService.physicalNodes)
-            {
-                if (n == o) continue;
-                Rigidbody otherRb = o.physicalNode.GetComponent<Rigidbody>();
-
-                Vector3 direction = nodeRb.position - otherRb.position;
-                float distance = direction.magnitude;
-
-                float velocityMagnitude = CalculateRepellVelocityMagnitude(distance);
-                Vector3 velocity = direction.normalized * Mathf.Min(maxVelocityMagnitude, velocityMagnitude);
-                otherRb.velocity += -velocity;
-                n.node.point.SetPosition(nodeRb.position);
-            }
-        }
-    }
-
-    private float CalculateRepellVelocityMagnitude(float distance)
-    {
-        float rawResult = repelFunCoefficient / distance;
-        return rawResult;
-    }
-
-    /// <summary>
-    /// Attract two nodes if there is an edge to connect them
-    /// </summary>
-    private void Attract()
-    {
-        foreach (var e in graphService.physicalEdges)
-        {
-            Rigidbody fromRb = e.nodeFrom.physicalNode.GetComponent<Rigidbody>();
-            Rigidbody toRb = e.nodeTo.physicalNode.GetComponent<Rigidbody>();
-
-            Vector3 direction = fromRb.position - toRb.position;
-            float distance = direction.magnitude;
-
-            float velocityMagnitude = CalculateAttractVelocityMagnitude(distance);
-            Vector3 velocity = direction.normalized * Mathf.Min(maxVelocityMagnitude, velocityMagnitude);
-
-            fromRb.velocity += -velocity;
-            toRb.velocity += velocity;
-        }
-    }
-
-    private float CalculateAttractVelocityMagnitude(float distance)
-    {
-        float rawResult = Mathf.Pow(distance, attractFunPower);
-        return rawResult;
-    }
+  private float CalculateAttractVelocityMagnitude(float distance)
+  {
+    var rawResult = Mathf.Pow(distance, attractFunPower);
+    return rawResult;
+  }
 }

@@ -17,7 +17,7 @@ namespace Player.Guns
 
         public void OnMoveDown(Transform playerTransform, Camera camera)
         {
-            movementExecutor.HandleExecuteMovementButtonPress();
+            movementExecutor.ToggleMovement();
         }
 
         public void OnSwitchedAway()

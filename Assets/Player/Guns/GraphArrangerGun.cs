@@ -15,7 +15,7 @@ namespace Player.Guns
 
     public void OnMoveDown(Transform playerTransform, Camera camera)
     {
-      graphArranger.HandleArrangeButtonPress();
+      graphArranger.ToggleArrangement();
     }
 
     public void OnRightClick(Camera camera)

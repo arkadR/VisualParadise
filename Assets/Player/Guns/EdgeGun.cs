@@ -1,78 +1,68 @@
-using Assets.GameObject;
+using Assets.Model;
 using Assets.Scripts;
 using UnityEngine;
 
 namespace Player.Guns
 {
-    public class EdgeGun : IGun
+  public class EdgeGun : IGun
+  {
+    [SerializeField] private float hitDistance = 40f;
+    private readonly GraphService graphService;
+    private readonly Material edgeMaterial;
+    private Node previouslyHitNode;
+    private float nodeHitGlowStrength = 0.5f;
+
+    public EdgeGun(GraphService graphService, Material edgeMaterial)
     {
-        [SerializeField] private float hitDistance = 40f;
-        private readonly GraphService graphService;
-        private readonly Material edgeMaterial;
-        private PhysicalNode previouslyHitNode;
-        private float nodeHitGlowStrength = 0.5f;
+      this.graphService = graphService;
+      this.edgeMaterial = edgeMaterial;
+    }
 
-        public EdgeGun(GraphService graphService, Material edgeMaterial)
-        {
-          this.graphService = graphService;
-          this.edgeMaterial = edgeMaterial;
-        }
-
-        public string GunName => "Edge";
+    public string GunName => "Edge";
 
     public void OnMoveDown(Transform playerTransform, Camera camera)
     {
       var transform = camera.transform;
-      bool hit = Physics.Raycast(
+      var hit = Physics.Raycast(
           transform.position,
           transform.forward,
           out var hitInfo,
           hitDistance);
+
       if (!hit) 
         return;
       
       var gameObjectHit = hitInfo.collider.gameObject;
-      if (IsNotPhysicalNode(gameObjectHit)) return;
-      if (HitTheSamePhysicalNode(gameObjectHit)) return;
+      var currentlyHitNode = graphService.FindNodeByGameObject(gameObjectHit);
 
-            var currentlyHitPhysicalNode = graphService.FindPhysicalNodeByGameObject(gameObjectHit);
+      // If not a node, don't do anything
+      if (currentlyHitNode == null) 
+        return;
 
-            if (previouslyHitNode == null)
-            {
-                previouslyHitNode = currentlyHitPhysicalNode;
-                previouslyHitNode.physicalNode.EnableGlow();
-                previouslyHitNode.physicalNode.SetGlow(nodeHitGlowStrength);
-                return;
-            }
+      // If player hit the same node twice, don't do anything
+      if (currentlyHitNode == previouslyHitNode) 
+        return;
 
-          if (EdgeOfNodesAlreadyExists(previouslyHitNode, currentlyHitPhysicalNode)) 
-            return;
 
-          graphService.AddEdge(currentlyHitPhysicalNode.node, previouslyHitNode.node, edgeMaterial);
-          previouslyHitNode.physicalNode.DisableGlow();
-          previouslyHitNode = null;
-    }
-    private bool EdgeOfNodesAlreadyExists(PhysicalNode first, PhysicalNode second)
-    {
-      var alreadyExistingEdge = graphService
-          .FindPhysicalEdgeByPhysicalNodes(first, second);
-      return alreadyExistingEdge != null;
-    }
+      if (previouslyHitNode == null)
+      {
+        previouslyHitNode = currentlyHitNode;
+        previouslyHitNode.EnableGlow();
+        return;
+      }
 
-    private bool HitTheSamePhysicalNode(GameObject gameObjectHit)
-    {
-      if (previouslyHitNode == null) return false;
-      return gameObjectHit == previouslyHitNode.physicalNode;
-    }
+      //Don't create duplicate edge
+      if (graphService.FindEdgeByNodes(previouslyHitNode, currentlyHitNode) != null) 
+        return;
 
-    private static bool IsNotPhysicalNode(GameObject gameObjectHit)
-    {
-      return !gameObjectHit.CompareTag(Constants.PhysicalNodeTag);
+      graphService.AddEdge(currentlyHitNode, previouslyHitNode, edgeMaterial);
+      previouslyHitNode.DisableGlow();
+      previouslyHitNode = null;
     }
 
     public void OnSwitchedAway()
     {
-        // noop
+      // noop
     }
 
     public void OnRightClick(Camera camera)
