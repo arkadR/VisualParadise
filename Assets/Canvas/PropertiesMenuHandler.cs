@@ -1,52 +1,52 @@
 ﻿using Assets.Canvas.PropertyContainer;
-using Assets.GameObject;
+using Assets.Model;
 using UnityEngine;
 
 public class PropertiesMenuHandler : MonoBehaviour
 {
-  private PointContainer pointContainerObject;
+  private PointContainer _pointContainerObject;
 
-  private VPointContainer vPointContainerObject;
+  private VPointContainer _vPointContainerObject;
 
-  private APointContainer aPointContainerObject;
+  private APointContainer _aPointContainerObject;
 
-  private PhysicalNode PhysicalNode;
+  private Node _node;
 
-  public GameObject PropertiesMenu;
+  public GameObject propertiesMenu;
 
-  public GameObject PointContainer;
+  public GameObject pointContainer;
 
-  public GameObject VPointContainer;
+  public GameObject vPointContainer;
 
-  public GameObject APointContainer;
+  public GameObject aPointContainer;
 
-  public void SetPhysicalNode(PhysicalNode physicalNode)
+  public void OpenPropertiesMenu(Node node)
   {
-    PhysicalNode = physicalNode;
-    PropertiesMenu.SetActive(true);
+    _node = node;
+    propertiesMenu.SetActive(true);
 
-    pointContainerObject.SetPhysicalNode(physicalNode);
-    vPointContainerObject.SetPhysicalNode(physicalNode);
-    aPointContainerObject.SetPhysicalNode(physicalNode);
+    _pointContainerObject.SetNode(_node);
+    _vPointContainerObject.SetNode(_node);
+    _aPointContainerObject.SetNode(_node);
   }
 
   public void SaveDataButtonOnClick()
   {
-    pointContainerObject.SaveData();
-    vPointContainerObject.SaveData();
-    aPointContainerObject.SaveData();
+    _pointContainerObject.SaveData();
+    _vPointContainerObject.SaveData();
+    _aPointContainerObject.SaveData();
     ExitButtonOnClick();
   }
 
   public void ExitButtonOnClick()
   {
-    PropertiesMenu.SetActive(false);
+    propertiesMenu.SetActive(false);
   }
 
   public void Start()
   {
-    pointContainerObject = PointContainer.GetComponent<PointContainer>();
-    vPointContainerObject = VPointContainer.GetComponent<VPointContainer>();
-    aPointContainerObject = APointContainer.GetComponent<APointContainer>();
+    _pointContainerObject = pointContainer.GetComponent<PointContainer>();
+    _vPointContainerObject = vPointContainer.GetComponent<VPointContainer>();
+    _aPointContainerObject = aPointContainer.GetComponent<APointContainer>();
   }
 }

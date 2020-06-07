@@ -1,4 +1,6 @@
 ﻿using Assets.GameObject;
+using Assets.Model;
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +8,7 @@ namespace Assets.Canvas.PropertyContainer
 {
     public class APointContainer : MonoBehaviour
     {
-        private PhysicalNode PhysicalNode;
+        private Node _node;
         public InputField ax;
         public InputField ay;
         public InputField az;
@@ -14,16 +16,18 @@ namespace Assets.Canvas.PropertyContainer
         public InputField alpha_phi;
         public InputField alpha_psi;
 
-        public void SetPhysicalNode(PhysicalNode physicalNode)
+        public void SetNode(Node node)
         {
-            PhysicalNode = physicalNode;
+            _node = node;
+            var (nodeAx, nodeAy, nodeAz) = _node.Acceleration;
+            var (nodeAax, nodeAay, nodeAaz) = _node.AngularAcceleration;
 
-            ax.text = PhysicalNode.node.apoint.ax.ToString();
-            ay.text = PhysicalNode.node.apoint.ay.ToString();
-            az.text = PhysicalNode.node.apoint.az.ToString();
-            alpha_theta.text = PhysicalNode.node.apoint.alpha_theta.ToString();
-            alpha_phi.text = PhysicalNode.node.apoint.alpha_phi.ToString();
-            alpha_psi.text = PhysicalNode.node.apoint.alpha_psi.ToString();
+            ax.text = nodeAx.ToString();
+            ay.text = nodeAy.ToString();
+            az.text = nodeAz.ToString();
+            alpha_theta.text = nodeAax.ToString();
+            alpha_phi.text = nodeAay.ToString();
+            alpha_psi.text = nodeAaz.ToString();
         }
 
         public void SaveData()

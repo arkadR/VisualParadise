@@ -47,7 +47,8 @@ namespace Player.Guns
       if (previouslyHitNode == null)
       {
         previouslyHitNode = currentlyHitNode;
-        previouslyHitNode.EnableGlow();
+        previouslyHitNode.gameObject.EnableGlow();
+        previouslyHitNode.gameObject.SetGlow(nodeHitGlowStrength);
         return;
       }
 
@@ -56,7 +57,7 @@ namespace Player.Guns
         return;
 
       graphService.AddEdge(currentlyHitNode, previouslyHitNode, edgeMaterial);
-      previouslyHitNode.DisableGlow();
+      previouslyHitNode.gameObject.DisableGlow();
       previouslyHitNode = null;
     }
 

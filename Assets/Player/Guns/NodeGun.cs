@@ -33,7 +33,7 @@ namespace Player.Guns
         return;
       var node = hit.collider.gameObject;
       var contextMenuHandler = FindObjectOfType<ContextMenuHandler>();
-      contextMenuHandler.OpenContextMenu(graphService.physicalNodes, graphService.physicalEdges, node);
+      contextMenuHandler.OpenContextMenu(graphService.Graph.nodes, graphService.Graph.edges, node);
     }
 
     public void OnSwitchedAway()

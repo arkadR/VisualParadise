@@ -1,49 +1,49 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.GameObject;
+using Assets.Model;
 using UnityEngine;
 
 public class ContextMenuHandler : MonoBehaviour
 {
-    private PhysicalNode PhysicalNode;
+    private Node _node;
 
-    private List<PhysicalEdge> PhysicalEdges;
+    private List<Edge> _edges;
 
-    private List<PhysicalNode> PhysicalNodes;
+    private List<Node> _nodes;
 
-    public GameObject ContextMenu;
+    public GameObject contextMenu;
 
-    public void OpenContextMenu(List<PhysicalNode> physicalNodes, List<PhysicalEdge> physicalEdges, GameObject node)
+    public void OpenContextMenu(List<Node> nodes, List<Edge> edges, GameObject gameObjectHit)
     {
-        var physicalNode = physicalNodes.SingleOrDefault(x => GameObject.ReferenceEquals(x.physicalNode, node));
-        PhysicalNode = physicalNode;
-        PhysicalNodes = physicalNodes;
-        PhysicalEdges = physicalEdges;
-        ContextMenu.SetActive(true);
+        var node = nodes.SingleOrDefault(x => ReferenceEquals(x.gameObject, gameObjectHit));
+        _node = node;
+        _nodes = nodes;
+        _edges = edges;
+        contextMenu.SetActive(true);
         GameService.Instance.PauseGame();
     }
 
     public void ChangeParametersButtonOnClick()
     {
-        FindObjectOfType<PropertiesMenuHandler>().SetPhysicalNode(PhysicalNode);
+        FindObjectOfType<PropertiesMenuHandler>().OpenPropertiesMenu(_node);
     }
 
     public void DeleteButtonOnClick()
     {
-        PhysicalNodes.Remove(PhysicalNode);
-        Destroy(PhysicalNode.physicalNode);
-        var physicalEdgesToDelete = PhysicalEdges.FindAll(x => x.nodeFrom.Equals(PhysicalNode) || x.nodeTo.Equals(PhysicalNode));
-        PhysicalEdges.RemoveAll(x => physicalEdgesToDelete.Contains(x));
+        _nodes.Remove(_node);
+        Destroy(_node.gameObject);
+        var physicalEdgesToDelete = _edges.FindAll(x => x.nodeTo.Equals(_node) || x.nodeTo.Equals(_node));
+        _edges.RemoveAll(x => physicalEdgesToDelete.Contains(x));
         foreach (var physicalEdge in physicalEdgesToDelete)
         {
-            Destroy(physicalEdge.edge);
+            Destroy(physicalEdge.gameObject);
         }
         ExitButtonOnClick();
     }
 
     public void ExitButtonOnClick()
     {
-        ContextMenu.SetActive(false);
+        contextMenu.SetActive(false);
         GameService.Instance.UnPauseGame();
     }
 }

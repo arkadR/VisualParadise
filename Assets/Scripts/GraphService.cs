@@ -53,6 +53,8 @@ namespace Assets.Scripts
         from = node1.id,
         to = node2.id,
         gameObject = EdgeGenerator.CreateGameObjectEdge(node1, node2, material),
+        nodeFrom = node1,
+        nodeTo = node2
       };
       Graph.edges.Add(edge);
     }

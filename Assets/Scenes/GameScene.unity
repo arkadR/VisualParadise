@@ -8808,8 +8808,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 305cfa7cb57b4408283b7b3141df541c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  repelFunCoefficient: 5
-  attractFunPower: 1.5
 --- !u!114 &1919699930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9768,10 +9766,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e73acb0ddf60594ba49891cbc40932b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PropertiesMenu: {fileID: 846006837}
-  PointContainer: {fileID: 1299598800}
-  VPointContainer: {fileID: 432882625}
-  APointContainer: {fileID: 1131774830}
+  propertiesMenu: {fileID: 846006837}
+  pointContainer: {fileID: 1299598800}
+  vPointContainer: {fileID: 432882625}
+  aPointContainer: {fileID: 1131774830}
 --- !u!114 &2051443775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9784,7 +9782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96cfdb6149de2d54fa08c0ffacce5873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ContextMenu: {fileID: 1523667554}
+  contextMenu: {fileID: 1523667554}
 --- !u!1 &2054330962
 GameObject:
   m_ObjectHideFlags: 0

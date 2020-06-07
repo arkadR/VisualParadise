@@ -1,4 +1,6 @@
 ﻿using Assets.GameObject;
+using Assets.Model;
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +8,7 @@ namespace Assets.Canvas.PropertyContainer
 {
     public class PointContainer : MonoBehaviour
     {
-        private PhysicalNode PhysicalNode;
+        private Node _node;
         public InputField x;
         public InputField y;
         public InputField z;
@@ -14,16 +16,19 @@ namespace Assets.Canvas.PropertyContainer
         public InputField phi;
         public InputField psi;
 
-        public void SetPhysicalNode(PhysicalNode physicalNode)
+        public void SetNode(Node node)
         {
-            PhysicalNode = physicalNode;
+            _node = node;
 
-            x.text = PhysicalNode.node.point.x.ToString();
-            y.text = PhysicalNode.node.point.y.ToString();
-            z.text = PhysicalNode.node.point.z.ToString();
-            theta.text = PhysicalNode.node.point.theta.ToString();
-            phi.text = PhysicalNode.node.point.phi.ToString();
-            psi.text = PhysicalNode.node.point.psi.ToString();
+            var (posX, posY, posZ) = _node.Position;
+            var (rotX, rotY, rotZ) = _node.Rotation;
+
+            x.text = posX.ToString();
+            y.text = posY.ToString();
+            z.text = posZ.ToString();
+            theta.text = rotX.ToString();
+            phi.text = rotY.ToString();
+            psi.text = rotZ.ToString();
         }
 
         public void SaveData()
