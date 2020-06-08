@@ -7,11 +7,12 @@ namespace Assets.Scripts
   {
     private GraphService graphService;
 
-    public const float repelFunCoefficient = 5.0f; // higher values causes more distortion
-    public const float attractFunPower = 1.5f; // safe range <1, 3>
-    public const float maxVelocityMagnitude = 40f;
+    private const float _repelFunCoefficient = 5.0f; // higher values causes more distortion
+    private const float _attractFunPower = 1.5f; // safe range <1, 3>
+    private const float _maxVelocityMagnitude = 25f;
 
-    public bool shouldArrange { get; private set; } = false;
+    private bool _shouldArrange = false;
+    private bool _reverse = false;
 
     void Start()
     {
@@ -24,7 +25,7 @@ namespace Assets.Scripts
       if (GameService.Instance.IsPaused)
         return;
 
-      if (!shouldArrange) 
+      if (!_shouldArrange) 
         return;
 
       graphService.StopNodes();
@@ -35,9 +36,14 @@ namespace Assets.Scripts
 
     public void ToggleArrangement()
     {
-      shouldArrange = !shouldArrange;
-      Debug.Log("Arranger " + (shouldArrange ? "enabled" : "disabled"));
+      _shouldArrange = !_shouldArrange;
+      Debug.Log("Arranger " + (_shouldArrange ? "enabled" : "disabled"));
       graphService.StopNodes();
+    }
+
+    public void ToggleReverse()
+    {
+      _reverse = !_reverse;
     }
 
     /// <summary>
@@ -56,17 +62,25 @@ namespace Assets.Scripts
           var distance = direction.magnitude;
 
           var velocityMagnitude = CalculateRepelVelocityMagnitude(distance);
-          var velocity = direction.normalized * Mathf.Min(maxVelocityMagnitude, velocityMagnitude);
+          var velocity = direction.normalized * Mathf.Min(_maxVelocityMagnitude, velocityMagnitude);
 
-          node1.Position += velocity * Time.deltaTime;
-          node2.Position -= velocity * Time.deltaTime;
+          if (_reverse)
+          {
+            node1.Position -= velocity * Time.deltaTime;
+            node2.Position += velocity * Time.deltaTime;
+          }
+          else
+          {
+            node1.Position += velocity * Time.deltaTime;
+            node2.Position -= velocity * Time.deltaTime;
+          }
         }
       }
     }
 
     private float CalculateRepelVelocityMagnitude(float distance)
     {
-      var rawResult = repelFunCoefficient / distance;
+      var rawResult = _repelFunCoefficient / distance;
       return rawResult;
     }
 
@@ -84,16 +98,24 @@ namespace Assets.Scripts
         var distance = direction.magnitude;
 
         var velocityMagnitude = CalculateAttractVelocityMagnitude(distance);
-        var velocity = direction.normalized * Mathf.Min(maxVelocityMagnitude, velocityMagnitude);
+        var velocity = direction.normalized * Mathf.Min(_maxVelocityMagnitude, velocityMagnitude);
 
-        node1.Position -= velocity * Time.deltaTime;
-        node2.Position += velocity * Time.deltaTime;
+        if (_reverse)
+        {
+          node1.Position += velocity * Time.deltaTime;
+          node2.Position -= velocity * Time.deltaTime;
+        }
+        else
+        {
+          node1.Position -= velocity * Time.deltaTime;
+          node2.Position += velocity * Time.deltaTime;
+        }
       }
     }
 
     private float CalculateAttractVelocityMagnitude(float distance)
     {
-      var rawResult = Mathf.Pow(distance, attractFunPower);
+      var rawResult = Mathf.Pow(distance, _attractFunPower);
       return rawResult;
     }
   }
