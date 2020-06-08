@@ -1,9 +1,9 @@
+﻿using System;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
-using System.IO;
-using System;
 
-namespace GitHub.Unity
+namespace Assets.Plugins.GitHub.Editor
 {
     [InitializeOnLoad]
     public class ExtensionLoader : ScriptableSingleton<ExtensionLoader>
