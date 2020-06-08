@@ -35,7 +35,12 @@ namespace Assets.Scripts
 
     public Node FindNodeByGameObject(UnityEngine.GameObject gameObject) => Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
 
-    public Edge FindEdgeByNodes(Node node1, Node node2) => Graph.edges.SingleOrDefault(e => e.@from == node1.id && e.to == node2.id);
+    public Edge FindEdgeByNodes(Node node1, Node node2) {
+      var edge = Graph.edges.SingleOrDefault(e => e.@from == node1.id && e.to == node2.id);
+      if (edge == null)
+        return Graph.edges.SingleOrDefault(e => e.@from == node2.id && e.to == node1.id);
+      return edge;
+    }
 
     public void AddNode(Vector3 position, Quaternion rotation, Material nodeMaterial)
     {
@@ -66,9 +71,14 @@ namespace Assets.Scripts
       var edgesToRemove = Graph.edges.Where(e => e.from == node.id || e.to == node.id);
       foreach (var edge in edgesToRemove)
       {
-        Destroy(edge.gameObject);
-        Graph.edges.Remove(edge);
+        RemoveEdge(edge);
       }
+    }
+
+    public void RemoveEdge(Edge edge)
+    {
+      Destroy(edge.gameObject);
+      Graph.edges.Remove(edge);
     }
 
     public Node FindNodeById(int id)
