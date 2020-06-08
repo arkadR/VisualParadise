@@ -1,50 +1,53 @@
 ﻿using UnityEngine;
 
-public class GameService : MonoBehaviour
+namespace Assets.Scripts
 {
-  public static GameService Instance;
-
-  public GameObject pauseMenu;
-  public GameObject gamePanel;
-
-  void Awake()
+  public class GameService : MonoBehaviour
   {
-    if (Instance != null)
-      Destroy(Instance);
+    public static GameService Instance;
 
-    Instance = this;
+    public UnityEngine.GameObject pauseMenu;
+    public UnityEngine.GameObject gamePanel;
 
-    DontDestroyOnLoad(this);
-  }
+    void Awake()
+    {
+      if (Instance != null)
+        Destroy(Instance);
 
-  public bool IsPaused { get; private set; } = false;
+      Instance = this;
 
-  public bool isResumableOnKeyPress = true;
+      DontDestroyOnLoad(this);
+    }
 
-  public void GlobalPauseGame()
-  {
-    isResumableOnKeyPress = true;
-    pauseMenu.SetActive(true);
-    PauseGame();
-  }
+    public bool IsPaused { get; private set; } = false;
 
-  public void GlobalUnPauseGame()
-  {
-    pauseMenu.SetActive(false);
-    UnPauseGame();
-  }
+    public bool isResumableOnKeyPress = true;
 
-  public void PauseGame()
-  {
-    gamePanel.SetActive(false);
-    IsPaused = true;
-    Cursor.lockState = CursorLockMode.None;
-  }
+    public void GlobalPauseGame()
+    {
+      isResumableOnKeyPress = true;
+      pauseMenu.SetActive(true);
+      PauseGame();
+    }
 
-  public void UnPauseGame()
-  {
-    gamePanel.SetActive(true);
-    IsPaused = false;
-    Cursor.lockState = CursorLockMode.Locked;
+    public void GlobalUnPauseGame()
+    {
+      pauseMenu.SetActive(false);
+      UnPauseGame();
+    }
+
+    public void PauseGame()
+    {
+      gamePanel.SetActive(false);
+      IsPaused = true;
+      Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void UnPauseGame()
+    {
+      gamePanel.SetActive(true);
+      IsPaused = false;
+      Cursor.lockState = CursorLockMode.Locked;
+    }
   }
 }

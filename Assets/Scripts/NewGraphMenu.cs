@@ -3,30 +3,32 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class NewGraphMenu : MonoBehaviour
+namespace Assets.Scripts
 {
-  public InputField GraphNameInput;
-  public Button CreateButton;
-
-  public void Start()
+  public class NewGraphMenu : MonoBehaviour
   {
-    CreateButton.interactable = false;
-  }
+    public InputField GraphNameInput;
+    public Button CreateButton;
 
-  public void Update()
-  {
-    //TODO: Consider better validation
-    var isNameValid = !string.IsNullOrEmpty(GraphNameInput.text);
-    CreateButton.interactable = isNameValid;
-  }
+    public void Start()
+    {
+      CreateButton.interactable = false;
+    }
 
-  public void StartNew()
-  {
-    var graphName = GraphNameInput.text;
-    var filePath = $"{Constants.GraphFolder}{graphName}.json";
-    File.Create(filePath);
-    PlayerPrefs.SetString(Constants.GraphFilePathKey, filePath);
-    
-    SceneManager.LoadScene(Constants.GameScene);
+    public void Update()
+    {
+      //TODO: Consider better validation
+      var isNameValid = !string.IsNullOrEmpty(GraphNameInput.text);
+      CreateButton.interactable = isNameValid;
+    }
+
+    public void StartNew()
+    {
+      var graphName = GraphNameInput.text;
+      var filePath = $"{Constants.GraphFolder}{graphName}.json";
+      File.Create(filePath);
+      PlayerPrefs.SetString(Constants.GraphFilePathKey, filePath);
+      SceneManager.LoadScene(Constants.GameScene);
+    }
   }
 }

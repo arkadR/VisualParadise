@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Assets.Model;
+using Assets.Scripts.Model;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -57,6 +57,23 @@ namespace Assets.Scripts
         nodeTo = node2
       };
       Graph.edges.Add(edge);
+    }
+
+    public void RemoveNode(Node node)
+    {
+      Destroy(node.gameObject);
+      Graph.nodes.Remove(node);
+      var edgesToRemove = Graph.edges.Where(e => e.from == node.id || e.to == node.id);
+      foreach (var edge in edgesToRemove)
+      {
+        Destroy(edge.gameObject);
+        Graph.edges.Remove(edge);
+      }
+    }
+
+    public Node FindNodeById(int id)
+    {
+      return Graph.nodes.SingleOrDefault(n => n.id == id);
     }
   }
 }

@@ -1,35 +1,37 @@
 ﻿using System.IO;
-using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseMenu : MonoBehaviour
+namespace Assets.Scripts
 {
-  public GameObject pauseMenu;
-  private GraphService graphService;
-
-  void Start()
+  public class PauseMenu : MonoBehaviour
   {
-    pauseMenu.SetActive(false);
+    public UnityEngine.GameObject pauseMenu;
+    private GraphService graphService;
 
-    graphService = FindObjectOfType<GraphService>();
-  }
+    void Start()
+    {
+      pauseMenu.SetActive(false);
 
-  public void SaveButton_OnClick()
-  {
-    var filePath = PlayerPrefs.GetString(Constants.GraphFilePathKey);
-    var graph = graphService.Graph;
-    var json = JsonUtility.ToJson(graph);
-    File.WriteAllText(filePath, json);
-  }
+      graphService = FindObjectOfType<GraphService>();
+    }
 
-  public void ResumeButton_OnClick()
-  {
-    GameService.Instance.GlobalUnPauseGame();
-  }
+    public void SaveButton_OnClick()
+    {
+      var filePath = PlayerPrefs.GetString(Constants.GraphFilePathKey);
+      var graph = graphService.Graph;
+      var json = JsonUtility.ToJson(graph);
+      File.WriteAllText(filePath, json);
+    }
 
-  public void QuitButton_OnClick()
-  {
-    SceneManager.LoadScene(Constants.MainMenuScene);
+    public void ResumeButton_OnClick()
+    {
+      GameService.Instance.GlobalUnPauseGame();
+    }
+
+    public void QuitButton_OnClick()
+    {
+      SceneManager.LoadScene(Constants.MainMenuScene);
+    }
   }
 }

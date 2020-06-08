@@ -1,40 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Menu : MonoBehaviour
+namespace Assets.Scripts
 {
-  public GameObject mainMenu;
-  public GameObject loadMenu;
-  public GameObject newGraphMenu;
-
-  // Start is called before the first frame update
-  void Start()
+  public class Menu : MonoBehaviour
   {
-    LoadMainMenu();
-  }
+    public GameObject mainMenu;
+    public GameObject loadMenu;
+    public GameObject newGraphMenu;
 
-  public void LoadMainMenu()
-  {
-    mainMenu.SetActive(true);
-    loadMenu.SetActive(false);
-    newGraphMenu.SetActive(false);
-  }
+    // Start is called before the first frame update
+    void Start()
+    {
+      LoadMainMenu();
+    }
 
-  public void NewGraphButton_OnClick()
-  {
-    newGraphMenu.SetActive(true);
-    mainMenu.SetActive(false);
-  }
+    public void LoadMainMenu()
+    {
+      mainMenu.SetActive(true);
+      loadMenu.SetActive(false);
+      newGraphMenu.SetActive(false);
+    }
 
-  public void LoadButton_OnClick()
-  {
-    mainMenu.SetActive(false);
-    loadMenu.SetActive(true);
-  }
+    public void NewGraphButton_OnClick()
+    {
+      newGraphMenu.SetActive(true);
+      mainMenu.SetActive(false);
+    }
 
-  public void QuitButton_OnClick()
-  {
-    Application.Quit();
+    public void LoadButton_OnClick()
+    {
+      mainMenu.SetActive(false);
+      loadMenu.SetActive(true);
+    }
+
+    public void QuitButton_OnClick()
+    {
+      Application.Quit();
+    }
   }
 }
