@@ -6,7 +6,8 @@ namespace Assets.Scripts
   {
     GraphService graphService;
 
-    private bool shouldMove = false;
+    private bool _shouldMove = false;
+    private bool _reverse = false;
 
     void Start()
     {
@@ -19,7 +20,7 @@ namespace Assets.Scripts
       if (GameService.Instance.IsPaused)
         return;
 
-      if (shouldMove == false)
+      if (_shouldMove == false)
         return;
 
       Move();
@@ -29,14 +30,14 @@ namespace Assets.Scripts
 
     public void ToggleMovement()
     {
-      shouldMove = !shouldMove;
-    
-      Debug.Log(shouldMove ? "Node movement enabled" : "Node movement disabled");
-      if (shouldMove == false)
-        graphService.StopNodes();
+      _shouldMove = !_shouldMove;
+      Debug.Log("Node movement " + (_shouldMove ? "enabled" : "disabled"));
     }
 
-
+    public void ToggleReverse()
+    {
+      _reverse = !_reverse;
+    }
 
     private void Accelerate()
     {
@@ -54,11 +55,16 @@ namespace Assets.Scripts
     {
       foreach (var n in graphService.Graph.nodes)
       {
-        var newPosition = n.Position + n.Velocity * Time.deltaTime;
-        var newRotation = n.Rotation + n.AngularVelocity * Time.deltaTime;
-
-        n.Position = newPosition;
-        n.Rotation = newRotation;
+        if (_reverse)
+        {
+          n.Position -= n.Velocity * Time.deltaTime;
+          n.Rotation -= n.AngularVelocity * Time.deltaTime;
+        }
+        else
+        {
+          n.Position += n.Velocity * Time.deltaTime;
+          n.Rotation += n.AngularVelocity * Time.deltaTime;
+        }
       }
     }
   }
