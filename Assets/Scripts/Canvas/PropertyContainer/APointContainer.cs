@@ -25,7 +25,17 @@ namespace Assets.Scripts.Canvas.PropertyContainer
 
     public void SaveData()
     {
+      float ax_value = float.Parse(ax.text);
+      float ay_value = float.Parse(ay.text);
+      float az_value = float.Parse(az.text);
+      float alpha_theta_value = float.Parse(alpha_theta.text);
+      float alpha_phi_value = float.Parse(alpha_phi.text);
+      float alpha_psi_value = float.Parse(alpha_psi.text);
 
+      var newAcceleration = new Vector3(ax_value, ay_value, az_value);
+      var newAngularAcceleration = new Vector3(alpha_theta_value, alpha_phi_value, alpha_psi_value);
+      _node.Acceleration = newAcceleration;
+      _node.AngularAcceleration = newAngularAcceleration;
     }
   }
 }
