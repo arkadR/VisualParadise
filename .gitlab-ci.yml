@@ -72,79 +72,11 @@ test-editmode:
   tags:
     - gitlab-org
 
-build-StandaloneLinux64:
-  <<: *build
-  variables:
-    BUILD_TARGET: StandaloneLinux64
-
-build-StandaloneLinux64-il2cpp:
-  <<: *build
-  image: gableroux/unity3d:2019.3.7f1-linux-il2cpp
-  variables:
-    BUILD_TARGET: StandaloneLinux64
-    SCRIPTING_BACKEND: IL2CPP
-    # https://forum.unity.com/threads/linux-il2cpp-linux-sysroot-not-specified-or-does-not-exist.854008/
-    IL2CPP_ADDITIONAL_ARGS: "--sysroot-path=/ --tool-chain-path=/"
-
-build-StandaloneOSX:
-  <<: *build
-  image: gableroux/unity3d:2019.3.7f1-mac
-  variables:
-    BUILD_TARGET: StandaloneOSX
-
-#Note: build target names changed in recent versions, use this for versions < 2017.2:
-# build-StandaloneOSXUniversal:
-#   <<: *build
-#   variables:
-#     BUILD_TARGET: StandaloneOSXUniversal
-
 build-StandaloneWindows64:
   <<: *build
-  image: gableroux/unity3d:2019.3.7f1-windows
+  image: gableroux/unity3d:2019.3.4f1-windows
   variables:
     BUILD_TARGET: StandaloneWindows64
-
-build-WebGL:
-  <<: *build
-  image: gableroux/unity3d:2019.3.7f1-webgl
-  variables:
-    BUILD_TARGET: WebGL
-
-build-android:
-  <<: *build
-  image: gableroux/unity3d:2019.3.7f1-android
-  variables:
-    BUILD_TARGET: Android
-    BUNDLE_VERSION_CODE: $CI_PIPELINE_IID
-    BUILD_APP_BUNDLE: "false"
-
-#deploy-android:
-#  stage: deploy
-#  image: ruby
-#  script: 
-#    - cd ./Builds/Android
-#    - echo $GPC_TOKEN > gpc_token.json
-#    - gem install bundler
-#    - bundle install
-#    - fastlane supply --aab $BUILD_NAME.aab --track internal --package_name com.youcompany.yourgame --json_key ./gpc_token.json
-#  needs: ["build-android"]
-
-build-ios-xcode:
-  <<: *build
-  image: gableroux/unity3d:2019.3.7f1-ios
-  variables:
-    BUILD_TARGET: iOS
-
-#build-and-deploy-ios:
-#  stage: deploy
-#  script:
-#    - cd ./Builds/iOS/$BUILD_NAME
-#    - pod install
-#    - fastlane ios beta
-#  tags:
-#    - ios
-#    - mac
-#  needs: ["build-ios-xcode"]
 
 pages:
   image: alpine:latest
