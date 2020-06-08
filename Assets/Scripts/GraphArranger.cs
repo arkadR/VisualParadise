@@ -6,20 +6,16 @@ namespace Assets.Scripts
   public class GraphArranger : MonoBehaviour
   {
     private GraphService graphService;
-    private MovementExecutor movementExecutor;
 
-    public const float repelFunCoefficient = 5.0f; // safe range <1, 50+)
-    public const float attractFunPower = 1.5f; // safe range <1, 1.5>
-    public const float maxVelocityMagnitude = 25f;
+    public const float repelFunCoefficient = 5.0f; // higher values causes more distortion
+    public const float attractFunPower = 1.5f; // safe range <1, 3>
+    public const float maxVelocityMagnitude = 40f;
 
-    private bool shouldArrange = false;
+    public bool shouldArrange { get; private set; } = false;
 
-    // Start is called before the first frame update
-    // needs to be called after GraphLoader.Start() and after MovementExecutor.Start()
     void Start()
     {
       graphService = UnityEngine.GameObject.FindObjectOfType<GraphService>();
-      movementExecutor = UnityEngine.GameObject.FindObjectOfType<MovementExecutor>();
     }
 
     // Update for physics
@@ -31,16 +27,17 @@ namespace Assets.Scripts
       if (!shouldArrange) 
         return;
 
-      movementExecutor.StopNodes();
+      graphService.StopNodes();
       Attract();
       Repel();
+      graphService.FixEdges();
     }
 
     public void ToggleArrangement()
     {
       shouldArrange = !shouldArrange;
-      Debug.Log("Arranger " + (shouldArrange ? "on" : "off"));
-      movementExecutor.StopNodes();
+      Debug.Log("Arranger " + (shouldArrange ? "enabled" : "disabled"));
+      graphService.StopNodes();
     }
 
     /// <summary>
@@ -60,8 +57,9 @@ namespace Assets.Scripts
 
           var velocityMagnitude = CalculateRepelVelocityMagnitude(distance);
           var velocity = direction.normalized * Mathf.Min(maxVelocityMagnitude, velocityMagnitude);
-          node1.Velocity += velocity;
-          node2.Velocity -= velocity;
+
+          node1.Position += velocity * Time.deltaTime;
+          node2.Position -= velocity * Time.deltaTime;
         }
       }
     }
@@ -88,8 +86,8 @@ namespace Assets.Scripts
         var velocityMagnitude = CalculateAttractVelocityMagnitude(distance);
         var velocity = direction.normalized * Mathf.Min(maxVelocityMagnitude, velocityMagnitude);
 
-        node1.Velocity -= velocity;
-        node2.Velocity += velocity;
+        node1.Position -= velocity * Time.deltaTime;
+        node2.Position += velocity * Time.deltaTime;
       }
     }
 

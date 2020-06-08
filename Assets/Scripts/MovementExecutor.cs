@@ -8,13 +8,9 @@ namespace Assets.Scripts
 
     private bool shouldMove = false;
 
-    // Start is called before the first frame update
-    // needs to be called after GraphLoader.Start()
     void Start()
     {
       graphService = FindObjectOfType<GraphService>();
-      Debug.Log("Nodes count: " + graphService.Graph.nodes.Count);
-      Debug.Log("Edges count: " + graphService.Graph.edges.Count);
     }
 
     // Update for physics
@@ -28,7 +24,7 @@ namespace Assets.Scripts
 
       Move();
       Accelerate();
-      FixEdges();
+      graphService.FixEdges();
     }
 
     public void ToggleMovement()
@@ -37,7 +33,7 @@ namespace Assets.Scripts
     
       Debug.Log(shouldMove ? "Node movement enabled" : "Node movement disabled");
       if (shouldMove == false)
-        StopNodes();
+        graphService.StopNodes();
     }
 
 
@@ -63,35 +59,6 @@ namespace Assets.Scripts
 
         n.Position = newPosition;
         n.Rotation = newRotation;
-      }
-    }
-
-    /// <summary>
-    /// Update edges position based on corresponding nodes
-    /// </summary>
-    public void FixEdges()
-    {
-      foreach (var e in graphService.Graph.edges)
-      {
-        var lineRenderer = e.gameObject.GetComponent<LineRenderer>();
-        var startingNode = graphService.FindNodeById(e.from);
-        var endingNode = graphService.FindNodeById(e.to);
-        lineRenderer.SetPosition(0, startingNode.Position);
-        lineRenderer.SetPosition(1, endingNode.Position);
-      }
-    }
-
-    /// <summary>
-    /// Set velocity of all nodes to 0
-    /// </summary>
-    public void StopNodes()
-    {
-      foreach (var n in graphService.Graph.nodes)
-      {
-        n.Velocity = Vector3.zero;
-        n.AngularVelocity = Vector3.zero;
-        n.Acceleration = Vector3.zero;
-        n.AngularAcceleration = Vector3.zero;
       }
     }
   }

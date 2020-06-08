@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Common.Extensions;
 using Assets.Scripts.Model;
-using Assets.Scripts.Canvas;
 using UnityEngine;
 
 namespace Assets.Scripts.Guns
@@ -9,7 +8,7 @@ namespace Assets.Scripts.Guns
   public class EdgeGun : MonoBehaviour, IGun
   {
     [SerializeField] private float hitDistance = 40f;
-    private static readonly Color _createGlowColor = Color.blue;
+    private static readonly Color _createGlowColor = Color.green;
     private static readonly Color _deleteGlowColor = Color.red;
     private readonly GraphService graphService;
     private readonly Material edgeMaterial;

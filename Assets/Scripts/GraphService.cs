@@ -85,5 +85,34 @@ namespace Assets.Scripts
     {
       return Graph.nodes.SingleOrDefault(n => n.id == id);
     }
+
+    /// <summary>
+    /// Update edges position based on corresponding nodes
+    /// </summary>
+    public void FixEdges()
+    {
+      foreach (var e in Graph.edges)
+      {
+        var lineRenderer = e.gameObject.GetComponent<LineRenderer>();
+        var startingNode = FindNodeById(e.from);
+        var endingNode = FindNodeById(e.to);
+        lineRenderer.SetPosition(0, startingNode.Position);
+        lineRenderer.SetPosition(1, endingNode.Position);
+      }
+    }
+
+    /// <summary>
+    /// Set velocity of all nodes to 0
+    /// </summary>
+    public void StopNodes()
+    {
+      foreach (var n in Graph.nodes)
+      {
+        n.Velocity = Vector3.zero;
+        n.AngularVelocity = Vector3.zero;
+        n.Acceleration = Vector3.zero;
+        n.AngularAcceleration = Vector3.zero;
+      }
+    }
   }
 }
