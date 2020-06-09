@@ -71,7 +71,7 @@ namespace Assets.Scripts.Guns
       if (pressedGunKey == KeyCode.None) 
         return;
 
-      if (ActiveGun != _guns[pressedGunKey])
+      if (ActiveGun == _guns[pressedGunKey])
         return;
 
       ActiveGun.OnSwitchedAway();
