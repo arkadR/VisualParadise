@@ -7,7 +7,7 @@ stages:
 # If you are looking for a place where to add 'UNITY_LICENSE_FILE' and other secrets, please visit your project's gitlab page:
 # settings > CI/CD > Variables instead
 variables:
-  BUILD_NAME: ExampleProjectName
+  BUILD_NAME: VisualParadise
   UNITY_ACTIVATION_FILE: ./unity3d.alf
 
 .unity_before_script: &unity_before_script
@@ -88,4 +88,3 @@ pages:
       - public
   only:
     - master
-
