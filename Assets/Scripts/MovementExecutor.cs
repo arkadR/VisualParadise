@@ -73,11 +73,7 @@ namespace Assets.Scripts
     {
       foreach (var e in graphService.Graph.edges)
       {
-        var lineRenderer = e.gameObject.GetComponent<LineRenderer>();
-        var startingNode = graphService.FindNodeById(e.from);
-        var endingNode = graphService.FindNodeById(e.to);
-        lineRenderer.SetPosition(0, startingNode.Position);
-        lineRenderer.SetPosition(1, endingNode.Position);
+        graphService.FixEdge(e);
       }
     }
 

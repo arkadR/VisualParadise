@@ -59,11 +59,7 @@ namespace Assets.Scripts.Canvas.PropertyContainer
 
       foreach (var edge in edges)
       {
-        var lineRenderer = edge.gameObject.GetComponent<LineRenderer>();
-        var startingNode = graphService.FindNodeById(edge.from);
-        var endingNode = graphService.FindNodeById(edge.to);
-        lineRenderer.SetPosition(0, startingNode.Position);
-        lineRenderer.SetPosition(1, endingNode.Position);
+        graphService.FixEdge(edge);
       }
     }
   }

@@ -78,5 +78,14 @@ namespace Assets.Scripts
     {
       return Graph.nodes.SingleOrDefault(n => n.id == id);
     }
+
+    public void FixEdge(Edge edge)
+    {
+      var lineRenderer = edge.gameObject.GetComponent<LineRenderer>();
+      var startingNode = FindNodeById(edge.from);
+      var endingNode = FindNodeById(edge.to);
+      lineRenderer.SetPosition(0, startingNode.Position);
+      lineRenderer.SetPosition(1, endingNode.Position);
+    }
   }
 }
