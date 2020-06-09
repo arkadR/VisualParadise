@@ -71,7 +71,8 @@ namespace Assets.Scripts
     {
       Destroy(node.gameObject);
       Graph.nodes.Remove(node);
-      var edgesToRemove = Graph.edges.Where(e => e.from == node.id || e.to == node.id);
+      var edgesToRemove = Graph.edges.Where(e => e.from == node.id || e.to == node.id).ToList();
+      
       foreach (var edge in edgesToRemove)
       {
         RemoveEdge(edge);
