@@ -76,7 +76,6 @@ namespace Assets.Scripts.Guns
 
       ActiveGun.OnSwitchedAway();
       ActiveGun = _guns[pressedGunKey];
-      _toolGunController.SetGunModeText(ActiveGun.GunName);
     }
   }
 }
