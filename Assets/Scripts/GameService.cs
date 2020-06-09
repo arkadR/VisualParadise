@@ -49,5 +49,21 @@ namespace Assets.Scripts
       IsPaused = false;
       Cursor.lockState = CursorLockMode.Locked;
     }
+
+    public void PauseGameWithoutResume()
+    {
+      gamePanel.SetActive(false);
+      IsPaused = true;
+      isResumableOnKeyPress = false;
+      Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void UnPauseGameWithoutResume()
+    {
+      gamePanel.SetActive(true);
+      IsPaused = false;
+      isResumableOnKeyPress = true;
+      Cursor.lockState = CursorLockMode.Locked;
+    }
   }
 }
