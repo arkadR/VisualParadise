@@ -1,7 +1,6 @@
-﻿using Assets.Scripts.Tools;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Tools
 {
   public class ToolTextPanelController : MonoBehaviour, IToolChangeObserver
   {
