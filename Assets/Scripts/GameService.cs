@@ -38,14 +38,14 @@ namespace Assets.Scripts
 
     public void PauseGame()
     {
-      gamePanel.SetActive(false);
+      // gamePanel.SetActive(false);
       IsPaused = true;
       Cursor.lockState = CursorLockMode.None;
     }
 
     public void UnPauseGame()
     {
-      gamePanel.SetActive(true);
+      // gamePanel.SetActive(true);
       IsPaused = false;
       Cursor.lockState = CursorLockMode.Locked;
     }
