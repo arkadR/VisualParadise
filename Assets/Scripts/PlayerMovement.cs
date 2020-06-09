@@ -2,7 +2,6 @@
 
 namespace Assets.Scripts
 {
-  enum MovementMode { AxisBased, FollowCamera}
   public class PlayerMovement : MonoBehaviour
   {
     public CharacterController controller;
@@ -10,7 +9,17 @@ namespace Assets.Scripts
     public LayerMask groundMask;
 
     public float speed = 12f;
-    private MovementMode _movementMode = MovementMode.FollowCamera;
+    private PlayerMovementMode _movementMode;
+
+    private void Start()
+    {
+      var playerMovementModeValue = PlayerPrefs.GetInt(Constants.PlayerMovementMode);
+      PlayerMovementMode playerMovementMode = System.Enum.IsDefined(typeof(PlayerMovementMode), playerMovementModeValue) 
+        ? (PlayerMovementMode)playerMovementModeValue
+        : default;
+
+      _movementMode = playerMovementMode;
+    }
 
     void Update()
     {
@@ -19,12 +28,12 @@ namespace Assets.Scripts
 
       switch (_movementMode)
       {
-        case MovementMode.AxisBased:
+        case PlayerMovementMode.AxisBased:
           {
             ApplyMovementAxisBased();
             break;
           }
-        case MovementMode.FollowCamera:
+        case PlayerMovementMode.FollowCamera:
           {
             ApplyMovementFollowCamera();
             break;
