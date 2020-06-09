@@ -11,7 +11,6 @@ namespace Assets.Scripts.Guns
     private IDictionary<KeyCode, IGun> guns;
     private Camera attachedCamera;
     private GraphService graphService;
-    private GraphLoader graphLoader;
     private IGun _activeGun;
     private IGun activeGun
     {
@@ -61,8 +60,17 @@ namespace Assets.Scripts.Guns
       }
     }
 
-    private void HandleChangeGun()
+    private void DisableMovementGuns(IGun gunNotToDisable)
     {
+      foreach (var gun in guns.Values)
+      {
+        if (gun != gunNotToDisable && gun is IMovementGun)
+          (gun as IMovementGun).Disable();
+      }
+    }
+
+    private void HandleChangeGun()
+    { 
       var pressedGunKey = guns
           .Keys
           .FirstOrDefault(Input.GetKeyDown);
@@ -70,8 +78,15 @@ namespace Assets.Scripts.Guns
       if (pressedGunKey == KeyCode.None) 
         return;
 
+      var newGun = guns[pressedGunKey];
+      if (activeGun == newGun)
+        return;
+
       activeGun.OnSwitchedAway();
-      activeGun = guns[pressedGunKey];
+
+      if (newGun is IMovementGun)
+        DisableMovementGuns(newGun);
+      activeGun = newGun;
     }
   }
 }
