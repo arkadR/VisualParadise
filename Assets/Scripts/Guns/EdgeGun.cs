@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Assets.Scripts.Guns
 {
   enum EdgeMode { Create, Delete}
-  public class EdgeGun : MonoBehaviour, IGun
+  public class EdgeGun : IGun
   {
     [SerializeField] private float hitDistance = 40f;
     private static readonly Color _createGlowColor = Color.green;
