@@ -78,6 +78,12 @@ build-StandaloneWindows64:
   variables:
     BUILD_TARGET: StandaloneWindows64
 
+build-WebGL:
+  <<: *build
+  image: gableroux/unity3d:2019.3.7f1-webgl
+  variables:
+    BUILD_TARGET: WebGL
+
 pages:
   image: alpine:latest
   stage: deploy

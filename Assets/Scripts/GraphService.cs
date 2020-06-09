@@ -44,7 +44,10 @@ namespace Assets.Scripts
 
     public void AddNode(Vector3 position, Quaternion rotation, Material nodeMaterial)
     {
-      var id = Graph.nodes.Max(n => n.id) + 1;
+      var id = Graph.nodes.Any() 
+        ? Graph.nodes.Max(n => n.id) + 1 
+        : 0;
+
       var node = Node.EmptyNode(id, NodeGenerator.GeneratePhysicalNode(position, rotation, nodeMaterial));
       node.Position = position;
       node.Rotation = rotation.eulerAngles;
@@ -68,7 +71,8 @@ namespace Assets.Scripts
     {
       Destroy(node.gameObject);
       Graph.nodes.Remove(node);
-      var edgesToRemove = Graph.edges.Where(e => e.from == node.id || e.to == node.id);
+      var edgesToRemove = Graph.edges.Where(e => e.from == node.id || e.to == node.id).ToList();
+      
       foreach (var edge in edgesToRemove)
       {
         RemoveEdge(edge);

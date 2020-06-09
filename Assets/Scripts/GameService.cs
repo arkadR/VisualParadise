@@ -6,8 +6,8 @@ namespace Assets.Scripts
   {
     public static GameService Instance;
 
-    public UnityEngine.GameObject pauseMenu;
-    public UnityEngine.GameObject gamePanel;
+    public GameObject pauseMenu;
+    public GameObject gamePanel;
 
     void Awake()
     {
@@ -38,14 +38,14 @@ namespace Assets.Scripts
 
     public void PauseGame()
     {
-      gamePanel.SetActive(false);
+      // gamePanel.SetActive(false);
       IsPaused = true;
       Cursor.lockState = CursorLockMode.None;
     }
 
     public void UnPauseGame()
     {
-      gamePanel.SetActive(true);
+      // gamePanel.SetActive(true);
       IsPaused = false;
       Cursor.lockState = CursorLockMode.Locked;
     }
