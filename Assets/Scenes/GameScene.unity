@@ -6860,6 +6860,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 963194228}
     m_Modifications:
+    - target: {fileID: -5178661895559278292, guid: 0fd1112dc1ac2934c9da2f19099ac3c2,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -5495902117074765545, guid: e327868e45a808843a53cab4789e1694,
+        type: 3}
     - target: {fileID: -4216859302048453862, guid: 0fd1112dc1ac2934c9da2f19099ac3c2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6918,17 +6924,17 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 0fd1112dc1ac2934c9da2f19099ac3c2,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 0fd1112dc1ac2934c9da2f19099ac3c2,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 0fd1112dc1ac2934c9da2f19099ac3c2,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 0fd1112dc1ac2934c9da2f19099ac3c2,
         type: 3}
@@ -9594,8 +9600,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2040796849}
   m_LocalRotation: {x: 0.246153, y: 0.246153, z: 0.66287917, w: 0.66287917}
-  m_LocalPosition: {x: -0.182, y: 0, z: 5.225}
-  m_LocalScale: {x: 0.3274, y: 1, z: 0.18445249}
+  m_LocalPosition: {x: -0.0018, y: 0, z: 0.05215}
+  m_LocalScale: {x: 0.003274, y: 0.01, z: 0.001844525}
   m_Children:
   - {fileID: 1454458438}
   m_Father: {fileID: 1539812613}
@@ -9694,7 +9700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 24578129}
-  gamePanel: {fileID: 0}
+  gamePanel: {fileID: 1523667554}
   isResumableOnKeyPress: 1
 --- !u!4 &2051443773
 Transform:

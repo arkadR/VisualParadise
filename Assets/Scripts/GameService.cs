@@ -6,8 +6,8 @@ namespace Assets.Scripts
   {
     public static GameService Instance;
 
-    public UnityEngine.GameObject pauseMenu;
-    public UnityEngine.GameObject gamePanel;
+    public GameObject pauseMenu;
+    public GameObject gamePanel;
 
     void Awake()
     {
