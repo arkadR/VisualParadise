@@ -31,13 +31,18 @@ namespace Assets.Scripts.Guns
       {
         if(_mode != value)
         {
-          if (previouslyHitNode != null)
-          {
-            previouslyHitNode.gameObject.DisableGlow();
-            previouslyHitNode = null;
-          }
+          ClearPreviouslyHitNode();
           _mode = value;
         }
+      }
+    }
+
+    private void ClearPreviouslyHitNode()
+    {
+      if (previouslyHitNode != null)
+      {
+        previouslyHitNode.gameObject.DisableGlow();
+        previouslyHitNode = null;
       }
     }
 
@@ -111,7 +116,7 @@ namespace Assets.Scripts.Guns
 
     public void OnSwitchedAway()
     {
-      // noop
+      ClearPreviouslyHitNode();
     }
 
     public void OnRightClick(Camera camera)
