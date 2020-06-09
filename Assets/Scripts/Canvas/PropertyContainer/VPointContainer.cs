@@ -15,12 +15,29 @@ namespace Assets.Scripts.Canvas.PropertyContainer
     public InputField om_phi;
     public InputField om_psi;
 
+    public void Start()
+    {
+      vx.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(vx); });
+      vy.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(vy); });
+      vz.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(vz); });
+      om_theta.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(om_theta); });
+      om_phi.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(om_phi); });
+      om_psi.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(om_psi); });
+    }
+
     public void SetNode(Node node)
     {
       _node = node;
       
       (vx.text, vy.text, vz.text) = _node.Velocity.ToStringTuple();
       (om_theta.text, om_phi.text, om_psi.text) = _node.AngularVelocity.ToStringTuple();
+    }
+
+    public bool IsInputCorrect()
+    {
+      return float.TryParse(vx.text, out var vx_res) && float.TryParse(vy.text, out var vy_res)
+        && float.TryParse(vz.text, out var vz_res) && float.TryParse(om_theta.text, out var om_theta_res)
+        && float.TryParse(om_phi.text, out var om_phi_res) && float.TryParse(om_psi.text, out var om_psi_res);
     }
 
     public void SaveData()

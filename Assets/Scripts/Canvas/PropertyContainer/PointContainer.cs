@@ -15,12 +15,29 @@ namespace Assets.Scripts.Canvas.PropertyContainer
     public InputField phi;
     public InputField psi;
 
+    public void Start()
+    {
+      x.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(x); });
+      y.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(y); });
+      z.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(z); });
+      theta.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(theta); });
+      phi.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(phi); });
+      psi.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(psi); });
+    }
+
     public void SetNode(Node node)
     {
       _node = node;
       
       (x.text, y.text, z.text) = _node.Position.ToStringTuple();
       (theta.text, phi.text, psi.text) = _node.Rotation.ToStringTuple();
+    }
+
+    public bool IsInputCorrect()
+    {
+      return float.TryParse(x.text, out var x_res) && float.TryParse(y.text, out var y_res)
+        && float.TryParse(z.text, out var z_res) && float.TryParse(theta.text, out var theta_res)
+        && float.TryParse(phi.text, out var phi_res) && float.TryParse(psi.text, out var psi_res);
     }
 
     public void SaveData()
