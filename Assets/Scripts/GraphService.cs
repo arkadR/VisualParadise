@@ -35,14 +35,19 @@ namespace Assets.Scripts
 
 
     public Node FindNodeByGameObject(UnityEngine.GameObject gameObject) => Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
-
-    public Edge FindEdgeByNodes(Node node1, Node node2) => Graph.edges.SingleOrDefault(e => e.@from == node1.id && e.to == node2.id);
-       
+  
     public List<Edge> FindNodeEdges(Node node) => Graph.edges.FindAll(e => e.from == node.id || e.to == node.id);
+
+    public Edge FindEdgeByNodes(Node node1, Node node2) {
+      var edge = Graph.edges.SingleOrDefault(e => e.@from == node1.id && e.to == node2.id);
+      if (edge == null)
+        return Graph.edges.SingleOrDefault(e => e.@from == node2.id && e.to == node1.id);
+      return edge;
+    }
 
     public void AddNode(Vector3 position, Quaternion rotation, Material nodeMaterial)
     {
-      var id = Graph.nodes.Count;
+      var id = Graph.nodes.Max(n => n.id) + 1;
       var node = Node.EmptyNode(id, NodeGenerator.GeneratePhysicalNode(position, rotation, nodeMaterial));
       node.Position = position;
       node.Rotation = rotation.eulerAngles;
@@ -69,9 +74,14 @@ namespace Assets.Scripts
       var edgesToRemove = Graph.edges.FindAll(e => e.from == node.id || e.to == node.id);
       foreach (var edge in edgesToRemove)
       {
-        Destroy(edge.gameObject);
-        Graph.edges.Remove(edge);
+        RemoveEdge(edge);
       }
+    }
+
+    public void RemoveEdge(Edge edge)
+    {
+      Destroy(edge.gameObject);
+      Graph.edges.Remove(edge);
     }
 
     public Node FindNodeById(int id)
@@ -86,6 +96,28 @@ namespace Assets.Scripts
       var endingNode = FindNodeById(edge.to);
       lineRenderer.SetPosition(0, startingNode.Position);
       lineRenderer.SetPosition(1, endingNode.Position);
+    }
+
+    public void FixEdges()
+    {
+      foreach (var e in Graph.edges)
+      {
+        FixEdge(e);
+      }
+    }
+
+    /// <summary>
+    /// Set velocity of all nodes to 0
+    /// </summary>
+    public void StopNodes()
+    {
+      foreach (var n in Graph.nodes)
+      {
+        n.Velocity = Vector3.zero;
+        n.AngularVelocity = Vector3.zero;
+        n.Acceleration = Vector3.zero;
+        n.AngularAcceleration = Vector3.zero;
+      }
     }
   }
 }

@@ -5,7 +5,6 @@ namespace Assets.Scripts.Common.Extensions
   public static class GameObjectExtensions
   {
     private static readonly int emissionColor = Shader.PropertyToID("_EmissionColor");
-    private static readonly Color glowColor = Color.yellow;
     private const string emission = "_EMISSION";
 
     public static void EnableGlow(this UnityEngine.GameObject gameObject)
@@ -20,10 +19,23 @@ namespace Assets.Scripts.Common.Extensions
       material.DisableKeyword(emission);
     }
 
-    public static void SetGlow(this UnityEngine.GameObject gameObject, float glowStrength)
+    public static void ToggleGlow(this UnityEngine.GameObject gameObject)
+    {
+      var material = LookupMaterial(gameObject);
+      if (material.IsKeywordEnabled(emission))
+      {
+        DisableGlow(gameObject);
+      }
+      else
+      {
+        EnableGlow(gameObject);
+      }
+    }
+
+    public static void SetGlow(this UnityEngine.GameObject gameObject, Color color)
     {
       var physicalNodeMaterial = LookupMaterial(gameObject);
-      physicalNodeMaterial.SetColor(emissionColor, glowColor * glowStrength);
+      physicalNodeMaterial.SetColor(emissionColor, color);
     }
 
     private static Material LookupMaterial(UnityEngine.GameObject gameObject)

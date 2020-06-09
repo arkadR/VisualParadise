@@ -25,7 +25,7 @@ namespace Assets.Scripts.Guns
 
     public void OnRightClick(Camera camera)
     {
-
+      movementExecutor.ToggleReverse();
     }
   }
 }

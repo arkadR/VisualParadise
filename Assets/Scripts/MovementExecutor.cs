@@ -6,15 +6,12 @@ namespace Assets.Scripts
   {
     GraphService graphService;
 
-    private bool shouldMove = false;
+    private bool _shouldMove = false;
+    private bool _reverse = false;
 
-    // Start is called before the first frame update
-    // needs to be called after GraphLoader.Start()
     void Start()
     {
       graphService = FindObjectOfType<GraphService>();
-      Debug.Log("Nodes count: " + graphService.Graph.nodes.Count);
-      Debug.Log("Edges count: " + graphService.Graph.edges.Count);
     }
 
     // Update for physics
@@ -23,24 +20,24 @@ namespace Assets.Scripts
       if (GameService.Instance.IsPaused)
         return;
 
-      if (shouldMove == false)
+      if (_shouldMove == false)
         return;
 
       Move();
       Accelerate();
-      FixEdges();
+      graphService.FixEdges();
     }
 
     public void ToggleMovement()
     {
-      shouldMove = !shouldMove;
-    
-      Debug.Log(shouldMove ? "Node movement enabled" : "Node movement disabled");
-      if (shouldMove == false)
-        StopNodes();
+      _shouldMove = !_shouldMove;
+      Debug.Log("Node movement " + (_shouldMove ? "enabled" : "disabled"));
     }
 
-
+    public void ToggleReverse()
+    {
+      _reverse = !_reverse;
+    }
 
     private void Accelerate()
     {
@@ -88,6 +85,17 @@ namespace Assets.Scripts
         n.AngularVelocity = Vector3.zero;
         n.Acceleration = Vector3.zero;
         n.AngularAcceleration = Vector3.zero;
+        
+        if (_reverse)
+        {
+          n.Position -= n.Velocity * Time.deltaTime;
+          n.Rotation -= n.AngularVelocity * Time.deltaTime;
+        }
+        else
+        {
+          n.Position += n.Velocity * Time.deltaTime;
+          n.Rotation += n.AngularVelocity * Time.deltaTime;
+        }
       }
     }
   }
