@@ -20,7 +20,7 @@ namespace Assets.Scripts.Guns
 
     public void OnRightClick(Camera camera)
     {
-        
+      graphArranger.ToggleReverse();
     }
 
     public void OnSwitchedAway()

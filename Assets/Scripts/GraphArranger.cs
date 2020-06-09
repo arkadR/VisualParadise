@@ -6,20 +6,17 @@ namespace Assets.Scripts
   public class GraphArranger : MonoBehaviour
   {
     private GraphService graphService;
-    private MovementExecutor movementExecutor;
 
-    public const float repelFunCoefficient = 5.0f; // safe range <1, 50+)
-    public const float attractFunPower = 1.5f; // safe range <1, 1.5>
-    public const float maxVelocityMagnitude = 25f;
+    private const float _repelFunCoefficient = 5.0f; // higher values causes more distortion
+    private const float _attractFunPower = 1.5f; // safe range <1, 3>
+    private const float _maxVelocityMagnitude = 25f;
 
-    private bool shouldArrange = false;
+    private bool _shouldArrange = false;
+    private bool _reverse = false;
 
-    // Start is called before the first frame update
-    // needs to be called after GraphLoader.Start() and after MovementExecutor.Start()
     void Start()
     {
       graphService = UnityEngine.GameObject.FindObjectOfType<GraphService>();
-      movementExecutor = UnityEngine.GameObject.FindObjectOfType<MovementExecutor>();
     }
 
     // Update for physics
@@ -28,19 +25,25 @@ namespace Assets.Scripts
       if (GameService.Instance.IsPaused)
         return;
 
-      if (!shouldArrange) 
+      if (!_shouldArrange) 
         return;
 
-      movementExecutor.StopNodes();
+      graphService.StopNodes();
       Attract();
       Repel();
+      graphService.FixEdges();
     }
 
     public void ToggleArrangement()
     {
-      shouldArrange = !shouldArrange;
-      Debug.Log("Arranger " + (shouldArrange ? "on" : "off"));
-      movementExecutor.StopNodes();
+      _shouldArrange = !_shouldArrange;
+      Debug.Log("Arranger " + (_shouldArrange ? "enabled" : "disabled"));
+      graphService.StopNodes();
+    }
+
+    public void ToggleReverse()
+    {
+      _reverse = !_reverse;
     }
 
     /// <summary>
@@ -59,16 +62,25 @@ namespace Assets.Scripts
           var distance = direction.magnitude;
 
           var velocityMagnitude = CalculateRepelVelocityMagnitude(distance);
-          var velocity = direction.normalized * Mathf.Min(maxVelocityMagnitude, velocityMagnitude);
-          node1.Velocity += velocity;
-          node2.Velocity -= velocity;
+          var velocity = direction.normalized * Mathf.Min(_maxVelocityMagnitude, velocityMagnitude);
+
+          if (_reverse)
+          {
+            node1.Position -= velocity * Time.deltaTime;
+            node2.Position += velocity * Time.deltaTime;
+          }
+          else
+          {
+            node1.Position += velocity * Time.deltaTime;
+            node2.Position -= velocity * Time.deltaTime;
+          }
         }
       }
     }
 
     private float CalculateRepelVelocityMagnitude(float distance)
     {
-      var rawResult = repelFunCoefficient / distance;
+      var rawResult = _repelFunCoefficient / distance;
       return rawResult;
     }
 
@@ -86,16 +98,24 @@ namespace Assets.Scripts
         var distance = direction.magnitude;
 
         var velocityMagnitude = CalculateAttractVelocityMagnitude(distance);
-        var velocity = direction.normalized * Mathf.Min(maxVelocityMagnitude, velocityMagnitude);
+        var velocity = direction.normalized * Mathf.Min(_maxVelocityMagnitude, velocityMagnitude);
 
-        node1.Velocity -= velocity;
-        node2.Velocity += velocity;
+        if (_reverse)
+        {
+          node1.Position += velocity * Time.deltaTime;
+          node2.Position -= velocity * Time.deltaTime;
+        }
+        else
+        {
+          node1.Position -= velocity * Time.deltaTime;
+          node2.Position += velocity * Time.deltaTime;
+        }
       }
     }
 
     private float CalculateAttractVelocityMagnitude(float distance)
     {
-      var rawResult = Mathf.Pow(distance, attractFunPower);
+      var rawResult = Mathf.Pow(distance, _attractFunPower);
       return rawResult;
     }
   }
