@@ -44,7 +44,7 @@ namespace Assets.Scripts
 
     public void AddNode(Vector3 position, Quaternion rotation, Material nodeMaterial)
     {
-      var id = Graph.nodes.Count;
+      var id = Graph.nodes.Max(n => n.id) + 1;
       var node = Node.EmptyNode(id, NodeGenerator.GeneratePhysicalNode(position, rotation, nodeMaterial));
       node.Position = position;
       node.Rotation = rotation.eulerAngles;

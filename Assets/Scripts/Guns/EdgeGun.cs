@@ -68,7 +68,11 @@ namespace Assets.Scripts.Guns
 
       // If player hit the same node twice, don't do anything
       if (currentlyHitNode == previouslyHitNode)
-        previouslyHitNode.gameObject.ToggleGlow();
+      {
+        previouslyHitNode.gameObject.DisableGlow();
+        previouslyHitNode = null;
+        return;
+      }
 
       if (previouslyHitNode == null)
       {
