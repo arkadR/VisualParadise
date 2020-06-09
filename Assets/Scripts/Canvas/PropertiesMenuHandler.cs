@@ -22,6 +22,15 @@ namespace Assets.Scripts.Canvas
 
     public UnityEngine.GameObject aPointContainer;
 
+    public void Start()
+    {
+      _pointContainerObject = pointContainer.GetComponent<PointContainer>();
+      _vPointContainerObject = vPointContainer.GetComponent<VPointContainer>();
+      _aPointContainerObject = aPointContainer.GetComponent<APointContainer>();
+
+      propertiesMenu.SetActive(false);
+    }
+
     public void OpenPropertiesMenu(Node node)
     {
       _node = node;
@@ -43,13 +52,6 @@ namespace Assets.Scripts.Canvas
     public void ExitButtonOnClick()
     {
       propertiesMenu.SetActive(false);
-    }
-
-    public void Start()
-    {
-      _pointContainerObject = pointContainer.GetComponent<PointContainer>();
-      _vPointContainerObject = vPointContainer.GetComponent<VPointContainer>();
-      _aPointContainerObject = aPointContainer.GetComponent<APointContainer>();
     }
   }
 }

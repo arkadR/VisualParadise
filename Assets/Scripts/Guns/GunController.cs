@@ -1,42 +1,44 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Canvas;
 using UnityEngine;
 
 namespace Assets.Scripts.Guns
 {
   public class GunController : MonoBehaviour
   {
-    private GunTypeChange gunTypeChange;
-    private IDictionary<KeyCode, IGun> guns;
-    private Camera attachedCamera;
-    private GraphService graphService;
+    private IDictionary<KeyCode, IGun> _guns;
+    private Camera _attachedCamera;
+    private GraphService _graphService;
+    private ToolGunController _toolGunController;
+
     private IGun _activeGun;
-    private IGun activeGun
+
+    public IGun ActiveGun
     {
       get => _activeGun;
       set
       {
-        gunTypeChange.ChangeGunType(value.GunName);
         _activeGun = value;
+        _toolGunController.SetGunModeText(_activeGun.GunName);
       }
     }
 
     private void Start()
     {
-      attachedCamera = Camera.main;
-      graphService = FindObjectOfType<GraphService>();
-      gunTypeChange = FindObjectOfType<GunTypeChange>();
+      _attachedCamera = Camera.main;
+      _graphService = FindObjectOfType<GraphService>();
+      _toolGunController = FindObjectOfType<ToolGunController>();
       var edgeMaterial = Resources.Load<Material>("Materials/Edge Material");
 
-      guns = new Dictionary<KeyCode, IGun>
+      _guns = new Dictionary<KeyCode, IGun>
       {
         [KeyCode.Alpha1] = gameObject.AddComponent<NodeGun>(),
-        [KeyCode.Alpha2] = new EdgeGun(graphService, edgeMaterial),
+        [KeyCode.Alpha2] = new EdgeGun(_graphService, edgeMaterial),
         [KeyCode.Alpha3] = new MovementExecutorGun(FindObjectOfType<MovementExecutor>()),
         [KeyCode.Alpha4] = new GraphArrangerGun(FindObjectOfType<GraphArranger>())
       };
-      activeGun = guns.First().Value;
+
+      ActiveGun = _guns.First().Value;
     }
 
     private void Update()
@@ -52,11 +54,11 @@ namespace Assets.Scripts.Guns
     {
       if (Input.GetButtonDown("Fire1"))
       {
-        activeGun.OnMoveDown(transform, attachedCamera);
+        ActiveGun.OnMoveDown(transform, _attachedCamera);
       }
       else if (Input.GetButtonDown("Fire2"))
       {
-        activeGun.OnRightClick(attachedCamera);
+        ActiveGun.OnRightClick(_attachedCamera);
       }
     }
 
@@ -70,8 +72,8 @@ namespace Assets.Scripts.Guns
     }
 
     private void HandleChangeGun()
-    { 
-      var pressedGunKey = guns
+    {
+      var pressedGunKey = _guns
           .Keys
           .FirstOrDefault(Input.GetKeyDown);
 
@@ -82,11 +84,11 @@ namespace Assets.Scripts.Guns
       if (activeGun == newGun)
         return;
 
-      activeGun.OnSwitchedAway();
+      ActiveGun.OnSwitchedAway();
 
       if (newGun is IMovementGun)
         DisableMovementGuns(newGun);
-      activeGun = newGun;
+      ActiveGun = newGun;
     }
   }
 }
