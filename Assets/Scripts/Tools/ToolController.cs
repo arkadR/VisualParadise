@@ -7,17 +7,16 @@ namespace Assets.Scripts.Tools
 {
   public class ToolController : MonoBehaviour
   {
-    [SerializeField] private Color notActivatedColor = Color.white;
-    [SerializeField] private Color activatedColor = Color.yellow;
-    [SerializeField] private float hitDistance = 40f;
-    [SerializeField] private Image crosshair;
-
-    private IDictionary<KeyCode, ITool> _tools;
-    private ISet<IToolChangeObserver> _toolChangeObservers;
+    private ITool _activeTool;
     private Camera _attachedCamera;
     private GraphService _graphService;
+    private ISet<IToolChangeObserver> _toolChangeObservers;
 
-    private ITool _activeTool;
+    private IDictionary<KeyCode, ITool> _tools;
+    [SerializeField] private Color activatedColor = Color.yellow;
+    [SerializeField] private Image crosshair;
+    [SerializeField] private float hitDistance = 40f;
+    [SerializeField] private Color notActivatedColor = Color.white;
 
     public ITool ActiveTool
     {
@@ -36,10 +35,9 @@ namespace Assets.Scripts.Tools
     {
       _attachedCamera = Camera.main;
       _graphService = FindObjectOfType<GraphService>();
-      var edgeMaterial = Resources.Load<Material>("Materials/Edge Material");
 
       var toolGunController = FindObjectOfType<ToolTextPanelController>();
-      var edgeTool = new EdgeTool(_graphService, edgeMaterial);
+      var edgeTool = new EdgeTool(_graphService);
 
       _tools = new Dictionary<KeyCode, ITool>
       {
@@ -57,7 +55,10 @@ namespace Assets.Scripts.Tools
     private void Update()
     {
       if (GameService.Instance.IsPaused)
+      {
         return;
+      }
+
       var isHit = RayCast(out var raycastHit);
       crosshair.color = isHit && ActiveTool.CanInteractWith(raycastHit) ? activatedColor : notActivatedColor;
       HandleChangeTool();
@@ -89,10 +90,14 @@ namespace Assets.Scripts.Tools
         .FirstOrDefault(Input.GetKeyDown);
 
       if (pressedGunKey == KeyCode.None)
+      {
         return;
+      }
 
       if (ActiveTool == _tools[pressedGunKey])
+      {
         return;
+      }
 
       ActiveTool = _tools[pressedGunKey];
     }

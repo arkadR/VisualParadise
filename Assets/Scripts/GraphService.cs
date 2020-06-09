@@ -6,20 +6,18 @@ namespace Assets.Scripts
 {
   public class GraphService : MonoBehaviour
   {
+    public EdgeFactory edgeFactory;
+    public NodeFactory nodeFactory;
     public Graph Graph { get; private set; }
 
     public void SetGraph(Graph graph)
     {
       Graph = graph;
 
-      var nodeMaterial = Resources.Load<Material>("Materials/Node Material");
-      var edgeMaterial = Resources.Load<Material>("Materials/Edge Material");
-
       foreach (var node in graph.nodes)
       {
-        var sphere = NodeGenerator.GeneratePhysicalNode(node.Position,
-          Quaternion.Euler(node.Rotation),
-          nodeMaterial);
+        var sphere = nodeFactory.CreateNode(node.Position,
+          Quaternion.Euler(node.Rotation));
         node.gameObject = sphere;
       }
 
@@ -27,43 +25,51 @@ namespace Assets.Scripts
       {
         var node1 = graph.nodes.Single(n => n.id == edge.from);
         var node2 = graph.nodes.Single(n => n.id == edge.to);
-        var line = EdgeGenerator.CreateGameObjectEdge(node1, node2, edgeMaterial);
+        var line = edgeFactory.CreateEdge(node1, node2);
         edge.gameObject = line;
       }
     }
 
-    public bool IsNode(GameObject gameObject) => FindNodeByGameObject(gameObject) != null;
+    public bool IsNode(GameObject gameObject)
+    {
+      return FindNodeByGameObject(gameObject) != null;
+    }
 
-    public Node FindNodeByGameObject(UnityEngine.GameObject gameObject) =>
-      Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
+    public Node FindNodeByGameObject(GameObject gameObject)
+    {
+      return Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
+    }
 
     public Edge FindEdgeByNodes(Node node1, Node node2)
     {
-      var edge = Graph.edges.SingleOrDefault(e => e.@from == node1.id && e.to == node2.id);
+      var edge = Graph.edges.SingleOrDefault(e => e.from == node1.id && e.to == node2.id);
       if (edge == null)
-        return Graph.edges.SingleOrDefault(e => e.@from == node2.id && e.to == node1.id);
+      {
+        return Graph.edges.SingleOrDefault(e => e.from == node2.id && e.to == node1.id);
+      }
+
       return edge;
     }
 
-    public void AddNode(Vector3 position, Quaternion rotation, Material nodeMaterial)
+    public void AddNode(Vector3 position, Quaternion rotation)
     {
       var id = Graph.nodes.Any()
         ? Graph.nodes.Max(n => n.id) + 1
         : 0;
 
-      var node = Node.EmptyNode(id, NodeGenerator.GeneratePhysicalNode(position, rotation, nodeMaterial));
+      var node = Node.EmptyNode(id, nodeFactory.CreateNode(position, rotation));
       node.Position = position;
       node.Rotation = rotation.eulerAngles;
       Graph.nodes.Add(node);
     }
 
-    public void AddEdge(Node node1, Node node2, Material material)
+    public void AddEdge(Node node1, Node node2)
     {
       var edge = new Edge
       {
         from = node1.id,
         to = node2.id,
-        gameObject = EdgeGenerator.CreateGameObjectEdge(node1, node2, material),
+        gameObject = edgeFactory.CreateEdge(node1, node2),
         nodeFrom = node1,
         nodeTo = node2
       };
@@ -94,7 +100,7 @@ namespace Assets.Scripts
     }
 
     /// <summary>
-    /// Update edges position based on corresponding nodes
+    ///   Update edges position based on corresponding nodes
     /// </summary>
     public void FixEdges()
     {
@@ -109,7 +115,7 @@ namespace Assets.Scripts
     }
 
     /// <summary>
-    /// Set velocity of all nodes to 0
+    ///   Set velocity of all nodes to 0
     /// </summary>
     public void StopNodes()
     {
