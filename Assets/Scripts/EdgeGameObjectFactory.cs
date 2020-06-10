@@ -5,7 +5,7 @@ namespace Assets.Scripts
 {
   public class EdgeGameObjectFactory : MonoBehaviour
   {
-    [SerializeField] private GameObject edgePrefab;
+    public GameObject edgePrefab;
 
     public GameObject CreateEdgeGameObject(Node fromNode, Node toNode)
     {

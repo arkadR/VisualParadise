@@ -5,19 +5,13 @@ namespace Assets.Scripts.Tools
 {
   public class NodeTool : MonoBehaviour, ITool
   {
-    private GraphService _graphService;
+    GraphService _graphService;
 
-    void Start()
-    {
-      _graphService = FindObjectOfType<GraphService>();
-    }
+    public void Start() => _graphService = FindObjectOfType<GraphService>();
 
     public string ToolName => "Node";
     
-    public bool CanInteractWith(RaycastHit hitInfo)
-    {
-      return _graphService.IsNode(hitInfo.collider.gameObject);
-    }
+    public bool CanInteractWith(RaycastHit hitInfo) => _graphService.IsNode(hitInfo.collider.gameObject);
 
     public void OnLeftClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit)
     {
@@ -28,10 +22,8 @@ namespace Assets.Scripts.Tools
 
     public void OnRightClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit)
     {
-      if (!isRayCastHit)
-      {
+      if (isRayCastHit == false)
         return;
-      }
 
       var node = raycastHit.collider.gameObject;
       var contextMenuHandler = FindObjectOfType<ContextMenuHandler>();

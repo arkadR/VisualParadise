@@ -1,29 +1,24 @@
-﻿using Assets.Scripts.Common.Extensions;
+﻿using Assets.Scripts.Common.Utils;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
   public class PlayerMovement : MonoBehaviour
   {
-    private PlayerMovementMode _movementMode;
+    PlayerMovementMode _movementMode;
     public CharacterController controller;
-    public Transform groundCheck;
-    public LayerMask groundMask;
-
     public float speed = 12f;
 
-    private void Start()
+    public void Start()
     {
       var playerMovementModeValue = PlayerPrefs.GetInt(Constants.PlayerMovementMode);
       _movementMode = EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(playerMovementModeValue);
     }
 
-    private void Update()
+    public void Update()
     {
       if (GameService.Instance.IsPaused)
-      {
         return;
-      }
 
       switch (_movementMode)
       {
@@ -40,7 +35,7 @@ namespace Assets.Scripts
       }
     }
 
-    private void ApplyMovementAxisBased()
+    void ApplyMovementAxisBased()
     {
       var x = Input.GetAxis("Horizontal");
       var z = Input.GetAxis("Vertical");
@@ -51,7 +46,7 @@ namespace Assets.Scripts
       controller.Move(offset * speed * Time.deltaTime);
     }
 
-    private void ApplyMovementFollowCamera()
+    void ApplyMovementFollowCamera()
     {
       var z = Input.GetAxis("Vertical");
 

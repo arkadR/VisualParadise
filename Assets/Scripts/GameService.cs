@@ -6,9 +6,13 @@ namespace Assets.Scripts
   {
     public static GameService Instance;
 
+    public bool isResumableOnKeyPress = true;
+
     public GameObject pauseMenu;
 
-    void Awake()
+    public bool IsPaused { get; private set; }
+
+    public void Awake()
     {
       if (Instance != null)
         Destroy(Instance);
@@ -17,10 +21,6 @@ namespace Assets.Scripts
 
       DontDestroyOnLoad(this);
     }
-
-    public bool IsPaused { get; private set; } = false;
-
-    public bool isResumableOnKeyPress = true;
 
     public void GlobalPauseGame()
     {

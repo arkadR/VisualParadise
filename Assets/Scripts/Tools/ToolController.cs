@@ -7,16 +7,16 @@ namespace Assets.Scripts.Tools
 {
   public class ToolController : MonoBehaviour
   {
-    private ITool _activeTool;
-    private Camera _attachedCamera;
-    private GraphService _graphService;
-    private ISet<IToolChangeObserver> _toolChangeObservers;
+    ITool _activeTool;
+    Camera _attachedCamera;
+    GraphService _graphService;
+    ISet<IToolChangeObserver> _toolChangeObservers;
 
-    private IDictionary<KeyCode, ITool> _tools;
-    [SerializeField] private Color activatedColor = Color.yellow;
-    [SerializeField] private Image crosshair;
-    [SerializeField] private float hitDistance = 40f;
-    [SerializeField] private Color notActivatedColor = Color.white;
+    IDictionary<KeyCode, ITool> _tools;
+    [SerializeField] Color activatedColor = Color.yellow;
+    [SerializeField] Image crosshair;
+    [SerializeField] float hitDistance = 40f;
+    [SerializeField] Color notActivatedColor = Color.white;
 
     public ITool ActiveTool
     {
@@ -31,7 +31,7 @@ namespace Assets.Scripts.Tools
       }
     }
 
-    private void Start()
+    void Start()
     {
       _attachedCamera = Camera.main;
       _graphService = FindObjectOfType<GraphService>();
@@ -52,12 +52,10 @@ namespace Assets.Scripts.Tools
       ActiveTool = _tools.First().Value;
     }
 
-    private void Update()
+    void Update()
     {
       if (GameService.Instance.IsPaused)
-      {
         return;
-      }
 
       var isHit = RayCast(out var raycastHit);
       crosshair.color = isHit && ActiveTool.CanInteractWith(raycastHit) ? activatedColor : notActivatedColor;
@@ -65,56 +63,44 @@ namespace Assets.Scripts.Tools
       HandleMouseClick(isHit, raycastHit);
     }
 
-    private bool RayCast(out RaycastHit raycastHit)
+    bool RayCast(out RaycastHit raycastHit)
     {
       var ray = _attachedCamera.ScreenPointToRay(Input.mousePosition);
       return Physics.Raycast(ray, out raycastHit, hitDistance);
     }
 
-    private void HandleMouseClick(bool isHit, RaycastHit raycastHit)
+    void HandleMouseClick(bool isHit, RaycastHit raycastHit)
     {
       if (Input.GetButtonDown("Fire1"))
-      {
         ActiveTool.OnLeftClick(_attachedCamera.transform, isHit, raycastHit);
-      }
       else if (Input.GetButtonDown("Fire2"))
-      {
         ActiveTool.OnRightClick(_attachedCamera.transform, isHit, raycastHit);
-      }
     }
 
-    private void DisableMovementTools(ITool toolNotToDisable)
+    void DisableMovementTools(ITool toolNotToDisable)
     {
       foreach (var tool in _tools.Values)
       {
         if (tool != toolNotToDisable && tool is IMovementTool)
-        {
           (tool as IMovementTool).Disable();
-        }
       }
     }
 
-    private void HandleChangeTool()
+    void HandleChangeTool()
     {
       var pressedToolKey = _tools
         .Keys
         .FirstOrDefault(Input.GetKeyDown);
 
       if (pressedToolKey == KeyCode.None)
-      {
         return;
-      }
 
       var newTool = _tools[pressedToolKey];
       if (ActiveTool == newTool)
-      {
         return;
-      }
 
       if (newTool is IMovementTool)
-      {
         DisableMovementTools(newTool);
-      }
 
       ActiveTool = newTool;
     }

@@ -324,8 +324,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3cfcef864c246f4aac15ba9a5fb8cfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenu: {fileID: 513765196}
   loadMenu: {fileID: 1806585776}
+  mainMenu: {fileID: 513765196}
   newGraphMenu: {fileID: 1538600500}
   playerMovementText: {fileID: 2125174433}
 --- !u!1 &447442818
@@ -2117,8 +2117,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a94157095b09ebf479b14c7465bc1a82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GraphNameInput: {fileID: 887126279}
   CreateButton: {fileID: 981915104}
+  GraphNameInput: {fileID: 887126279}
 --- !u!224 &1547107192 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3364381332462250100, guid: 61de6d5d8428c5d459a76f4e0d0e1d49,

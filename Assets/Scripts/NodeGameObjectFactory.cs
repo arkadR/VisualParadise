@@ -6,9 +6,7 @@ namespace Assets.Scripts
   {
     public GameObject nodePrefab;
 
-    public GameObject CreateNodeGameObject(Vector3 position, Quaternion rotation)
-    {
-      return Instantiate(nodePrefab, position, rotation);
-    }
+    public GameObject CreateNodeGameObject(Vector3 position, Quaternion rotation) =>
+      Instantiate(nodePrefab, position, rotation);
   }
 }

@@ -5,19 +5,15 @@ namespace Assets.Scripts
   public class InputManager : MonoBehaviour
   {
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-      if (!Input.GetKeyDown(KeyCode.Tab) || !GameService.Instance.isResumableOnKeyPress) 
+      if (!Input.GetKeyDown(KeyCode.Tab) || !GameService.Instance.isResumableOnKeyPress)
         return;
-      
+
       if (GameService.Instance.IsPaused)
-      {
         GameService.Instance.GlobalUnPauseGame();
-      }
       else
-      {
-        GameService.Instance.GlobalPauseGame();;
-      }
+        GameService.Instance.GlobalPauseGame();
     }
   }
 }

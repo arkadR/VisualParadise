@@ -1,5 +1,6 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts.Common.Extensions;
 using Assets.Scripts.Model;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,28 +31,26 @@ namespace Assets.Scripts
         var node2 = graph.nodes.Single(n => n.id == edge.to);
         var line = edgeGameObjectFactory.CreateEdgeGameObject(node1, node2);
         edge.gameObject = line;
-        // edge.gameObject.GetComponent<Text>().text = edge.label;
+        edge.gameObject.GetComponentInChildren<Text>().text = edge.label;
       }
     }
 
-    public bool IsNode(GameObject gameObject)
-    {
-      return FindNodeByGameObject(gameObject) != null;
-    }
+    public bool IsNode(GameObject gameObject) => FindNodeByGameObject(gameObject) != null;
 
-    public Node FindNodeByGameObject(GameObject gameObject) => Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
+    public Node FindNodeByGameObject(GameObject gameObject) =>
+      Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
 
     public List<Edge> FindNodeEdges(Node node) => Graph.edges.Where(e => e.from == node.id || e.to == node.id).ToList();
 
     public Edge FindEdgeByNodes(Node node1, Node node2) =>
-      Graph.edges.SingleOrDefault(e => 
+      Graph.edges.SingleOrDefault(e =>
         (e.from == node1.id && e.to == node2.id) ||
         (e.from == node2.id && e.to == node1.id));
 
     public void AddNode(Vector3 position, Quaternion rotation)
     {
-      var id = Graph.nodes.Any() 
-        ? Graph.nodes.Max(n => n.id) + 1 
+      var id = Graph.nodes.Any()
+        ? Graph.nodes.Max(n => n.id) + 1
         : 0;
 
       var node = Node.EmptyNode(id, nodeGameObjectFactory.CreateNodeGameObject(position, rotation));
@@ -91,10 +90,7 @@ namespace Assets.Scripts
       Graph.edges.Remove(edge);
     }
 
-    public Node FindNodeById(int id)
-    {
-      return Graph.nodes.SingleOrDefault(n => n.id == id);
-    }
+    public Node FindNodeById(int id) => Graph.nodes.SingleOrDefault(n => n.id == id);
 
     public void FixEdge(Edge edge)
     {
@@ -103,6 +99,15 @@ namespace Assets.Scripts
       var endingNode = FindNodeById(edge.to);
       lineRenderer.SetPosition(0, startingNode.Position);
       lineRenderer.SetPosition(1, endingNode.Position);
+
+      var labelText = edge.gameObject.GetComponentInChildren<Text>();
+      var (x1, y1, _) = Camera.main.WorldToScreenPoint(startingNode.Position);
+      var (x2, y2, _) = Camera.main.WorldToScreenPoint(endingNode.Position);
+      var tan = (y1 - y2) / (x1 - x2);
+      var angle = Mathf.Atan(tan) * Mathf.Rad2Deg;
+      var centerOfEdgeOnScreen = new Vector2(x1+x2, y1+y2) / 2;
+      labelText.SetPositionOnScreen(centerOfEdgeOnScreen);
+      labelText.rectTransform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     /// <summary>

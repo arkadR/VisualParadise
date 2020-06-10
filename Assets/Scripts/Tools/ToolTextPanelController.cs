@@ -6,9 +6,6 @@ namespace Assets.Scripts.Tools
   {
     public TextMesh gunModeText;
 
-    public void OnToolsChanged(ITool newTool)
-    {
-      gunModeText.text = newTool.ToolName;
-    }
+    public void OnToolsChanged(ITool newTool) => gunModeText.text = newTool.ToolName;
   }
 }

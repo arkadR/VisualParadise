@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Tools
 {
-  internal interface IMovementTool
+  interface IMovementTool
   {
     void Disable();
   }

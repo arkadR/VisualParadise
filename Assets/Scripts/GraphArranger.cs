@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -11,29 +10,22 @@ namespace Assets.Scripts
 
     private bool _shouldArrange;
     private int _velocityModifier = 1;
-    private GraphService graphService;
 
-    private void Start()
-    {
-      graphService = FindObjectOfType<GraphService>();
-    }
+    private GraphService _graphService;
 
-    // Update for physics
-    private void FixedUpdate()
+    public void Start() => _graphService = FindObjectOfType<GraphService>();
+
+    public void FixedUpdate()
     {
       if (GameService.Instance.IsPaused)
-      {
         return;
-      }
 
       if (!_shouldArrange)
-      {
         return;
-      }
 
       Attract();
       Repel();
-      graphService.FixEdges();
+      _graphService.FixEdges();
     }
 
     public void ToggleArrangement()
@@ -42,40 +34,33 @@ namespace Assets.Scripts
       Debug.Log("Arranger " + (_shouldArrange ? "enabled" : "disabled"));
     }
 
-    public void ToggleReverse()
-    {
-      _velocityModifier *= -1;
-    }
+    public void ToggleReverse() => _velocityModifier *= -1;
 
     public void DisableArrangement()
     {
       if (_shouldArrange)
-      {
         ToggleArrangement();
-      }
     }
 
     /// <summary>
     ///   Repel each Node from every other node
     /// </summary>
-    private void Repel()
+    void Repel()
     {
-      for (var i = 0; i < graphService.Graph.nodes.Count; i++)
+      for (var i = 0; i < _graphService.Graph.nodes.Count; i++)
+      for (var j = i + 1; j < _graphService.Graph.nodes.Count; j++)
       {
-        for (var j = i + 1; j < graphService.Graph.nodes.Count; j++)
-        {
-          var node1 = graphService.Graph.nodes[i];
-          var node2 = graphService.Graph.nodes[j];
+        var node1 = _graphService.Graph.nodes[i];
+        var node2 = _graphService.Graph.nodes[j];
 
-          var direction = node1.Position - node2.Position;
-          var distance = direction.magnitude;
+        var direction = node1.Position - node2.Position;
+        var distance = direction.magnitude;
 
-          var velocityMagnitude = CalculateRepelVelocityMagnitude(distance);
-          var velocity = direction.normalized * Mathf.Min(_maxVelocityMagnitude, velocityMagnitude);
+        var velocityMagnitude = CalculateRepelVelocityMagnitude(distance);
+        var velocity = direction.normalized * Mathf.Min(_maxVelocityMagnitude, velocityMagnitude);
 
-          node1.Position += velocity * Time.deltaTime * _velocityModifier;
-          node2.Position -= velocity * Time.deltaTime * _velocityModifier;
-        }
+        node1.Position += velocity * Time.deltaTime * _velocityModifier;
+        node2.Position -= velocity * Time.deltaTime * _velocityModifier;
       }
     }
 
@@ -88,12 +73,12 @@ namespace Assets.Scripts
     /// <summary>
     ///   Attract two nodes if there is an edge to connect them
     /// </summary>
-    private void Attract()
+    void Attract()
     {
-      foreach (var e in graphService.Graph.edges)
+      foreach (var e in _graphService.Graph.edges)
       {
-        var node1 = graphService.Graph.nodes.Single(n => n.id == e.from);
-        var node2 = graphService.Graph.nodes.Single(n => n.id == e.to);
+        var node1 = _graphService.FindNodeById(e.from);
+        var node2 = _graphService.FindNodeById(e.to);
 
         var direction = node1.Position - node2.Position;
         var distance = direction.magnitude;

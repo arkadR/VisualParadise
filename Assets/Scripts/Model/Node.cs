@@ -39,7 +39,7 @@ namespace Assets.Scripts.Model
       {
         point.position = value;
         gameObject.transform.position = value;
-        gameObject.GetComponentInChildren<Text>().transform.position = Camera.main.WorldToScreenPoint(value);
+        gameObject.GetComponentInChildren<Text>().SetPositionOnScreen(Camera.main.WorldToScreenPoint(value));
       }
     }
 

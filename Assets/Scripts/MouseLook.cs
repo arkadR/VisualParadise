@@ -8,20 +8,17 @@ namespace Assets.Scripts
 
     public Transform playerBody;
 
-    public float yRotation = 0f;
+    public float yRotation;
 
     // Start is called before the first frame update
-    void Start()
-    {
-      Cursor.lockState = CursorLockMode.Locked;
-    }
+    public void Start() => Cursor.lockState = CursorLockMode.Locked;
 
     // Update is called once per frame
     void Update()
     {
       if (GameService.Instance.IsPaused)
         return;
-    
+
       var mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
       var mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 

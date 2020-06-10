@@ -4,23 +4,23 @@ using UnityEngine;
 
 namespace Assets.Scripts.Tools
 {
-  internal enum EdgeMode { Create, Delete }
+  enum EdgeMode { Create, Delete }
 
   public class EdgeTool : ITool, IToolChangeObserver
   {
-    private const float _nodeHitGlowStrength = 0.5f;
-    private readonly Color _createGlowColor = Color.green;
-    private readonly Color _deleteGlowColor = Color.red;
-    private readonly GraphService _graphService;
-    private EdgeMode _mode = EdgeMode.Create;
-    private Node _previouslyHitNode;
+    const float _nodeHitGlowStrength = 0.5f;
+    readonly Color _createGlowColor = Color.green;
+    readonly Color _deleteGlowColor = Color.red;
+    readonly GraphService _graphService;
+    EdgeMode _mode = EdgeMode.Create;
+    Node _previouslyHitNode;
 
     public EdgeTool(GraphService graphService)
     {
       _graphService = graphService;
     }
 
-    private EdgeMode Mode
+    EdgeMode Mode
     {
       get => _mode;
       set
@@ -35,11 +35,7 @@ namespace Assets.Scripts.Tools
 
     public string ToolName => "Edge";
 
-    public bool CanInteractWith(RaycastHit hitInfo)
-    {
-      return _graphService.IsNode(hitInfo.collider.gameObject);
-    }
-
+    public bool CanInteractWith(RaycastHit hitInfo) => _graphService.IsNode(hitInfo.collider.gameObject);
 
     public void OnLeftClick(Transform cameraTransform, bool isHit, RaycastHit raycastHit)
     {
@@ -53,12 +49,9 @@ namespace Assets.Scripts.Tools
       OnActionPerformed(isHit, raycastHit);
     }
 
-    public void OnToolsChanged(ITool newTool)
-    {
-      ClearPreviouslyHitNode();
-    }
+    public void OnToolsChanged(ITool newTool) => ClearPreviouslyHitNode();
 
-    private void ClearPreviouslyHitNode()
+    void ClearPreviouslyHitNode()
     {
       if (_previouslyHitNode != null)
       {
@@ -67,21 +60,17 @@ namespace Assets.Scripts.Tools
       }
     }
 
-    private void OnActionPerformed(bool isHit, RaycastHit raycastHit)
+    void OnActionPerformed(bool isHit, RaycastHit raycastHit)
     {
       if (!isHit)
-      {
         return;
-      }
 
       var gameObjectHit = raycastHit.collider.gameObject;
       var currentlyHitNode = _graphService.FindNodeByGameObject(gameObjectHit);
 
       // If not a node, don't do anything
       if (currentlyHitNode == null)
-      {
         return;
-      }
 
       // If player hit the same node twice, don't do anything
       if (currentlyHitNode == _previouslyHitNode)
@@ -108,9 +97,7 @@ namespace Assets.Scripts.Tools
         {
           //Don't create duplicate edge
           if (existingEdge != null)
-          {
             return;
-          }
 
           _graphService.AddEdge(currentlyHitNode, _previouslyHitNode);
           break;
@@ -118,9 +105,7 @@ namespace Assets.Scripts.Tools
         case EdgeMode.Delete:
         {
           if (existingEdge == null)
-          {
             return;
-          }
 
           _graphService.RemoveEdge(existingEdge);
           break;
