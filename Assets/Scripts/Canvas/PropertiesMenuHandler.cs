@@ -43,6 +43,10 @@ namespace Assets.Scripts.Canvas
 
     public void SaveDataButtonOnClick()
     {
+      if (!_pointContainerObject.IsInputCorrect() || !_vPointContainerObject.IsInputCorrect()
+        || !_aPointContainerObject.IsInputCorrect())
+        return;
+
       _pointContainerObject.SaveData();
       _vPointContainerObject.SaveData();
       _aPointContainerObject.SaveData();

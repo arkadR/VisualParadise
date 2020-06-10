@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Collections.Generic;
 using Assets.Scripts.Model;
 using UnityEngine;
 
@@ -35,26 +36,21 @@ namespace Assets.Scripts
       return FindNodeByGameObject(gameObject) != null;
     }
 
-    public Node FindNodeByGameObject(GameObject gameObject)
-    {
-      return Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
-    }
+    public Node FindNodeByGameObject(UnityEngine.GameObject gameObject) => Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
 
-    public Edge FindEdgeByNodes(Node node1, Node node2)
-    {
-      var edge = Graph.edges.SingleOrDefault(e => e.from == node1.id && e.to == node2.id);
+    public List<Edge> FindNodeEdges(Node node) => Graph.edges.Where(e => e.from == node.id || e.to == node.id).ToList();
+
+    public Edge FindEdgeByNodes(Node node1, Node node2) {
+      var edge = Graph.edges.SingleOrDefault(e => e.@from == node1.id && e.to == node2.id);
       if (edge == null)
-      {
-        return Graph.edges.SingleOrDefault(e => e.from == node2.id && e.to == node1.id);
-      }
-
+        return Graph.edges.SingleOrDefault(e => e.@from == node2.id && e.to == node1.id);
       return edge;
     }
 
     public void AddNode(Vector3 position, Quaternion rotation)
     {
-      var id = Graph.nodes.Any()
-        ? Graph.nodes.Max(n => n.id) + 1
+      var id = Graph.nodes.Any() 
+        ? Graph.nodes.Max(n => n.id) + 1 
         : 0;
 
       var node = Node.EmptyNode(id, nodeGameObjectFactory.CreateNodeGameObject(position, rotation));
@@ -99,18 +95,23 @@ namespace Assets.Scripts
       return Graph.nodes.SingleOrDefault(n => n.id == id);
     }
 
+    public void FixEdge(Edge edge)
+    {
+      var lineRenderer = edge.gameObject.GetComponent<LineRenderer>();
+      var startingNode = FindNodeById(edge.from);
+      var endingNode = FindNodeById(edge.to);
+      lineRenderer.SetPosition(0, startingNode.Position);
+      lineRenderer.SetPosition(1, endingNode.Position);
+    }
+
     /// <summary>
-    ///   Update edges position based on corresponding nodes
+    ///   Update edges positions based on corresponding nodes
     /// </summary>
     public void FixEdges()
     {
       foreach (var e in Graph.edges)
       {
-        var lineRenderer = e.gameObject.GetComponent<LineRenderer>();
-        var startingNode = FindNodeById(e.from);
-        var endingNode = FindNodeById(e.to);
-        lineRenderer.SetPosition(0, startingNode.Position);
-        lineRenderer.SetPosition(1, endingNode.Position);
+        FixEdge(e);
       }
     }
 

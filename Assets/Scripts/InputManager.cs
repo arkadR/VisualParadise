@@ -7,11 +7,10 @@ namespace Assets.Scripts
     // Update is called once per frame
     void Update()
     {
-      if (!Input.GetKeyDown(KeyCode.Tab)) 
+      if (!Input.GetKeyDown(KeyCode.Tab) || !GameService.Instance.isResumableOnKeyPress) 
         return;
-      var isPaused = GameService.Instance.IsPaused;
-      var isResumableOnKeyPress = GameService.Instance.isResumableOnKeyPress;
-      if (isPaused && isResumableOnKeyPress)
+      
+      if (GameService.Instance.IsPaused)
       {
         GameService.Instance.GlobalUnPauseGame();
       }
