@@ -4,18 +4,20 @@ namespace Assets.Scripts
 {
   public class MovementExecutor : MonoBehaviour
   {
-    private bool _shouldMove;
-    private int _velocityModifier = 1;
-    private GraphService graphService;
+    bool _shouldMove;
+    int _velocityModifier = 1;
+    GraphService graphService;
 
-    private void Start() => graphService = FindObjectOfType<GraphService>();
+    public void Start() => graphService = FindObjectOfType<GraphService>();
 
     // Update for physics
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
-      if (GameService.Instance.IsPaused) return;
+      if (GameService.Instance.IsPaused)
+        return;
 
-      if (_shouldMove == false) return;
+      if (_shouldMove == false)
+        return;
 
       Move();
       Accelerate();
@@ -30,12 +32,13 @@ namespace Assets.Scripts
 
     public void DisableMovement()
     {
-      if (_shouldMove) ToggleMovement();
+      if (_shouldMove)
+        ToggleMovement();
     }
 
     public void ToggleReverse() => _velocityModifier *= -1;
 
-    private void Accelerate()
+    void Accelerate()
     {
       foreach (var n in graphService.Graph.nodes)
       {
@@ -47,7 +50,7 @@ namespace Assets.Scripts
       }
     }
 
-    private void Move()
+    void Move()
     {
       foreach (var n in graphService.Graph.nodes)
       {

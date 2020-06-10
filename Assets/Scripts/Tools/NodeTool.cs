@@ -5,7 +5,7 @@ namespace Assets.Scripts.Tools
 {
   public class NodeTool : MonoBehaviour, ITool
   {
-    private GraphService _graphService;
+    GraphService _graphService;
 
     public string ToolName => "Node";
 

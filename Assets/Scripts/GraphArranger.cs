@@ -5,22 +5,24 @@ namespace Assets.Scripts
 {
   public class GraphArranger : MonoBehaviour
   {
-    private const float _repelFunCoefficient = 5.0f; // higher values causes more distortion
-    private const float _attractFunPower = 1.5f; // safe range <1, 3>
-    private const float _maxVelocityMagnitude = 25f;
+    const float _repelFunCoefficient = 5.0f; // higher values causes more distortion
+    const float _attractFunPower = 1.5f; // safe range <1, 3>
+    const float _maxVelocityMagnitude = 25f;
 
-    private bool _shouldArrange;
-    private int _velocityModifier = 1;
-    private GraphService graphService;
+    bool _shouldArrange;
+    int _velocityModifier = 1;
+    GraphService graphService;
 
     public void Start() => graphService = FindObjectOfType<GraphService>();
 
     // Update for physics
     public void FixedUpdate()
     {
-      if (GameService.Instance.IsPaused) return;
+      if (GameService.Instance.IsPaused)
+        return;
 
-      if (!_shouldArrange) return;
+      if (!_shouldArrange)
+        return;
 
       Attract();
       Repel();
@@ -37,13 +39,14 @@ namespace Assets.Scripts
 
     public void DisableArrangement()
     {
-      if (_shouldArrange) ToggleArrangement();
+      if (_shouldArrange)
+        ToggleArrangement();
     }
 
     /// <summary>
     ///   Repel each Node from every other node
     /// </summary>
-    private void Repel()
+    void Repel()
     {
       for (var i = 0; i < graphService.Graph.nodes.Count; i++)
       for (var j = i + 1; j < graphService.Graph.nodes.Count; j++)
@@ -62,7 +65,7 @@ namespace Assets.Scripts
       }
     }
 
-    private float CalculateRepelVelocityMagnitude(float distance)
+    float CalculateRepelVelocityMagnitude(float distance)
     {
       var rawResult = _repelFunCoefficient / distance;
       return rawResult;
@@ -71,7 +74,7 @@ namespace Assets.Scripts
     /// <summary>
     ///   Attract two nodes if there is an edge to connect them
     /// </summary>
-    private void Attract()
+    void Attract()
     {
       foreach (var e in graphService.Graph.edges)
       {
@@ -89,7 +92,7 @@ namespace Assets.Scripts
       }
     }
 
-    private float CalculateAttractVelocityMagnitude(float distance)
+    float CalculateAttractVelocityMagnitude(float distance)
     {
       var rawResult = Mathf.Pow(distance, _attractFunPower);
       return rawResult;

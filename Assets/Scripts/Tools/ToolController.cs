@@ -54,7 +54,8 @@ namespace Assets.Scripts.Tools
 
     void Update()
     {
-      if (GameService.Instance.IsPaused) return;
+      if (GameService.Instance.IsPaused)
+        return;
 
       var isHit = RayCast(out var raycastHit);
       crosshair.color = isHit && ActiveTool.CanInteractWith(raycastHit) ? activatedColor : notActivatedColor;

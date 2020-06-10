@@ -5,7 +5,7 @@ namespace Assets.Scripts
 {
   public class PlayerMovement : MonoBehaviour
   {
-    private PlayerMovementMode _movementMode;
+    PlayerMovementMode _movementMode;
     public CharacterController controller;
     public float speed = 12f;
 
@@ -17,7 +17,8 @@ namespace Assets.Scripts
 
     public void Update()
     {
-      if (GameService.Instance.IsPaused) return;
+      if (GameService.Instance.IsPaused)
+        return;
 
       switch (_movementMode)
       {
@@ -34,7 +35,7 @@ namespace Assets.Scripts
       }
     }
 
-    private void ApplyMovementAxisBased()
+    void ApplyMovementAxisBased()
     {
       var x = Input.GetAxis("Horizontal");
       var z = Input.GetAxis("Vertical");
@@ -45,7 +46,7 @@ namespace Assets.Scripts
       controller.Move(offset * speed * Time.deltaTime);
     }
 
-    private void ApplyMovementFollowCamera()
+    void ApplyMovementFollowCamera()
     {
       var z = Input.GetAxis("Vertical");
 
