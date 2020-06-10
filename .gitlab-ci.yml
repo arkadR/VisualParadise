@@ -48,15 +48,15 @@ get-activation-file:
     - gitlab-org
   coverage: /<Linecoverage>(.*?)</Linecoverage>/
 
-test-playmode:
-  <<: *test
-  variables:
-    TEST_PLATFORM: playmode
+# test-playmode:
+#   <<: *test
+#   variables:
+#     TEST_PLATFORM: playmode
 
-test-editmode:
-  <<: *test
-  variables:
-    TEST_PLATFORM: editmode
+# test-editmode:
+#   <<: *test
+#   variables:
+#     TEST_PLATFORM: editmode
 
 .build: &build
   stage: build_and_test
@@ -78,11 +78,11 @@ build-StandaloneWindows64:
   variables:
     BUILD_TARGET: StandaloneWindows64
 
-build-WebGL:
-  <<: *build
-  image: gableroux/unity3d:2019.3.7f1-webgl
-  variables:
-    BUILD_TARGET: WebGL
+# build-WebGL:
+#   <<: *build
+#   image: gableroux/unity3d:2019.3.7f1-webgl
+#   variables:
+#     BUILD_TARGET: WebGL
 
 pages:
   image: alpine:latest
