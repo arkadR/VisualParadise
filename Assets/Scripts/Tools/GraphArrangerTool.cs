@@ -8,18 +8,22 @@ namespace Assets.Scripts.Tools
 
     public GraphArrangerTool(GraphArranger graphArranger)
     {
-      this._graphArranger = graphArranger;
+      _graphArranger = graphArranger;
     }
 
     public string ToolName => "Arrange";
-    public bool CanInteractWith(RaycastHit hitInfo) => false;
+
+    public bool CanInteractWith(RaycastHit hitInfo)
+    {
+      return false;
+    }
 
     public void OnLeftClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit)
     {
       _graphArranger.ToggleArrangement();
     }
 
-    public void OnRightClick(bool isRayCastHit, RaycastHit raycastHit)
+    public void OnRightClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit)
     {
       _graphArranger.ToggleReverse();
     }

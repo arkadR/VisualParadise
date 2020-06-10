@@ -46,7 +46,7 @@ namespace Assets.Scripts.Tools
       ModifyEdge(isHit, raycastHit);
     }
 
-    public void OnRightClick(bool isHit, RaycastHit raycastHit)
+    public void OnRightClick(Transform cameraTransform, bool isHit, RaycastHit raycastHit)
     {
       Mode = EdgeMode.Delete;
       ModifyEdge(isHit, raycastHit);

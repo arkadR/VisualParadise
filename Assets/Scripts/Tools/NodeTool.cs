@@ -22,7 +22,7 @@ namespace Assets.Scripts.Tools
       _graphService.AddNode(position, cameraTransform.rotation);
     }
 
-    public void OnRightClick(bool isRayCastHit, RaycastHit raycastHit)
+    public void OnRightClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit)
     {
       if (!isRayCastHit)
       {

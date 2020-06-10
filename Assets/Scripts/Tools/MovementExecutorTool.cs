@@ -8,18 +8,22 @@ namespace Assets.Scripts.Tools
 
     public MovementExecutorTool(MovementExecutor movementExecutor)
     {
-      this._movementExecutor = movementExecutor;
+      _movementExecutor = movementExecutor;
     }
 
     public string ToolName => "Move";
-    public bool CanInteractWith(RaycastHit hitInfo) => false;
+
+    public bool CanInteractWith(RaycastHit hitInfo)
+    {
+      return false;
+    }
 
     public void OnLeftClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit)
     {
       _movementExecutor.ToggleMovement();
     }
 
-    public void OnRightClick(bool isRayCastHit, RaycastHit raycastHit)
+    public void OnRightClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit)
     {
       _movementExecutor.ToggleReverse();
     }

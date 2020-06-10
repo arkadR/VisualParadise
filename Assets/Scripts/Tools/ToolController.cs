@@ -79,7 +79,7 @@ namespace Assets.Scripts.Tools
       }
       else if (Input.GetButtonDown("Fire2"))
       {
-        ActiveTool.OnRightClick(isHit, raycastHit);
+        ActiveTool.OnRightClick(_attachedCamera.transform, isHit, raycastHit);
       }
     }
 
