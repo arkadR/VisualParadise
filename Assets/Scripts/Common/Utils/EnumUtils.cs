@@ -17,7 +17,8 @@ namespace Assets.Scripts.Common.Utils
     static EnumUtils()
     {
       // Throw Exception on static initialization if the given type isn't an enum.
-      if (!typeof(T).IsEnum) throw new ArgumentException("T must be an enumerated type");
+      if (!typeof(T).IsEnum)
+        throw new ArgumentException("T must be an enumerated type");
     }
 
     public static int GetNextValue(int currentValue) => (currentValue + 1) % Enum.GetValues(typeof(T)).Length;
