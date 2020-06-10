@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
@@ -7,11 +8,14 @@ namespace Assets.Scripts
     public GameObject mainMenu;
     public GameObject loadMenu;
     public GameObject newGraphMenu;
+    public Text playerMovementText;
+    private const string c_playerMovement = "Player movement";
 
     // Start is called before the first frame update
     void Start()
     {
       LoadMainMenu();
+      playerMovementText.text = $"{c_playerMovement}: {System.Enum.GetName(typeof(PlayerMovementMode), PlayerPrefs.GetInt(Constants.PlayerMovementMode))}";
     }
 
     public void LoadMainMenu()
@@ -31,6 +35,21 @@ namespace Assets.Scripts
     {
       mainMenu.SetActive(false);
       loadMenu.SetActive(true);
+    }
+
+    public void PlayerMovement_OnClick()
+    {
+      PlayerMovementMode playerMovementMode = SwitchPlayerMovement();
+      playerMovementText.text = $"{c_playerMovement}: {System.Enum.GetName(typeof(PlayerMovementMode), playerMovementMode)}";
+    }
+
+    private PlayerMovementMode SwitchPlayerMovement()
+    {
+      var playerMovementModeValue = PlayerPrefs.GetInt(Constants.PlayerMovementMode);
+      var newValue = (playerMovementModeValue + 1) % System.Enum.GetValues(typeof(PlayerMovementMode)).Length;
+      PlayerPrefs.SetInt(Constants.PlayerMovementMode, newValue);
+      Debug.Log("PlayerMovementMode: " + newValue);
+      return (PlayerMovementMode)(newValue);
     }
 
     public void QuitButton_OnClick()
