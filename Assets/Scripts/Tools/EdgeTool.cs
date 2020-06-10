@@ -43,13 +43,13 @@ namespace Assets.Scripts.Tools
     public void OnLeftClick(Transform cameraTransform, bool isHit, RaycastHit raycastHit)
     {
       Mode = EdgeMode.Create;
-      ModifyEdge(isHit, raycastHit);
+      OnActionPerformed(isHit, raycastHit);
     }
 
     public void OnRightClick(Transform cameraTransform, bool isHit, RaycastHit raycastHit)
     {
       Mode = EdgeMode.Delete;
-      ModifyEdge(isHit, raycastHit);
+      OnActionPerformed(isHit, raycastHit);
     }
 
     public void OnToolsChanged(ITool newTool)
@@ -66,7 +66,7 @@ namespace Assets.Scripts.Tools
       }
     }
 
-    private void ModifyEdge(bool isHit, RaycastHit raycastHit)
+    private void OnActionPerformed(bool isHit, RaycastHit raycastHit)
     {
       if (!isHit)
       {

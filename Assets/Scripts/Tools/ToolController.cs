@@ -83,23 +83,40 @@ namespace Assets.Scripts.Tools
       }
     }
 
+    private void DisableMovementTools(ITool toolNotToDisable)
+    {
+      foreach (var tool in _tools.Values)
+      {
+        if (tool != toolNotToDisable && tool is IMovementTool)
+        {
+          (tool as IMovementTool).Disable();
+        }
+      }
+    }
+
     private void HandleChangeTool()
     {
-      var pressedGunKey = _tools
+      var pressedToolKey = _tools
         .Keys
         .FirstOrDefault(Input.GetKeyDown);
 
-      if (pressedGunKey == KeyCode.None)
+      if (pressedToolKey == KeyCode.None)
       {
         return;
       }
 
-      if (ActiveTool == _tools[pressedGunKey])
+      var newTool = _tools[pressedToolKey];
+      if (ActiveTool == newTool)
       {
         return;
       }
 
-      ActiveTool = _tools[pressedGunKey];
+      if (newTool is IMovementTool)
+      {
+        DisableMovementTools(newTool);
+      }
+
+      ActiveTool = newTool;
     }
   }
 }

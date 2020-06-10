@@ -5,30 +5,32 @@ namespace Assets.Scripts
 {
   public class GraphArranger : MonoBehaviour
   {
-    private GraphService graphService;
-
     private const float _repelFunCoefficient = 5.0f; // higher values causes more distortion
     private const float _attractFunPower = 1.5f; // safe range <1, 3>
     private const float _maxVelocityMagnitude = 25f;
 
-    private bool _shouldArrange = false;
-    private bool _reverse = false;
+    private bool _shouldArrange;
+    private int _velocityModifier = 1;
+    private GraphService graphService;
 
-    void Start()
+    private void Start()
     {
-      graphService = UnityEngine.GameObject.FindObjectOfType<GraphService>();
+      graphService = FindObjectOfType<GraphService>();
     }
 
     // Update for physics
-    void FixedUpdate()
+    private void FixedUpdate()
     {
       if (GameService.Instance.IsPaused)
+      {
         return;
+      }
 
-      if (!_shouldArrange) 
+      if (!_shouldArrange)
+      {
         return;
+      }
 
-      graphService.StopNodes();
       Attract();
       Repel();
       graphService.FixEdges();
@@ -38,22 +40,29 @@ namespace Assets.Scripts
     {
       _shouldArrange = !_shouldArrange;
       Debug.Log("Arranger " + (_shouldArrange ? "enabled" : "disabled"));
-      graphService.StopNodes();
     }
 
     public void ToggleReverse()
     {
-      _reverse = !_reverse;
+      _velocityModifier *= -1;
+    }
+
+    public void DisableArrangement()
+    {
+      if (_shouldArrange)
+      {
+        ToggleArrangement();
+      }
     }
 
     /// <summary>
-    /// Repel each Node from every other node
+    ///   Repel each Node from every other node
     /// </summary>
     private void Repel()
     {
       for (var i = 0; i < graphService.Graph.nodes.Count; i++)
       {
-        for (var j = i+1; j < graphService.Graph.nodes.Count; j++)
+        for (var j = i + 1; j < graphService.Graph.nodes.Count; j++)
         {
           var node1 = graphService.Graph.nodes[i];
           var node2 = graphService.Graph.nodes[j];
@@ -64,16 +73,8 @@ namespace Assets.Scripts
           var velocityMagnitude = CalculateRepelVelocityMagnitude(distance);
           var velocity = direction.normalized * Mathf.Min(_maxVelocityMagnitude, velocityMagnitude);
 
-          if (_reverse)
-          {
-            node1.Position -= velocity * Time.deltaTime;
-            node2.Position += velocity * Time.deltaTime;
-          }
-          else
-          {
-            node1.Position += velocity * Time.deltaTime;
-            node2.Position -= velocity * Time.deltaTime;
-          }
+          node1.Position += velocity * Time.deltaTime * _velocityModifier;
+          node2.Position -= velocity * Time.deltaTime * _velocityModifier;
         }
       }
     }
@@ -85,7 +86,7 @@ namespace Assets.Scripts
     }
 
     /// <summary>
-    /// Attract two nodes if there is an edge to connect them
+    ///   Attract two nodes if there is an edge to connect them
     /// </summary>
     private void Attract()
     {
@@ -100,16 +101,8 @@ namespace Assets.Scripts
         var velocityMagnitude = CalculateAttractVelocityMagnitude(distance);
         var velocity = direction.normalized * Mathf.Min(_maxVelocityMagnitude, velocityMagnitude);
 
-        if (_reverse)
-        {
-          node1.Position += velocity * Time.deltaTime;
-          node2.Position -= velocity * Time.deltaTime;
-        }
-        else
-        {
-          node1.Position -= velocity * Time.deltaTime;
-          node2.Position += velocity * Time.deltaTime;
-        }
+        node1.Position -= velocity * Time.deltaTime * _velocityModifier;
+        node2.Position += velocity * Time.deltaTime * _velocityModifier;
       }
     }
 

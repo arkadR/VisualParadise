@@ -2,13 +2,18 @@
 
 namespace Assets.Scripts.Tools
 {
-  public class MovementExecutorTool : ITool
+  public class MovementExecutorTool : ITool, IMovementTool
   {
     private readonly MovementExecutor _movementExecutor;
 
     public MovementExecutorTool(MovementExecutor movementExecutor)
     {
       _movementExecutor = movementExecutor;
+    }
+
+    public void Disable()
+    {
+      _movementExecutor.DisableMovement();
     }
 
     public string ToolName => "Move";
