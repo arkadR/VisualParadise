@@ -40,6 +40,7 @@ namespace Assets.Scripts.Tools
       return _graphService.IsNode(hitInfo.collider.gameObject);
     }
 
+
     public void OnLeftClick(Transform cameraTransform, bool isHit, RaycastHit raycastHit)
     {
       Mode = EdgeMode.Create;
