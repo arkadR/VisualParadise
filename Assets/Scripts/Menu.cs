@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Common.Extensions;
+﻿using Assets.Scripts.Common.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +19,7 @@ namespace Assets.Scripts
     }
 
     // Start is called before the first frame update
-    private void Start()
+    public void Start()
     {
       LoadMainMenu();
       SetPlayerMovementText(EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(PlayerMovementModeValue));
@@ -51,14 +51,9 @@ namespace Assets.Scripts
       SetPlayerMovementText(EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(PlayerMovementModeValue));
     }
 
-    private void SetPlayerMovementText(PlayerMovementMode value)
-    {
-      playerMovementText.text = $"{c_playerMovement}: {EnumUtils<PlayerMovementMode>.GetName(value)}";
-    }
+    private void SetPlayerMovementText(PlayerMovementMode value) => playerMovementText.text =
+      $"{c_playerMovement}: {EnumUtils<PlayerMovementMode>.GetName(value)}";
 
-    public void QuitButton_OnClick()
-    {
-      Application.Quit();
-    }
+    public void QuitButton_OnClick() => Application.Quit();
   }
 }

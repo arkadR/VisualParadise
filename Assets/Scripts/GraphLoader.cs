@@ -9,7 +9,7 @@ namespace Assets.Scripts
   {
     public GraphService graphService;
 
-    void Start()
+    public void Start()
     {
       var graphFilePath = PlayerPrefs.GetString(Constants.GraphFilePathKey);
       var graph = LoadGraph(graphFilePath) ?? new Graph();

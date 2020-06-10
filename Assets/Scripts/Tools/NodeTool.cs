@@ -9,10 +9,7 @@ namespace Assets.Scripts.Tools
 
     public string ToolName => "Node";
 
-    public bool CanInteractWith(RaycastHit hitInfo)
-    {
-      return _graphService.IsNode(hitInfo.collider.gameObject);
-    }
+    public bool CanInteractWith(RaycastHit hitInfo) => _graphService.IsNode(hitInfo.collider.gameObject);
 
     public void OnLeftClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit)
     {
@@ -24,18 +21,13 @@ namespace Assets.Scripts.Tools
     public void OnRightClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit)
     {
       if (!isRayCastHit)
-      {
         return;
-      }
 
       var node = raycastHit.collider.gameObject;
       var contextMenuHandler = FindObjectOfType<ContextMenuHandler>();
       contextMenuHandler.OpenContextMenu(node);
     }
 
-    private void Start()
-    {
-      _graphService = FindObjectOfType<GraphService>();
-    }
+    public void Start() => _graphService = FindObjectOfType<GraphService>();
   }
 }

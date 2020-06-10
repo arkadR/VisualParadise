@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Scripts.Common.Extensions
+namespace Assets.Scripts.Common.Utils
 {
   //https://stackoverflow.com/questions/6413804/why-does-casting-int-to-invalid-enum-value-not-throw-exception
   /// <summary>
@@ -17,32 +17,18 @@ namespace Assets.Scripts.Common.Extensions
     static EnumUtils()
     {
       // Throw Exception on static initialization if the given type isn't an enum.
-      if (!typeof(T).IsEnum)
-      {
-        throw new ArgumentException("T must be an enumerated type");
-      }
+      if (!typeof(T).IsEnum) throw new ArgumentException("T must be an enumerated type");
     }
 
-    public static int GetNextValue(int currentValue)
-    {
-      return (currentValue + 1) % Enum.GetValues(typeof(T)).Length;
-    }
+    public static int GetNextValue(int currentValue) => (currentValue + 1) % Enum.GetValues(typeof(T)).Length;
 
-    public static bool IsDefined(object enumValue)
-    {
-      return Enum.IsDefined(typeof(T), enumValue);
-    }
+    public static bool IsDefined(object enumValue) => Enum.IsDefined(typeof(T), enumValue);
 
-    public static T DefinedOrDefaultCast(object enumValue)
-    {
-      return IsDefined(enumValue)
+    public static T DefinedOrDefaultCast(object enumValue) =>
+      IsDefined(enumValue)
         ? (T)enumValue
         : default;
-    }
 
-    public static string GetName(T enumValue)
-    {
-      return Enum.GetName(typeof(T), enumValue);
-    }
+    public static string GetName(T enumValue) => Enum.GetName(typeof(T), enumValue);
   }
 }

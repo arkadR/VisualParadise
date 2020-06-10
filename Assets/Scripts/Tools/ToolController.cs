@@ -24,10 +24,7 @@ namespace Assets.Scripts.Tools
       set
       {
         _activeTool = value;
-        foreach (var observer in _toolChangeObservers)
-        {
-          observer.OnToolsChanged(_activeTool);
-        }
+        foreach (var observer in _toolChangeObservers) observer.OnToolsChanged(_activeTool);
       }
     }
 
@@ -54,10 +51,7 @@ namespace Assets.Scripts.Tools
 
     private void Update()
     {
-      if (GameService.Instance.IsPaused)
-      {
-        return;
-      }
+      if (GameService.Instance.IsPaused) return;
 
       var isHit = RayCast(out var raycastHit);
       crosshair.color = isHit && ActiveTool.CanInteractWith(raycastHit) ? activatedColor : notActivatedColor;
@@ -74,24 +68,15 @@ namespace Assets.Scripts.Tools
     private void HandleMouseClick(bool isHit, RaycastHit raycastHit)
     {
       if (Input.GetButtonDown("Fire1"))
-      {
         ActiveTool.OnLeftClick(_attachedCamera.transform, isHit, raycastHit);
-      }
-      else if (Input.GetButtonDown("Fire2"))
-      {
-        ActiveTool.OnRightClick(_attachedCamera.transform, isHit, raycastHit);
-      }
+      else if (Input.GetButtonDown("Fire2")) ActiveTool.OnRightClick(_attachedCamera.transform, isHit, raycastHit);
     }
 
     private void DisableMovementTools(ITool toolNotToDisable)
     {
       foreach (var tool in _tools.Values)
-      {
         if (tool != toolNotToDisable && tool is IMovementTool)
-        {
           (tool as IMovementTool).Disable();
-        }
-      }
     }
 
     private void HandleChangeTool()
@@ -100,21 +85,12 @@ namespace Assets.Scripts.Tools
         .Keys
         .FirstOrDefault(Input.GetKeyDown);
 
-      if (pressedToolKey == KeyCode.None)
-      {
-        return;
-      }
+      if (pressedToolKey == KeyCode.None) return;
 
       var newTool = _tools[pressedToolKey];
-      if (ActiveTool == newTool)
-      {
-        return;
-      }
+      if (ActiveTool == newTool) return;
 
-      if (newTool is IMovementTool)
-      {
-        DisableMovementTools(newTool);
-      }
+      if (newTool is IMovementTool) DisableMovementTools(newTool);
 
       ActiveTool = newTool;
     }

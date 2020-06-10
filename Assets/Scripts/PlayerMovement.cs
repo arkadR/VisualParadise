@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Common.Extensions;
+﻿using Assets.Scripts.Common.Utils;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -7,23 +7,17 @@ namespace Assets.Scripts
   {
     private PlayerMovementMode _movementMode;
     public CharacterController controller;
-    public Transform groundCheck;
-    public LayerMask groundMask;
-
     public float speed = 12f;
 
-    private void Start()
+    public void Start()
     {
       var playerMovementModeValue = PlayerPrefs.GetInt(Constants.PlayerMovementMode);
       _movementMode = EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(playerMovementModeValue);
     }
 
-    private void Update()
+    public void Update()
     {
-      if (GameService.Instance.IsPaused)
-      {
-        return;
-      }
+      if (GameService.Instance.IsPaused) return;
 
       switch (_movementMode)
       {

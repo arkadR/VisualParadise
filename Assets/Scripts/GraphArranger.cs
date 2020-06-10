@@ -13,23 +13,14 @@ namespace Assets.Scripts
     private int _velocityModifier = 1;
     private GraphService graphService;
 
-    private void Start()
-    {
-      graphService = FindObjectOfType<GraphService>();
-    }
+    public void Start() => graphService = FindObjectOfType<GraphService>();
 
     // Update for physics
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
-      if (GameService.Instance.IsPaused)
-      {
-        return;
-      }
+      if (GameService.Instance.IsPaused) return;
 
-      if (!_shouldArrange)
-      {
-        return;
-      }
+      if (!_shouldArrange) return;
 
       Attract();
       Repel();
@@ -42,17 +33,11 @@ namespace Assets.Scripts
       Debug.Log("Arranger " + (_shouldArrange ? "enabled" : "disabled"));
     }
 
-    public void ToggleReverse()
-    {
-      _velocityModifier *= -1;
-    }
+    public void ToggleReverse() => _velocityModifier *= -1;
 
     public void DisableArrangement()
     {
-      if (_shouldArrange)
-      {
-        ToggleArrangement();
-      }
+      if (_shouldArrange) ToggleArrangement();
     }
 
     /// <summary>
@@ -61,21 +46,19 @@ namespace Assets.Scripts
     private void Repel()
     {
       for (var i = 0; i < graphService.Graph.nodes.Count; i++)
+      for (var j = i + 1; j < graphService.Graph.nodes.Count; j++)
       {
-        for (var j = i + 1; j < graphService.Graph.nodes.Count; j++)
-        {
-          var node1 = graphService.Graph.nodes[i];
-          var node2 = graphService.Graph.nodes[j];
+        var node1 = graphService.Graph.nodes[i];
+        var node2 = graphService.Graph.nodes[j];
 
-          var direction = node1.Position - node2.Position;
-          var distance = direction.magnitude;
+        var direction = node1.Position - node2.Position;
+        var distance = direction.magnitude;
 
-          var velocityMagnitude = CalculateRepelVelocityMagnitude(distance);
-          var velocity = direction.normalized * Mathf.Min(_maxVelocityMagnitude, velocityMagnitude);
+        var velocityMagnitude = CalculateRepelVelocityMagnitude(distance);
+        var velocity = direction.normalized * Mathf.Min(_maxVelocityMagnitude, velocityMagnitude);
 
-          node1.Position += velocity * Time.deltaTime * _velocityModifier;
-          node2.Position -= velocity * Time.deltaTime * _velocityModifier;
-        }
+        node1.Position += velocity * Time.deltaTime * _velocityModifier;
+        node2.Position -= velocity * Time.deltaTime * _velocityModifier;
       }
     }
 

@@ -8,23 +8,14 @@ namespace Assets.Scripts
     private int _velocityModifier = 1;
     private GraphService graphService;
 
-    private void Start()
-    {
-      graphService = FindObjectOfType<GraphService>();
-    }
+    private void Start() => graphService = FindObjectOfType<GraphService>();
 
     // Update for physics
     private void FixedUpdate()
     {
-      if (GameService.Instance.IsPaused)
-      {
-        return;
-      }
+      if (GameService.Instance.IsPaused) return;
 
-      if (_shouldMove == false)
-      {
-        return;
-      }
+      if (_shouldMove == false) return;
 
       Move();
       Accelerate();
@@ -39,16 +30,10 @@ namespace Assets.Scripts
 
     public void DisableMovement()
     {
-      if (_shouldMove)
-      {
-        ToggleMovement();
-      }
+      if (_shouldMove) ToggleMovement();
     }
 
-    public void ToggleReverse()
-    {
-      _velocityModifier *= -1;
-    }
+    public void ToggleReverse() => _velocityModifier *= -1;
 
     private void Accelerate()
     {
