@@ -20,6 +20,7 @@ namespace Assets.Scripts
       if (graph.edges == null)
         graph.edges = new List<Edge>();
 
+      Debug.Log($"Nodes count: {graph?.nodes.Count}\nEdges count: {graph?.edges.Count}");
       graphService.SetGraph(graph);
     }
 
@@ -28,7 +29,6 @@ namespace Assets.Scripts
       //TODO: Try/catch file for bad formats.
       var graphJson = File.ReadAllText(filePath);
       var graph = JsonUtility.FromJson<Graph>(graphJson);
-      Debug.Log($"Nodes count: {graph?.nodes.Count}\nEdges count: {graph?.edges.Count}");
       return graph;
     }
   }

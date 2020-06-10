@@ -49,10 +49,10 @@ namespace Assets.Scripts.Guns
     public void OnMoveDown(Transform playerTransform, Camera camera)
     {
       Mode = EdgeMode.Create;
-      ModifyEdge(camera);
+      OnActonPerformed(camera);
     }
 
-    private void ModifyEdge(Camera camera)
+    private void OnActonPerformed(Camera camera)
     {
       var transform = camera.transform;
       var hit = Physics.Raycast(
@@ -122,7 +122,7 @@ namespace Assets.Scripts.Guns
     public void OnRightClick(Camera camera)
     {
       Mode = EdgeMode.Delete;
-      ModifyEdge(camera);
+      OnActonPerformed(camera);
     }
     }
 }

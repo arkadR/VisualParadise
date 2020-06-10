@@ -13,6 +13,7 @@ namespace Assets.Scripts.Canvas
     public void Start()
     {
       _graphService = FindObjectOfType<GraphService>();
+      contextMenu.SetActive(false);
     }
 
     public void OpenContextMenu(UnityEngine.GameObject gameObjectHit)

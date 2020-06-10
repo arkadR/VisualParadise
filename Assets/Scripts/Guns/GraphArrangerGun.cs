@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Guns
 {
-  public class GraphArrangerGun : IGun
+  public class GraphArrangerGun : IGun, IMovementGun
   {
     private readonly GraphArranger graphArranger;
 
@@ -12,6 +12,11 @@ namespace Assets.Scripts.Guns
     }
 
     public string GunName => "Arrange";
+
+    public void Disable()
+    {
+      graphArranger.DisableArrangement();
+    }
 
     public void OnMoveDown(Transform playerTransform, Camera camera)
     {

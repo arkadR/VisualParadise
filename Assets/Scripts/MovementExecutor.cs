@@ -7,7 +7,7 @@ namespace Assets.Scripts
     GraphService graphService;
 
     private bool _shouldMove = false;
-    private bool _reverse = false;
+    private int _velocityModifier = 1;
 
     void Start()
     {
@@ -34,9 +34,15 @@ namespace Assets.Scripts
       Debug.Log("Node movement " + (_shouldMove ? "enabled" : "disabled"));
     }
 
+    public void DisableMovement()
+    {
+      if (_shouldMove)
+        ToggleMovement();
+    }
+
     public void ToggleReverse()
     {
-      _reverse = !_reverse;
+      _velocityModifier *= -1;
     }
 
     private void Accelerate()
@@ -55,47 +61,8 @@ namespace Assets.Scripts
     {
       foreach (var n in graphService.Graph.nodes)
       {
-        var newPosition = n.Position + n.Velocity * Time.deltaTime;
-        var newRotation = n.Rotation + n.AngularVelocity * Time.deltaTime;
-
-        n.Position = newPosition;
-        n.Rotation = newRotation;
-      }
-    }
-
-    /// <summary>
-    /// Update edges position based on corresponding nodes
-    /// </summary>
-    public void FixEdges()
-    {
-      foreach (var e in graphService.Graph.edges)
-      {
-        graphService.FixEdge(e);
-      }
-    }
-
-    /// <summary>
-    /// Set velocity of all nodes to 0
-    /// </summary>
-    public void StopNodes()
-    {
-      foreach (var n in graphService.Graph.nodes)
-      {
-        n.Velocity = Vector3.zero;
-        n.AngularVelocity = Vector3.zero;
-        n.Acceleration = Vector3.zero;
-        n.AngularAcceleration = Vector3.zero;
-        
-        if (_reverse)
-        {
-          n.Position -= n.Velocity * Time.deltaTime;
-          n.Rotation -= n.AngularVelocity * Time.deltaTime;
-        }
-        else
-        {
-          n.Position += n.Velocity * Time.deltaTime;
-          n.Rotation += n.AngularVelocity * Time.deltaTime;
-        }
+        n.Position += n.Velocity * Time.deltaTime * _velocityModifier;
+        n.Rotation += n.AngularVelocity * Time.deltaTime * _velocityModifier;
       }
     }
   }
