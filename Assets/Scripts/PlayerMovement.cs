@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Assets.Scripts.Common.Extensions;
 
 namespace Assets.Scripts
 {
@@ -9,17 +10,35 @@ namespace Assets.Scripts
     public LayerMask groundMask;
 
     public float speed = 12f;
+    private PlayerMovementMode _movementMode;
 
-    // Update is called once per frame
+    private void Start()
+    {
+      var playerMovementModeValue = PlayerPrefs.GetInt(Constants.PlayerMovementMode);
+      _movementMode = EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(playerMovementModeValue);
+    }
+
     void Update()
     {
       if (GameService.Instance.IsPaused)
         return;
 
-      ApplyPlayerInput();
+      switch (_movementMode)
+      {
+        case PlayerMovementMode.AxisBased:
+          {
+            ApplyMovementAxisBased();
+            break;
+          }
+        case PlayerMovementMode.FollowCamera:
+          {
+            ApplyMovementFollowCamera();
+            break;
+          }
+      }
     }
 
-    void ApplyPlayerInput()
+    void ApplyMovementAxisBased()
     {
       var x = Input.GetAxis("Horizontal");
       var z = Input.GetAxis("Vertical");
@@ -28,6 +47,13 @@ namespace Assets.Scripts
       var offset = transform.right * x + transform.forward * z + transform.up * y;
 
       controller.Move(offset * speed * Time.deltaTime);
+    }
+
+    void ApplyMovementFollowCamera()
+    {
+      var z = Input.GetAxis("Vertical");
+
+      controller.Move(Camera.main.transform.forward * speed * Time.deltaTime * z);
     }
   }
 }
