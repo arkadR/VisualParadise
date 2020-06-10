@@ -35,8 +35,8 @@ namespace Assets.Scripts
 
 
     public Node FindNodeByGameObject(UnityEngine.GameObject gameObject) => Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
-  
-    public List<Edge> FindNodeEdges(Node node) => Graph.edges.FindAll(e => e.from == node.id || e.to == node.id);
+
+    public List<Edge> FindNodeEdges(Node node) => Graph.edges.Where(e => e.from == node.id || e.to == node.id).ToList();
 
     public Edge FindEdgeByNodes(Node node1, Node node2) {
       var edge = Graph.edges.SingleOrDefault(e => e.@from == node1.id && e.to == node2.id);

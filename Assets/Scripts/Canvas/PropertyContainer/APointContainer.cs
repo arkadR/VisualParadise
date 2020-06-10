@@ -17,12 +17,12 @@ namespace Assets.Scripts.Canvas.PropertyContainer
 
     public void Start()
     {
-      ax.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(ax); });
-      ay.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(ay); });
-      az.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(az); });
-      alpha_theta.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(alpha_theta); });
-      alpha_phi.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(alpha_phi); });
-      alpha_psi.onValueChanged.AddListener(delegate { TextValidator.OnValueChanged(alpha_psi); });
+      ax.onValueChanged.AddListener(delegate { new TextValidator(ax).OnValueChanged(); });
+      ay.onValueChanged.AddListener(delegate { new TextValidator(ay).OnValueChanged(); });
+      az.onValueChanged.AddListener(delegate { new TextValidator(az).OnValueChanged(); });
+      alpha_theta.onValueChanged.AddListener(delegate { new TextValidator(alpha_theta).OnValueChanged(); });
+      alpha_phi.onValueChanged.AddListener(delegate { new TextValidator(alpha_phi).OnValueChanged(); });
+      alpha_psi.onValueChanged.AddListener(delegate { new TextValidator(alpha_psi).OnValueChanged(); });
     }
 
     public void SetNode(Node node)
