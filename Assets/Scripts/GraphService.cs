@@ -6,8 +6,8 @@ namespace Assets.Scripts
 {
   public class GraphService : MonoBehaviour
   {
-    public EdgeFactory edgeFactory;
-    public NodeFactory nodeFactory;
+    public EdgeGameObjectFactory edgeGameObjectFactory;
+    public NodeGameObjectFactory nodeGameObjectFactory;
     public Graph Graph { get; private set; }
 
     public void SetGraph(Graph graph)
@@ -16,7 +16,7 @@ namespace Assets.Scripts
 
       foreach (var node in graph.nodes)
       {
-        var sphere = nodeFactory.CreateNode(node.Position,
+        var sphere = nodeGameObjectFactory.CreateNodeGameObject(node.Position,
           Quaternion.Euler(node.Rotation));
         node.gameObject = sphere;
       }
@@ -25,7 +25,7 @@ namespace Assets.Scripts
       {
         var node1 = graph.nodes.Single(n => n.id == edge.from);
         var node2 = graph.nodes.Single(n => n.id == edge.to);
-        var line = edgeFactory.CreateEdge(node1, node2);
+        var line = edgeGameObjectFactory.CreateEdgeGameObject(node1, node2);
         edge.gameObject = line;
       }
     }
@@ -57,7 +57,7 @@ namespace Assets.Scripts
         ? Graph.nodes.Max(n => n.id) + 1
         : 0;
 
-      var node = Node.EmptyNode(id, nodeFactory.CreateNode(position, rotation));
+      var node = Node.EmptyNode(id, nodeGameObjectFactory.CreateNodeGameObject(position, rotation));
       node.Position = position;
       node.Rotation = rotation.eulerAngles;
       Graph.nodes.Add(node);
@@ -69,7 +69,7 @@ namespace Assets.Scripts
       {
         from = node1.id,
         to = node2.id,
-        gameObject = edgeFactory.CreateEdge(node1, node2),
+        gameObject = edgeGameObjectFactory.CreateEdgeGameObject(node1, node2),
         nodeFrom = node1,
         nodeTo = node2
       };

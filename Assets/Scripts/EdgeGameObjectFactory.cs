@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-  public class EdgeFactory : MonoBehaviour
+  public class EdgeGameObjectFactory : MonoBehaviour
   {
     [SerializeField] private GameObject edgePrefab;
 
-    public GameObject CreateEdge(Node fromNode, Node toNode)
+    public GameObject CreateEdgeGameObject(Node fromNode, Node toNode)
     {
       var line = Instantiate(edgePrefab);
       var lineRenderer = line.GetComponent<LineRenderer>();

@@ -2,11 +2,11 @@
 
 namespace Assets.Scripts
 {
-  public class NodeFactory : MonoBehaviour
+  public class NodeGameObjectFactory : MonoBehaviour
   {
     public GameObject nodePrefab;
 
-    public GameObject CreateNode(Vector3 position, Quaternion rotation)
+    public GameObject CreateNodeGameObject(Vector3 position, Quaternion rotation)
     {
       return Instantiate(nodePrefab, position, rotation);
     }
