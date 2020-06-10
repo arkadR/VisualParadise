@@ -7,8 +7,13 @@ namespace Assets.Scripts.Tools
   {
     private GraphService _graphService;
 
-    public string ToolName => "Node";
+    void Start()
+    {
+      _graphService = FindObjectOfType<GraphService>();
+    }
 
+    public string ToolName => "Node";
+    
     public bool CanInteractWith(RaycastHit hitInfo)
     {
       return _graphService.IsNode(hitInfo.collider.gameObject);
@@ -31,11 +36,6 @@ namespace Assets.Scripts.Tools
       var node = raycastHit.collider.gameObject;
       var contextMenuHandler = FindObjectOfType<ContextMenuHandler>();
       contextMenuHandler.OpenContextMenu(node);
-    }
-
-    private void Start()
-    {
-      _graphService = FindObjectOfType<GraphService>();
     }
   }
 }

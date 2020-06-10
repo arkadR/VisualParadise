@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.Model;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
@@ -20,6 +21,7 @@ namespace Assets.Scripts
         var sphere = nodeGameObjectFactory.CreateNodeGameObject(node.Position,
           Quaternion.Euler(node.Rotation));
         node.gameObject = sphere;
+        node.gameObject.GetComponentInChildren<Text>().text = node.label;
       }
 
       foreach (var edge in graph.edges)
@@ -28,6 +30,7 @@ namespace Assets.Scripts
         var node2 = graph.nodes.Single(n => n.id == edge.to);
         var line = edgeGameObjectFactory.CreateEdgeGameObject(node1, node2);
         edge.gameObject = line;
+        // edge.gameObject.GetComponent<Text>().text = edge.label;
       }
     }
 
@@ -36,16 +39,14 @@ namespace Assets.Scripts
       return FindNodeByGameObject(gameObject) != null;
     }
 
-    public Node FindNodeByGameObject(UnityEngine.GameObject gameObject) => Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
+    public Node FindNodeByGameObject(GameObject gameObject) => Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
 
     public List<Edge> FindNodeEdges(Node node) => Graph.edges.Where(e => e.from == node.id || e.to == node.id).ToList();
 
-    public Edge FindEdgeByNodes(Node node1, Node node2) {
-      var edge = Graph.edges.SingleOrDefault(e => e.@from == node1.id && e.to == node2.id);
-      if (edge == null)
-        return Graph.edges.SingleOrDefault(e => e.@from == node2.id && e.to == node1.id);
-      return edge;
-    }
+    public Edge FindEdgeByNodes(Node node1, Node node2) =>
+      Graph.edges.SingleOrDefault(e => 
+        (e.from == node1.id && e.to == node2.id) ||
+        (e.from == node2.id && e.to == node1.id));
 
     public void AddNode(Vector3 position, Quaternion rotation)
     {
