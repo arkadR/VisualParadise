@@ -54,17 +54,12 @@ namespace Assets.Scripts.Guns
 
     private void OnActonPerformed(Camera camera)
     {
-      var transform = camera.transform;
-      var hit = Physics.Raycast(
-          transform.position,
-          transform.forward,
-          out var hitInfo,
-          hitDistance);
+      var ray = camera.ScreenPointToRay(Input.mousePosition);
 
-      if (!hit)
-        return ;
+      if (!Physics.Raycast(ray, out var hit))
+        return;
 
-      var gameObjectHit = hitInfo.collider.gameObject;
+      var gameObjectHit = hit.collider.gameObject;
       var currentlyHitNode = graphService.FindNodeByGameObject(gameObjectHit);
 
       // If not a node, don't do anything
