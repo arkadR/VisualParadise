@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Assets.Scripts.Common.Extensions;
 
 namespace Assets.Scripts
 {
@@ -9,13 +10,21 @@ namespace Assets.Scripts
     public GameObject loadMenu;
     public GameObject newGraphMenu;
     public Text playerMovementText;
+    private int PlayerMovementModeValue
+    {
+      get => PlayerPrefs.GetInt(Constants.PlayerMovementMode);
+      set
+      {
+        PlayerPrefs.SetInt(Constants.PlayerMovementMode, value);
+      }
+    }
     private const string c_playerMovement = "Player movement";
 
     // Start is called before the first frame update
     void Start()
     {
       LoadMainMenu();
-      SetPlayerMovementText(PlayerPrefs.GetInt(Constants.PlayerMovementMode));
+      SetPlayerMovementText(EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(PlayerMovementModeValue));
     }
 
     public void LoadMainMenu()
@@ -39,22 +48,14 @@ namespace Assets.Scripts
 
     public void PlayerMovement_OnClick()
     {
-      PlayerMovementMode playerMovementMode = SwitchPlayerMovement();
-      SetPlayerMovementText(playerMovementMode);
+      PlayerMovementModeValue = EnumUtils<PlayerMovementMode>.GetNextValue(PlayerMovementModeValue);
+      Debug.Log("PlayerMovementMode: " + PlayerMovementModeValue);
+      SetPlayerMovementText(EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(PlayerMovementModeValue));
     }
 
-    private void SetPlayerMovementText(object value)
+    private void SetPlayerMovementText(PlayerMovementMode value)
     {
-      playerMovementText.text = $"{c_playerMovement}: {System.Enum.GetName(typeof(PlayerMovementMode), value)}";
-    }
-
-    private PlayerMovementMode SwitchPlayerMovement()
-    {
-      var playerMovementModeValue = PlayerPrefs.GetInt(Constants.PlayerMovementMode);
-      var newValue = (playerMovementModeValue + 1) % System.Enum.GetValues(typeof(PlayerMovementMode)).Length;
-      PlayerPrefs.SetInt(Constants.PlayerMovementMode, newValue);
-      Debug.Log("PlayerMovementMode: " + newValue);
-      return (PlayerMovementMode)(newValue);
+      playerMovementText.text = $"{c_playerMovement}: {EnumUtils<PlayerMovementMode>.GetName(value)}";
     }
 
     public void QuitButton_OnClick()

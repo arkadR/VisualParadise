@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Assets.Scripts.Common.Extensions;
 
 namespace Assets.Scripts
 {
@@ -14,11 +15,7 @@ namespace Assets.Scripts
     private void Start()
     {
       var playerMovementModeValue = PlayerPrefs.GetInt(Constants.PlayerMovementMode);
-      PlayerMovementMode playerMovementMode = System.Enum.IsDefined(typeof(PlayerMovementMode), playerMovementModeValue) 
-        ? (PlayerMovementMode)playerMovementModeValue
-        : default;
-
-      _movementMode = playerMovementMode;
+      _movementMode = EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(playerMovementModeValue);
     }
 
     void Update()
