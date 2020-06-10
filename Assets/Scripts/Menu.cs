@@ -1,27 +1,25 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Common.Utils;
+using UnityEngine;
 using UnityEngine.UI;
-using Assets.Scripts.Common.Extensions;
 
 namespace Assets.Scripts
 {
   public class Menu : MonoBehaviour
   {
-    public GameObject mainMenu;
+    private const string c_playerMovement = "Player movement";
     public GameObject loadMenu;
+    public GameObject mainMenu;
     public GameObject newGraphMenu;
     public Text playerMovementText;
+
     private int PlayerMovementModeValue
     {
       get => PlayerPrefs.GetInt(Constants.PlayerMovementMode);
-      set
-      {
-        PlayerPrefs.SetInt(Constants.PlayerMovementMode, value);
-      }
+      set => PlayerPrefs.SetInt(Constants.PlayerMovementMode, value);
     }
-    private const string c_playerMovement = "Player movement";
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
       LoadMainMenu();
       SetPlayerMovementText(EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(PlayerMovementModeValue));
@@ -53,14 +51,9 @@ namespace Assets.Scripts
       SetPlayerMovementText(EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(PlayerMovementModeValue));
     }
 
-    private void SetPlayerMovementText(PlayerMovementMode value)
-    {
-      playerMovementText.text = $"{c_playerMovement}: {EnumUtils<PlayerMovementMode>.GetName(value)}";
-    }
+    private void SetPlayerMovementText(PlayerMovementMode value) => playerMovementText.text =
+      $"{c_playerMovement}: {EnumUtils<PlayerMovementMode>.GetName(value)}";
 
-    public void QuitButton_OnClick()
-    {
-      Application.Quit();
-    }
+    public void QuitButton_OnClick() => Application.Quit();
   }
 }

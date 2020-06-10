@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace Assets.Scripts.Common.Extensions
+namespace Assets.Scripts.Common.Utils
 {
   //https://stackoverflow.com/questions/6413804/why-does-casting-int-to-invalid-enum-value-not-throw-exception
   /// <summary>
-  /// Utility methods for enum values. This static type will fail to initialize 
-  /// (throwing a <see cref="ArgumentException"/>) if
-  /// you try to provide a value that is not an enum.
+  ///   Utility methods for enum values. This static type will fail to initialize
+  ///   (throwing a <see cref="ArgumentException" />) if
+  ///   you try to provide a value that is not an enum.
   /// </summary>
   /// <typeparam name="T">An enum type. </typeparam>
   public static class EnumUtils<T> where T : struct, IConvertible // Try to get as much of a static check as we can.
@@ -25,9 +25,10 @@ namespace Assets.Scripts.Common.Extensions
 
     public static bool IsDefined(object enumValue) => Enum.IsDefined(typeof(T), enumValue);
 
-    public static T DefinedOrDefaultCast(object enumValue) => IsDefined(enumValue)
-       ? (T)enumValue
-       : default;
+    public static T DefinedOrDefaultCast(object enumValue) =>
+      IsDefined(enumValue)
+        ? (T)enumValue
+        : default;
 
     public static string GetName(T enumValue) => Enum.GetName(typeof(T), enumValue);
   }

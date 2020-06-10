@@ -7,13 +7,10 @@ namespace Assets.Scripts
 {
   public class NewGraphMenu : MonoBehaviour
   {
-    public InputField GraphNameInput;
     public Button CreateButton;
+    public InputField GraphNameInput;
 
-    public void Start()
-    {
-      CreateButton.interactable = false;
-    }
+    public void Start() => CreateButton.interactable = false;
 
     public void Update()
     {

@@ -6,13 +6,12 @@ namespace Assets.Scripts
 {
   public class PauseMenu : MonoBehaviour
   {
-    public UnityEngine.GameObject pauseMenu;
-    private GraphService graphService;
+    GraphService graphService;
+    public GameObject pauseMenu;
 
-    void Start()
+    public void Start()
     {
       pauseMenu.SetActive(false);
-
       graphService = FindObjectOfType<GraphService>();
     }
 
@@ -24,14 +23,8 @@ namespace Assets.Scripts
       File.WriteAllText(filePath, json);
     }
 
-    public void ResumeButton_OnClick()
-    {
-      GameService.Instance.GlobalUnPauseGame();
-    }
+    public void ResumeButton_OnClick() => GameService.Instance.GlobalUnPauseGame();
 
-    public void QuitButton_OnClick()
-    {
-      SceneManager.LoadScene(Constants.MainMenuScene);
-    }
+    public void QuitButton_OnClick() => SceneManager.LoadScene(Constants.MainMenuScene);
   }
 }
