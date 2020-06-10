@@ -15,7 +15,7 @@ namespace Assets.Scripts
     void Start()
     {
       LoadMainMenu();
-      playerMovementText.text = $"{c_playerMovement}: {System.Enum.GetName(typeof(PlayerMovementMode), PlayerPrefs.GetInt(Constants.PlayerMovementMode))}";
+      SetPlayerMovementText(PlayerPrefs.GetInt(Constants.PlayerMovementMode));
     }
 
     public void LoadMainMenu()
@@ -40,7 +40,12 @@ namespace Assets.Scripts
     public void PlayerMovement_OnClick()
     {
       PlayerMovementMode playerMovementMode = SwitchPlayerMovement();
-      playerMovementText.text = $"{c_playerMovement}: {System.Enum.GetName(typeof(PlayerMovementMode), playerMovementMode)}";
+      SetPlayerMovementText(playerMovementMode);
+    }
+
+    private void SetPlayerMovementText(object value)
+    {
+      playerMovementText.text = $"{c_playerMovement}: {System.Enum.GetName(typeof(PlayerMovementMode), value)}";
     }
 
     private PlayerMovementMode SwitchPlayerMovement()
