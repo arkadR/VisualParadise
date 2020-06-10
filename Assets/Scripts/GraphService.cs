@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Collections.Generic;
 using Assets.Scripts.Model;
 using UnityEngine;
 
@@ -34,6 +35,8 @@ namespace Assets.Scripts
 
 
     public Node FindNodeByGameObject(UnityEngine.GameObject gameObject) => Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
+
+    public List<Edge> FindNodeEdges(Node node) => Graph.edges.Where(e => e.from == node.id || e.to == node.id).ToList();
 
     public Edge FindEdgeByNodes(Node node1, Node node2) {
       var edge = Graph.edges.SingleOrDefault(e => e.@from == node1.id && e.to == node2.id);
@@ -90,18 +93,20 @@ namespace Assets.Scripts
       return Graph.nodes.SingleOrDefault(n => n.id == id);
     }
 
-    /// <summary>
-    /// Update edges position based on corresponding nodes
-    /// </summary>
+    public void FixEdge(Edge edge)
+    {
+      var lineRenderer = edge.gameObject.GetComponent<LineRenderer>();
+      var startingNode = FindNodeById(edge.from);
+      var endingNode = FindNodeById(edge.to);
+      lineRenderer.SetPosition(0, startingNode.Position);
+      lineRenderer.SetPosition(1, endingNode.Position);
+    }
+
     public void FixEdges()
     {
       foreach (var e in Graph.edges)
       {
-        var lineRenderer = e.gameObject.GetComponent<LineRenderer>();
-        var startingNode = FindNodeById(e.from);
-        var endingNode = FindNodeById(e.to);
-        lineRenderer.SetPosition(0, startingNode.Position);
-        lineRenderer.SetPosition(1, endingNode.Position);
+        FixEdge(e);
       }
     }
 

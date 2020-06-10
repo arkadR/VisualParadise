@@ -7,7 +7,6 @@ namespace Assets.Scripts
     public static GameService Instance;
 
     public GameObject pauseMenu;
-    public GameObject gamePanel;
 
     void Awake()
     {
@@ -47,6 +46,20 @@ namespace Assets.Scripts
     {
       // gamePanel.SetActive(true);
       IsPaused = false;
+      Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void PauseGameWithoutResume()
+    {
+      IsPaused = true;
+      isResumableOnKeyPress = false;
+      Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void UnPauseGameWithoutResume()
+    {
+      IsPaused = false;
+      isResumableOnKeyPress = true;
       Cursor.lockState = CursorLockMode.Locked;
     }
   }

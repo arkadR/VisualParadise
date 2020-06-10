@@ -21,7 +21,7 @@ namespace Assets.Scripts.Canvas
       var node = _graphService.FindNodeByGameObject(gameObjectHit);
       _node = node;
       contextMenu.SetActive(true);
-      GameService.Instance.PauseGame();
+      GameService.Instance.PauseGameWithoutResume();
     }
 
     public void ChangeParametersButtonOnClick()
@@ -38,7 +38,7 @@ namespace Assets.Scripts.Canvas
     public void ExitButtonOnClick()
     {
       contextMenu.SetActive(false);
-      GameService.Instance.UnPauseGame();
+      GameService.Instance.UnPauseGameWithoutResume();
     }
   }
 }
