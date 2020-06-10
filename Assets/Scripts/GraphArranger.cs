@@ -12,7 +12,7 @@ namespace Assets.Scripts
     private const float _maxVelocityMagnitude = 25f;
 
     private bool _shouldArrange = false;
-    private bool _reverse = false;
+    private int _velocityModifier = 1;
 
     void Start()
     {
@@ -28,7 +28,6 @@ namespace Assets.Scripts
       if (!_shouldArrange) 
         return;
 
-      graphService.StopNodes();
       Attract();
       Repel();
       graphService.FixEdges();
@@ -38,12 +37,17 @@ namespace Assets.Scripts
     {
       _shouldArrange = !_shouldArrange;
       Debug.Log("Arranger " + (_shouldArrange ? "enabled" : "disabled"));
-      graphService.StopNodes();
     }
 
     public void ToggleReverse()
     {
-      _reverse = !_reverse;
+      _velocityModifier *= -1;
+    }
+
+    public void DisableArrangement()
+    {
+      if (_shouldArrange)
+        ToggleArrangement();
     }
 
     /// <summary>
@@ -64,16 +68,8 @@ namespace Assets.Scripts
           var velocityMagnitude = CalculateRepelVelocityMagnitude(distance);
           var velocity = direction.normalized * Mathf.Min(_maxVelocityMagnitude, velocityMagnitude);
 
-          if (_reverse)
-          {
-            node1.Position -= velocity * Time.deltaTime;
-            node2.Position += velocity * Time.deltaTime;
-          }
-          else
-          {
-            node1.Position += velocity * Time.deltaTime;
-            node2.Position -= velocity * Time.deltaTime;
-          }
+          node1.Position += velocity * Time.deltaTime * _velocityModifier;
+          node2.Position -= velocity * Time.deltaTime * _velocityModifier;
         }
       }
     }
@@ -100,16 +96,8 @@ namespace Assets.Scripts
         var velocityMagnitude = CalculateAttractVelocityMagnitude(distance);
         var velocity = direction.normalized * Mathf.Min(_maxVelocityMagnitude, velocityMagnitude);
 
-        if (_reverse)
-        {
-          node1.Position += velocity * Time.deltaTime;
-          node2.Position -= velocity * Time.deltaTime;
-        }
-        else
-        {
-          node1.Position -= velocity * Time.deltaTime;
-          node2.Position += velocity * Time.deltaTime;
-        }
+        node1.Position -= velocity * Time.deltaTime * _velocityModifier;
+        node2.Position += velocity * Time.deltaTime * _velocityModifier;
       }
     }
 

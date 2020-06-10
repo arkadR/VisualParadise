@@ -62,6 +62,15 @@ namespace Assets.Scripts.Guns
       }
     }
 
+    private void DisableMovementGuns(IGun gunNotToDisable)
+    {
+      foreach (var gun in _guns.Values)
+      {
+        if (gun != gunNotToDisable && gun is IMovementGun)
+          (gun as IMovementGun).Disable();
+      }
+    }
+
     private void HandleChangeGun()
     {
       var pressedGunKey = _guns
@@ -71,11 +80,15 @@ namespace Assets.Scripts.Guns
       if (pressedGunKey == KeyCode.None) 
         return;
 
-      if (ActiveGun == _guns[pressedGunKey])
+      var newGun = _guns[pressedGunKey];
+      if (ActiveGun == newGun)
         return;
 
       ActiveGun.OnSwitchedAway();
-      ActiveGun = _guns[pressedGunKey];
+
+      if (newGun is IMovementGun)
+        DisableMovementGuns(newGun);
+      ActiveGun = newGun;
     }
   }
 }

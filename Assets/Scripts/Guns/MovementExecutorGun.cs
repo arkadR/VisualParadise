@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Guns
 {
-  public class MovementExecutorGun : IGun
+  public class MovementExecutorGun : IGun, IMovementGun
   {
     private readonly MovementExecutor movementExecutor;
 
@@ -26,6 +26,11 @@ namespace Assets.Scripts.Guns
     public void OnRightClick(Camera camera)
     {
       movementExecutor.ToggleReverse();
+    }
+
+    public void Disable()
+    {
+      movementExecutor.DisableMovement();
     }
   }
 }
