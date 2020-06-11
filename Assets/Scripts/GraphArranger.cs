@@ -4,14 +4,14 @@ namespace Assets.Scripts
 {
   public class GraphArranger : MonoBehaviour
   {
-    private const float _repelFunCoefficient = 5.0f; // higher values causes more distortion
-    private const float _attractFunPower = 1.5f; // safe range <1, 3>
-    private const float _maxVelocityMagnitude = 25f;
+    const float _repelFunCoefficient = 5.0f; // higher values causes more distortion
+    const float _attractFunPower = 1.5f; // safe range <1, 3>
+    const float _maxVelocityMagnitude = 25f;
 
-    private bool _shouldArrange;
-    private int _velocityModifier = 1;
+    bool _shouldArrange;
+    int _velocityModifier = 1;
 
-    private GraphService _graphService;
+    GraphService _graphService;
 
     public void Start() => _graphService = FindObjectOfType<GraphService>();
 
@@ -64,7 +64,7 @@ namespace Assets.Scripts
       }
     }
 
-    private float CalculateRepelVelocityMagnitude(float distance)
+    float CalculateRepelVelocityMagnitude(float distance)
     {
       var rawResult = _repelFunCoefficient / distance;
       return rawResult;
@@ -91,7 +91,7 @@ namespace Assets.Scripts
       }
     }
 
-    private float CalculateAttractVelocityMagnitude(float distance)
+    float CalculateAttractVelocityMagnitude(float distance)
     {
       var rawResult = Mathf.Pow(distance, _attractFunPower);
       return rawResult;
