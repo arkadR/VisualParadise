@@ -1,8 +1,6 @@
-﻿using Assets.Scripts.Common.Utils;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.StartMenu
 {
   public class Menu : MonoBehaviour
   {
