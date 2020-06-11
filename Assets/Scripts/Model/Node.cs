@@ -4,23 +4,14 @@ using UnityEngine;
 namespace Assets.Scripts.Model
 {
   [Serializable]
-  public class Node
+  public class Node : IEquatable<Node>
   {
+    public APoint apoint;
+
+    [NonSerialized] public GameObject gameObject;
     public int id;
     public Point point;
     public VPoint vpoint;
-    public APoint apoint;
-
-    [NonSerialized] public UnityEngine.GameObject gameObject;
-
-    public static Node EmptyNode(int id, UnityEngine.GameObject gameObject) => new Node
-    {
-      id = id,
-      point = new Point(),
-      apoint = new APoint(),
-      vpoint = new VPoint(),
-      gameObject = gameObject
-    };
 
     public Vector3 Position
     {
@@ -65,5 +56,35 @@ namespace Assets.Scripts.Model
       get => apoint.angularAcceleration;
       set => apoint.angularAcceleration = value;
     }
+
+    public bool Equals(Node other)
+    {
+      if (ReferenceEquals(null, other)) return false;
+      if (ReferenceEquals(this, other)) return true;
+      return id == other.id;
+    }
+
+    public static Node EmptyNode(int id, GameObject gameObject) => new Node
+    {
+      id = id,
+      point = new Point(),
+      apoint = new APoint(),
+      vpoint = new VPoint(),
+      gameObject = gameObject
+    };
+
+    public override bool Equals(object obj)
+    {
+      if (ReferenceEquals(null, obj)) return false;
+      if (ReferenceEquals(this, obj)) return true;
+      if (obj.GetType() != GetType()) return false;
+      return Equals((Node)obj);
+    }
+
+    public override int GetHashCode() => id;
+
+    public static bool operator ==(Node left, Node right) => Equals(left, right);
+
+    public static bool operator !=(Node left, Node right) => !Equals(left, right);
   }
 }
