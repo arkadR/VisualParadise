@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Common.Utils;
+﻿using Assets.Scripts.Common;
+using Assets.Scripts.Common.Utils;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -11,7 +12,7 @@ namespace Assets.Scripts
 
     public void Start()
     {
-      var playerMovementModeValue = PlayerPrefs.GetInt(Constants.PlayerMovementMode);
+      var playerMovementModeValue = PlayerPrefs.GetInt(Constants.PlayerMovementModeKey);
       _movementMode = EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(playerMovementModeValue);
     }
 
@@ -23,15 +24,15 @@ namespace Assets.Scripts
       switch (_movementMode)
       {
         case PlayerMovementMode.AxisBased:
-        {
-          ApplyMovementAxisBased();
-          break;
-        }
+          {
+            ApplyMovementAxisBased();
+            break;
+          }
         case PlayerMovementMode.FollowCamera:
-        {
-          ApplyMovementFollowCamera();
-          break;
-        }
+          {
+            ApplyMovementFollowCamera();
+            break;
+          }
       }
     }
 
@@ -48,9 +49,11 @@ namespace Assets.Scripts
 
     void ApplyMovementFollowCamera()
     {
+      var x = Input.GetAxis("Horizontal");
       var z = Input.GetAxis("Vertical");
 
-      controller.Move(Camera.main.transform.forward * speed * Time.deltaTime * z);
+      var offset = (transform.right * x) + (Camera.main.transform.forward * z);
+      controller.Move(offset * speed * Time.deltaTime);
     }
   }
 }
