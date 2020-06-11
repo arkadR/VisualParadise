@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Common.Extensions;
 using Assets.Scripts.Model;
 using UnityEngine;
 
@@ -24,10 +25,8 @@ namespace Assets.Scripts
 
       foreach (var edge in graph.edges)
       {
-        var node1 = graph.nodes.Single(n => n.id == edge.from);
-        var node2 = graph.nodes.Single(n => n.id == edge.to);
-        var line = edgeGameObjectFactory.CreateEdgeGameObject(node1, node2);
-        edge.gameObject = line;
+        //TODO[ME] EXTREMELY POORLY PERFORMING
+        edgeGameObjectFactory.CreateGameObjectEdgesFor(new HashSet<Edge> {edge});
       }
     }
 
@@ -38,12 +37,13 @@ namespace Assets.Scripts
 
     public List<Edge> FindNodeEdges(Node node) => Graph.edges.Where(e => e.from == node.id || e.to == node.id).ToList();
 
-    public Edge FindEdgeByNodes(Node node1, Node node2)
+    public ISet<Edge> FindEdgesByNodes(Node node1, Node node2)
     {
-      var edge = Graph.edges.SingleOrDefault(e => e.from == node1.id && e.to == node2.id);
-      if (edge == null)
-        return Graph.edges.SingleOrDefault(e => e.from == node2.id && e.to == node1.id);
-      return edge;
+      var nodes = new HashSet<Node> {node1, node2};
+      return (from edge in Graph.edges
+          where nodes.Contains(edge.nodeFrom) && nodes.Contains(edge.nodeTo)
+          select edge)
+        .ToSet();
     }
 
     public void AddNode(Vector3 position, Quaternion rotation)
@@ -60,14 +60,20 @@ namespace Assets.Scripts
 
     public void AddEdge(Node node1, Node node2)
     {
+      var id = Graph.edges.Any()
+        ? Graph.edges.Max(n => n.id) + 1
+        : 0;
       var edge = new Edge
       {
+        id = id,
         from = node1.id,
         to = node2.id,
-        gameObject = edgeGameObjectFactory.CreateEdgeGameObject(node1, node2),
         nodeFrom = node1,
         nodeTo = node2
       };
+      var existingEdges = FindEdgesByNodes(node1, node2);
+      existingEdges.Add(edge);
+      edgeGameObjectFactory.CreateGameObjectEdgesFor(existingEdges);
       Graph.edges.Add(edge);
     }
 
@@ -79,23 +85,25 @@ namespace Assets.Scripts
 
       foreach (var edge in edgesToRemove)
       {
-        RemoveEdge(edge);
+        RemoveAllEdgesBetween(edge.nodeFrom, edge.nodeTo);
       }
     }
 
-    public void RemoveEdge(Edge edge)
+    public void RemoveAllEdgesBetween(Node node1, Node node2)
     {
-      Destroy(edge.gameObject);
-      Graph.edges.Remove(edge);
+      var edges = FindEdgesByNodes(node1, node2);
+      foreach (var edge in edges)
+      {
+        Destroy(edge.gameObject);
+        Graph.edges.Remove(edge);
+      }
     }
-
-    public Node FindNodeById(int id) => Graph.nodes.SingleOrDefault(n => n.id == id);
 
     public void FixEdge(Edge edge)
     {
       var lineRenderer = edge.gameObject.GetComponent<LineRenderer>();
-      var startingNode = FindNodeById(edge.from);
-      var endingNode = FindNodeById(edge.to);
+      var startingNode = Graph.FindNodeById(edge.from);
+      var endingNode = Graph.FindNodeById(edge.to);
       lineRenderer.SetPosition(0, startingNode.Position);
       lineRenderer.SetPosition(1, endingNode.Position);
     }

@@ -89,25 +89,16 @@ namespace Assets.Scripts.Tools
         return;
       }
 
-      var existingEdge = _graphService.FindEdgeByNodes(_previouslyHitNode, currentlyHitNode);
-
       switch (Mode)
       {
         case EdgeMode.Create:
         {
-          //Don't create duplicate edge
-          if (existingEdge != null)
-            return;
-
           _graphService.AddEdge(currentlyHitNode, _previouslyHitNode);
           break;
         }
         case EdgeMode.Delete:
         {
-          if (existingEdge == null)
-            return;
-
-          _graphService.RemoveEdge(existingEdge);
+          _graphService.RemoveAllEdgesBetween(currentlyHitNode, _previouslyHitNode);
           break;
         }
       }

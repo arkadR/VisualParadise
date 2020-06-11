@@ -8992,6 +8992,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   edgePrefab: {fileID: 6955056186729139999, guid: edcfaedcc49f0fe41a1bdddc4c863ce7,
     type: 3}
+  debugSpherePrefab: {fileID: 7751082562957601977, guid: 0e8928f2afef7d04da1e28c03ba7a931,
+    type: 3}
+  debug: 1
 --- !u!114 &1919699933
 MonoBehaviour:
   m_ObjectHideFlags: 0
