@@ -6,23 +6,15 @@ namespace Assets.Scripts
 {
   public class Menu : MonoBehaviour
   {
-    private const string c_playerMovement = "Player movement";
     public GameObject loadMenu;
     public GameObject mainMenu;
     public GameObject newGraphMenu;
-    public Text playerMovementText;
-
-    private int PlayerMovementModeValue
-    {
-      get => PlayerPrefs.GetInt(Constants.PlayerMovementMode);
-      set => PlayerPrefs.SetInt(Constants.PlayerMovementMode, value);
-    }
+    public GameObject settingsMenu;
 
     // Start is called before the first frame update
     public void Start()
     {
       LoadMainMenu();
-      SetPlayerMovementText(EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(PlayerMovementModeValue));
     }
 
     public void LoadMainMenu()
@@ -30,6 +22,7 @@ namespace Assets.Scripts
       mainMenu.SetActive(true);
       loadMenu.SetActive(false);
       newGraphMenu.SetActive(false);
+      settingsMenu.SetActive(false);
     }
 
     public void NewGraphButton_OnClick()
@@ -44,15 +37,11 @@ namespace Assets.Scripts
       loadMenu.SetActive(true);
     }
 
-    public void PlayerMovement_OnClick()
+    public void SettingsButton_OnClick()
     {
-      PlayerMovementModeValue = EnumUtils<PlayerMovementMode>.GetNextValue(PlayerMovementModeValue);
-      Debug.Log("PlayerMovementMode: " + PlayerMovementModeValue);
-      SetPlayerMovementText(EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(PlayerMovementModeValue));
+      mainMenu.SetActive(false);
+      settingsMenu.SetActive(true);
     }
-
-    private void SetPlayerMovementText(PlayerMovementMode value) => playerMovementText.text =
-      $"{c_playerMovement}: {EnumUtils<PlayerMovementMode>.GetName(value)}";
 
     public void QuitButton_OnClick() => Application.Quit();
   }

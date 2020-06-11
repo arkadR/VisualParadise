@@ -98,7 +98,7 @@ namespace Assets.Scripts.Tools
       ActiveTool = newTool;
     }
 
-
+    
     void DisableMovementTools(ITool toolNotToDisable)
     {
       foreach (var tool in _tools.Values)

@@ -11,7 +11,7 @@ namespace Assets.Scripts
 
     public void Start()
     {
-      var playerMovementModeValue = PlayerPrefs.GetInt(Constants.PlayerMovementMode);
+      var playerMovementModeValue = PlayerPrefs.GetInt(Constants.PlayerMovementModeKey);
       _movementMode = EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(playerMovementModeValue);
     }
 
