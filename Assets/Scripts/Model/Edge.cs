@@ -1,5 +1,7 @@
 ﻿using System;
+using Assets.Scripts.Common.Extensions;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Model
 {
@@ -16,5 +18,18 @@ namespace Assets.Scripts.Model
 
     [NonSerialized] public Node nodeFrom;
     [NonSerialized] public Node nodeTo;
+
+    public Text Text => gameObject.GetComponentInChildren<Text>();
+
+    public void UpdatePosition()
+    {
+      var (x1, y1, _) = Camera.main.WorldToScreenPoint(nodeFrom.Position);
+      var (x2, y2, _) = Camera.main.WorldToScreenPoint(nodeTo.Position);
+      var tan = (y1 - y2) / (x1 - x2);
+      var angle = Mathf.Atan(tan) * Mathf.Rad2Deg;
+      var centerOfEdgeOnScreen = new Vector2(x1 + x2, y1 + y2) / 2;
+      Text.SetPositionOnScreen(centerOfEdgeOnScreen);
+      Text.rectTransform.rotation = Quaternion.Euler(0, 0, angle);
+    }
   }
 }

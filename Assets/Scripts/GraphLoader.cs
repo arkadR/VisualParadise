@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
+using System.Linq;
 using Assets.Scripts.Common;
 using Assets.Scripts.Model;
 using UnityEngine;
@@ -21,10 +21,13 @@ namespace Assets.Scripts
           n.label = n.id.ToString();
       });
 
-      graph.edges.ForEach(n =>
+      graph.edges.ForEach(e =>
       {
-        if (string.IsNullOrEmpty(n.label))
-          n.label = $"{n.from}-{n.to}";
+        if (string.IsNullOrEmpty(e.label))
+          e.label = $"{e.from}-{e.to}";
+
+        e.nodeFrom = graph.nodes.Single(n => n.id == e.from);
+        e.nodeTo = graph.nodes.Single(n => n.id == e.to);
       });
 
       Debug.Log($"Nodes count: {graph.nodes.Count}\nEdges count: {graph.edges.Count}");

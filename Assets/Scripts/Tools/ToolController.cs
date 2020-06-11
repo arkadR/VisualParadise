@@ -38,13 +38,15 @@ namespace Assets.Scripts.Tools
 
       var toolGunController = FindObjectOfType<ToolTextPanelController>();
       var edgeTool = new EdgeTool(_graphService);
+      var labelVisibilityTool = new LabelVisibilityTool(_graphService);
 
       _tools = new Dictionary<KeyCode, ITool>
       {
         [KeyCode.Alpha1] = gameObject.AddComponent<NodeTool>(),
         [KeyCode.Alpha2] = edgeTool,
         [KeyCode.Alpha3] = new MovementExecutorTool(FindObjectOfType<MovementExecutor>()),
-        [KeyCode.Alpha4] = new GraphArrangerTool(FindObjectOfType<GraphArranger>())
+        [KeyCode.Alpha4] = new GraphArrangerTool(FindObjectOfType<GraphArranger>()),
+        [KeyCode.Alpha5] = labelVisibilityTool
       };
 
       _toolChangeObservers = new HashSet<IToolChangeObserver> {toolGunController, edgeTool};
@@ -77,15 +79,6 @@ namespace Assets.Scripts.Tools
         ActiveTool.OnRightClick(_attachedCamera.transform, isHit, raycastHit);
     }
 
-    void DisableMovementTools(ITool toolNotToDisable)
-    {
-      foreach (var tool in _tools.Values)
-      {
-        if (tool != toolNotToDisable && tool is IMovementTool)
-          (tool as IMovementTool).Disable();
-      }
-    }
-
     void HandleChangeTool()
     {
       var pressedToolKey = _tools
@@ -104,5 +97,16 @@ namespace Assets.Scripts.Tools
 
       ActiveTool = newTool;
     }
+
+
+    void DisableMovementTools(ITool toolNotToDisable)
+    {
+      foreach (var tool in _tools.Values)
+      {
+        if (tool != toolNotToDisable && tool is IMovementTool movementTool)
+          movementTool.Disable();
+      }
+    }
+
   }
 }

@@ -33,6 +33,8 @@ namespace Assets.Scripts
         edge.gameObject = line;
         edge.gameObject.GetComponentInChildren<Text>().text = edge.label;
       }
+
+      SetLabelVisibility(false);
     }
 
     public bool IsNode(GameObject gameObject) => FindNodeByGameObject(gameObject) != null;
@@ -100,14 +102,7 @@ namespace Assets.Scripts
       lineRenderer.SetPosition(0, startingNode.Position);
       lineRenderer.SetPosition(1, endingNode.Position);
 
-      var labelText = edge.gameObject.GetComponentInChildren<Text>();
-      var (x1, y1, _) = Camera.main.WorldToScreenPoint(startingNode.Position);
-      var (x2, y2, _) = Camera.main.WorldToScreenPoint(endingNode.Position);
-      var tan = (y1 - y2) / (x1 - x2);
-      var angle = Mathf.Atan(tan) * Mathf.Rad2Deg;
-      var centerOfEdgeOnScreen = new Vector2(x1+x2, y1+y2) / 2;
-      labelText.SetPositionOnScreen(centerOfEdgeOnScreen);
-      labelText.rectTransform.rotation = Quaternion.Euler(0, 0, angle);
+      edge.UpdatePosition();
     }
 
     /// <summary>
@@ -133,6 +128,12 @@ namespace Assets.Scripts
         n.Acceleration = Vector3.zero;
         n.AngularAcceleration = Vector3.zero;
       }
+    }
+
+    public void SetLabelVisibility(bool visibility)
+    {
+      Graph.nodes.ForEach(n => n.Text.enabled = visibility );
+      Graph.edges.ForEach(n => n.Text.enabled = visibility );
     }
   }
 }
