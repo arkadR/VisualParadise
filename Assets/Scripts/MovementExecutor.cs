@@ -17,10 +17,7 @@ namespace Assets.Scripts
         return;
 
       if (_shouldMove == false)
-      {
-        UpdateLabelPositions();
         return;
-      }
 
       Move();
       Accelerate();
@@ -60,15 +57,6 @@ namespace Assets.Scripts
         n.Position += n.Velocity * Time.deltaTime * _velocityModifier;
         n.Rotation += n.AngularVelocity * Time.deltaTime * _velocityModifier;
       }
-    }
-
-    /// <summary>
-    /// Forces the text to update regardless if movement is on or off. Without that, text is stuck on screen in one place.
-    /// </summary>
-    void UpdateLabelPositions()
-    {
-      graphService.Graph.nodes.ForEach(n => n.UpdateText());
-      graphService.Graph.edges.ForEach(e => e.UpdatePosition());
     }
   }
 }

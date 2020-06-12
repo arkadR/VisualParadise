@@ -18,13 +18,13 @@ namespace Assets.Scripts
       graph.nodes.ForEach(n =>
       {
         if (string.IsNullOrEmpty(n.label))
-          n.label = n.id.ToString();
+          n.label = n.DefaultLabel;
       });
 
       graph.edges.ForEach(e =>
       {
         if (string.IsNullOrEmpty(e.label))
-          e.label = $"{e.from}-{e.to}";
+          e.label = e.DefaultLabel;
 
         e.nodeFrom = graph.nodes.Single(n => n.id == e.from);
         e.nodeTo = graph.nodes.Single(n => n.id == e.to);

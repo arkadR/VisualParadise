@@ -21,7 +21,12 @@ namespace Assets.Scripts.Model
 
     public Text Text => gameObject.GetComponentInChildren<Text>();
 
-    public void UpdatePosition()
+    public string DefaultLabel 
+    {
+      get => $"{from}-{to}";
+    }
+
+    public void UpdateTextPosition()
     {
       var (x1, y1, _) = Camera.main.WorldToScreenPoint(nodeFrom.Position);
       var (x2, y2, _) = Camera.main.WorldToScreenPoint(nodeTo.Position);

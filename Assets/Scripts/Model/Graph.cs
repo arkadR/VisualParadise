@@ -7,8 +7,8 @@ namespace Assets.Scripts.Model
   [Serializable]
   public class Graph
   {
-    public List<Node> nodes;
-    public List<Edge> edges;
+    public List<Node> nodes = new List<Node>();
+    public List<Edge> edges = new List<Edge>();
 
 
 
