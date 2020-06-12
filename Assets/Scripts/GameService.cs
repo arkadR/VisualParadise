@@ -8,8 +8,8 @@ namespace Assets.Scripts
 
     public bool isResumableOnKeyPress = true;
 
-    public GameObject pauseMenu;
-
+    PauseMenu _pauseMenu;
+    
     public bool IsPaused { get; private set; }
 
     public void Awake()
@@ -19,19 +19,21 @@ namespace Assets.Scripts
 
       Instance = this;
 
+      _pauseMenu = FindObjectOfType<PauseMenu>();
+
       DontDestroyOnLoad(this);
     }
 
     public void GlobalPauseGame()
     {
       isResumableOnKeyPress = true;
-      pauseMenu.SetActive(true);
+      _pauseMenu.ShowMenu();
       PauseGame();
     }
 
     public void GlobalUnPauseGame()
     {
-      pauseMenu.SetActive(false);
+      _pauseMenu.HideMenu();
       UnPauseGame();
     }
 
