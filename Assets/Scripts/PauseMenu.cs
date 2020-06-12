@@ -22,6 +22,7 @@ namespace Assets.Scripts
       var graph = graphService.Graph;
       var json = JsonUtility.ToJson(graph);
       File.WriteAllText(filePath, json);
+      Toast.Instance.Show("Graph saved succesfully!", 4f, Toast.ToastColor.Green);
     }
 
     public void ResumeButton_OnClick() => GameService.Instance.GlobalUnPauseGame();
