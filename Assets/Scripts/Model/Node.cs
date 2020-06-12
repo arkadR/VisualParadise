@@ -1,5 +1,7 @@
 ﻿using System;
+using Assets.Scripts.Common.Extensions;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Model
 {
@@ -7,20 +9,27 @@ namespace Assets.Scripts.Model
   public class Node
   {
     public int id;
+    public string label;
     public Point point;
     public VPoint vpoint;
     public APoint apoint;
 
-    [NonSerialized] public UnityEngine.GameObject gameObject;
+    [NonSerialized] public GameObject gameObject;
 
-    public static Node EmptyNode(int id, UnityEngine.GameObject gameObject) => new Node
+    public static Node EmptyNode(int id, GameObject gameObject)
     {
-      id = id,
-      point = new Point(),
-      apoint = new APoint(),
-      vpoint = new VPoint(),
-      gameObject = gameObject
-    };
+      var node = new Node
+      {
+        id = id,
+        label = id.ToString(),
+        point = new Point(),
+        apoint = new APoint(),
+        vpoint = new VPoint(),
+        gameObject = gameObject
+      };
+      node.Text.text = node.label;
+      return node;
+    }
 
     public Vector3 Position
     {
@@ -29,6 +38,7 @@ namespace Assets.Scripts.Model
       {
         point.position = value;
         gameObject.transform.position = value;
+        Text.SetPositionOnScreen(Camera.main.WorldToScreenPoint(value));
       }
     }
 
@@ -65,5 +75,9 @@ namespace Assets.Scripts.Model
       get => apoint.angularAcceleration;
       set => apoint.angularAcceleration = value;
     }
+
+    public Text Text => gameObject.GetComponentInChildren<Text>();
+
+    public void UpdateText() => Text.SetPositionOnScreen(Camera.main.WorldToScreenPoint(Position));
   }
 }

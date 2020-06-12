@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -11,11 +10,11 @@ namespace Assets.Scripts
 
     bool _shouldArrange;
     int _velocityModifier = 1;
-    GraphService graphService;
 
-    public void Start() => graphService = FindObjectOfType<GraphService>();
+    GraphService _graphService;
 
-    // Update for physics
+    public void Start() => _graphService = FindObjectOfType<GraphService>();
+
     public void FixedUpdate()
     {
       if (GameService.Instance.IsPaused)
@@ -26,7 +25,7 @@ namespace Assets.Scripts
 
       Attract();
       Repel();
-      graphService.FixEdges();
+      _graphService.FixEdges();
     }
 
     public void ToggleArrangement()
@@ -48,11 +47,11 @@ namespace Assets.Scripts
     /// </summary>
     void Repel()
     {
-      for (var i = 0; i < graphService.Graph.nodes.Count; i++)
-      for (var j = i + 1; j < graphService.Graph.nodes.Count; j++)
+      for (var i = 0; i < _graphService.Graph.nodes.Count; i++)
+      for (var j = i + 1; j < _graphService.Graph.nodes.Count; j++)
       {
-        var node1 = graphService.Graph.nodes[i];
-        var node2 = graphService.Graph.nodes[j];
+        var node1 = _graphService.Graph.nodes[i];
+        var node2 = _graphService.Graph.nodes[j];
 
         var direction = node1.Position - node2.Position;
         var distance = direction.magnitude;
@@ -76,10 +75,10 @@ namespace Assets.Scripts
     /// </summary>
     void Attract()
     {
-      foreach (var e in graphService.Graph.edges)
+      foreach (var e in _graphService.Graph.edges)
       {
-        var node1 = graphService.Graph.nodes.Single(n => n.id == e.from);
-        var node2 = graphService.Graph.nodes.Single(n => n.id == e.to);
+        var node1 = _graphService.FindNodeById(e.from);
+        var node2 = _graphService.FindNodeById(e.to);
 
         var direction = node1.Position - node2.Position;
         var distance = direction.magnitude;

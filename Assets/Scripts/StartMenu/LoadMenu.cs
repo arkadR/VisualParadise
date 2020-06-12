@@ -1,9 +1,10 @@
 ﻿using System.IO;
+using Assets.Scripts.Common;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.StartMenu
 {
   public class LoadMenu : MonoBehaviour
   {

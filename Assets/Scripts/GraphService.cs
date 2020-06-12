@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Common.Extensions;
 using Assets.Scripts.Model;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
@@ -20,6 +22,7 @@ namespace Assets.Scripts
         var sphere = nodeGameObjectFactory.CreateNodeGameObject(node.Position,
           Quaternion.Euler(node.Rotation));
         node.gameObject = sphere;
+        node.gameObject.GetComponentInChildren<Text>().text = node.label;
       }
 
       foreach (var edge in graph.edges)
@@ -28,7 +31,10 @@ namespace Assets.Scripts
         var node2 = graph.nodes.Single(n => n.id == edge.to);
         var line = edgeGameObjectFactory.CreateEdgeGameObject(node1, node2);
         edge.gameObject = line;
+        edge.gameObject.GetComponentInChildren<Text>().text = edge.label;
       }
+
+      SetLabelVisibility(false);
     }
 
     public bool IsNode(GameObject gameObject) => FindNodeByGameObject(gameObject) != null;
@@ -38,13 +44,10 @@ namespace Assets.Scripts
 
     public List<Edge> FindNodeEdges(Node node) => Graph.edges.Where(e => e.from == node.id || e.to == node.id).ToList();
 
-    public Edge FindEdgeByNodes(Node node1, Node node2)
-    {
-      var edge = Graph.edges.SingleOrDefault(e => e.from == node1.id && e.to == node2.id);
-      if (edge == null)
-        return Graph.edges.SingleOrDefault(e => e.from == node2.id && e.to == node1.id);
-      return edge;
-    }
+    public Edge FindEdgeByNodes(Node node1, Node node2) =>
+      Graph.edges.SingleOrDefault(e =>
+        (e.from == node1.id && e.to == node2.id) ||
+        (e.from == node2.id && e.to == node1.id));
 
     public void AddNode(Vector3 position, Quaternion rotation)
     {
@@ -98,6 +101,8 @@ namespace Assets.Scripts
       var endingNode = FindNodeById(edge.to);
       lineRenderer.SetPosition(0, startingNode.Position);
       lineRenderer.SetPosition(1, endingNode.Position);
+
+      edge.UpdatePosition();
     }
 
     /// <summary>
@@ -123,6 +128,12 @@ namespace Assets.Scripts
         n.Acceleration = Vector3.zero;
         n.AngularAcceleration = Vector3.zero;
       }
+    }
+
+    public void SetLabelVisibility(bool visibility)
+    {
+      Graph.nodes.ForEach(n => n.Text.enabled = visibility );
+      Graph.edges.ForEach(n => n.Text.enabled = visibility );
     }
   }
 }

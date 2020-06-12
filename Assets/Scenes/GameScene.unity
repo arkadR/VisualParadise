@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5194,7 +5194,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 969613248}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -3.38, y: -0, z: 0}
+  m_LocalPosition: {x: -4, y: 0, z: 3}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 2040796850}
@@ -5212,7 +5212,7 @@ TextMesh:
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
-  m_Anchor: 4
+  m_Anchor: 3
   m_Alignment: 0
   m_TabSize: 4
   m_FontSize: 100
@@ -6483,7 +6483,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1454458437}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -4, y: 0, z: 1}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 2040796850}
@@ -6497,11 +6497,11 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1454458437}
-  m_Text: Test
+  m_Text: PLACEHOLDER
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
-  m_Anchor: 4
+  m_Anchor: 3
   m_Alignment: 0
   m_TabSize: 4
   m_FontSize: 100
@@ -6769,10 +6769,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 1515649760}
-  groundCheck: {fileID: 0}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 256
   speed: 12
 --- !u!1 &1520164285
 GameObject:
@@ -9719,7 +9715,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2040796849}
-  m_LocalRotation: {x: 0.2449848, y: 0.2449848, z: 0.6633117, w: 0.6633117}
+  m_LocalRotation: {x: 0.24184473, y: 0.24184473, z: 0.66446304, w: 0.66446304}
   m_LocalPosition: {x: -0.0017, y: 0, z: 0.0525}
   m_LocalScale: {x: 0.0032826, y: 0.0010000002, z: 0.001842827}
   m_Children:
@@ -9727,7 +9723,7 @@ Transform:
   - {fileID: 969613249}
   m_Father: {fileID: 1769413082}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 40.542004, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 40, z: 90}
 --- !u!64 &2040796851
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -9818,8 +9814,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e70fbd381f25b9841a5fd6d0fd7bacd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 24578129}
   isResumableOnKeyPress: 1
+  pauseMenu: {fileID: 24578129}
 --- !u!4 &2051443773
 Transform:
   m_ObjectHideFlags: 0

@@ -35,9 +35,9 @@ namespace Assets.Scripts.Canvas.PropertyContainer
 
     public bool IsInputCorrect()
     {
-      return float.TryParse(ax.text, out var ax_res) && float.TryParse(ay.text, out var ay_res)
-        && float.TryParse(az.text, out var az_res) && float.TryParse(alpha_theta.text, out var alpha_theta_res)
-        && float.TryParse(alpha_phi.text, out var alpha_phi_res) && float.TryParse(alpha_psi.text, out var alpha_psi_res);
+      return float.TryParse(ax.text, out _) && float.TryParse(ay.text, out _)
+        && float.TryParse(az.text, out _) && float.TryParse(alpha_theta.text, out _)
+        && float.TryParse(alpha_phi.text, out _) && float.TryParse(alpha_psi.text, out _);
     }
 
     public void SaveData()
