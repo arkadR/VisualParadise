@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Common.Extensions;
 using Assets.Scripts.Model;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +11,19 @@ namespace Assets.Scripts
     public EdgeGameObjectFactory edgeGameObjectFactory;
     public NodeGameObjectFactory nodeGameObjectFactory;
     public Graph Graph { get; private set; }
+    private bool _labelVisibility = false;
+    public bool LabelVisibility
+    {
+      get => _labelVisibility;
+      set
+      {
+        _labelVisibility = value;
+        Graph?.nodes.ForEach(n => n.Text.enabled = _labelVisibility);
+        Graph?.edges.ForEach(n => n.Text.enabled = _labelVisibility);
+      }
+    }
+
+    public void ToggleLabelVisibility() => LabelVisibility = !LabelVisibility;
 
     public void SetGraph(Graph graph)
     {
@@ -34,7 +46,7 @@ namespace Assets.Scripts
         edge.gameObject.GetComponentInChildren<Text>().text = edge.label;
       }
 
-      SetLabelVisibility(false);
+      LabelVisibility = false;
     }
 
     public bool IsNode(GameObject gameObject) => FindNodeByGameObject(gameObject) != null;
@@ -58,6 +70,7 @@ namespace Assets.Scripts
       var node = Node.EmptyNode(id, nodeGameObjectFactory.CreateNodeGameObject(position, rotation));
       node.Position = position;
       node.Rotation = rotation.eulerAngles;
+      node.Text.enabled = LabelVisibility;
       Graph.nodes.Add(node);
     }
 
@@ -71,6 +84,9 @@ namespace Assets.Scripts
         nodeFrom = node1,
         nodeTo = node2
       };
+      edge.label = edge.DefaultLabel;
+      edge.Text.text = edge.label;
+      edge.Text.enabled = LabelVisibility;
       Graph.edges.Add(edge);
     }
 
@@ -101,8 +117,6 @@ namespace Assets.Scripts
       var endingNode = FindNodeById(edge.to);
       lineRenderer.SetPosition(0, startingNode.Position);
       lineRenderer.SetPosition(1, endingNode.Position);
-
-      edge.UpdatePosition();
     }
 
     /// <summary>
@@ -114,26 +128,6 @@ namespace Assets.Scripts
       {
         FixEdge(e);
       }
-    }
-
-    /// <summary>
-    ///   Set velocity of all nodes to 0
-    /// </summary>
-    public void StopNodes()
-    {
-      foreach (var n in Graph.nodes)
-      {
-        n.Velocity = Vector3.zero;
-        n.AngularVelocity = Vector3.zero;
-        n.Acceleration = Vector3.zero;
-        n.AngularAcceleration = Vector3.zero;
-      }
-    }
-
-    public void SetLabelVisibility(bool visibility)
-    {
-      Graph.nodes.ForEach(n => n.Text.enabled = visibility );
-      Graph.edges.ForEach(n => n.Text.enabled = visibility );
     }
   }
 }

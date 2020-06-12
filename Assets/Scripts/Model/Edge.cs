@@ -21,13 +21,19 @@ namespace Assets.Scripts.Model
 
     public Text Text => gameObject.GetComponentInChildren<Text>();
 
-    public void UpdatePosition()
+    public string DefaultLabel 
     {
-      var (x1, y1, _) = Camera.main.WorldToScreenPoint(nodeFrom.Position);
-      var (x2, y2, _) = Camera.main.WorldToScreenPoint(nodeTo.Position);
+      get => $"{from}-{to}";
+    }
+
+    public void UpdateTextPosition()
+    {
+      var (x1, y1, z1) = Camera.main.WorldToScreenPoint(nodeFrom.Position);
+      var (x2, y2, z2) = Camera.main.WorldToScreenPoint(nodeTo.Position);
       var tan = (y1 - y2) / (x1 - x2);
+      tan = float.IsNaN(tan) ? 0 : tan;
       var angle = Mathf.Atan(tan) * Mathf.Rad2Deg;
-      var centerOfEdgeOnScreen = new Vector2(x1 + x2, y1 + y2) / 2;
+      var centerOfEdgeOnScreen = new Vector3(x1 + x2, y1 + y2, z1 + z2) / 2;
       Text.SetPositionOnScreen(centerOfEdgeOnScreen);
       Text.rectTransform.rotation = Quaternion.Euler(0, 0, angle);
     }
