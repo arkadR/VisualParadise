@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using Assets.Scripts.Common;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts
 {
@@ -9,10 +8,12 @@ namespace Assets.Scripts
   {
     GraphService graphService;
     public GameObject pauseMenu;
+    public GameObject saveBeforeQuitMenu;
 
     public void Start()
     {
       pauseMenu.SetActive(false);
+      saveBeforeQuitMenu.SetActive(false);
       graphService = FindObjectOfType<GraphService>();
     }
 
@@ -27,6 +28,10 @@ namespace Assets.Scripts
 
     public void ResumeButton_OnClick() => GameService.Instance.GlobalUnPauseGame();
 
-    public void QuitButton_OnClick() => SceneManager.LoadScene(Constants.MainMenuScene);
+    public void QuitButton_OnClick()
+    {
+      pauseMenu.SetActive(false);
+      saveBeforeQuitMenu.SetActive(true);
+    }
   }
 }
