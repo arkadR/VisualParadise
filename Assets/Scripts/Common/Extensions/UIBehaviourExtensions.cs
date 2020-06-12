@@ -14,7 +14,7 @@ namespace Assets.Scripts.Common.Extensions
     public static void SetPositionOnScreen(this UIBehaviour uiElement, Vector3 position)
     {
       uiElement.transform.position = position.z < 0 
-        ? Vector3.zero 
+        ? Vector3.one * -200 //far outside screen
         : position;
     }
   }
