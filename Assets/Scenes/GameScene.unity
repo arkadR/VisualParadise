@@ -6288,6 +6288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4353a2c086d3201498f2cda9b22fdeed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  graphService: {fileID: 1919699931}
   x: {fileID: 788841271}
   y: {fileID: 809351161}
   z: {fileID: 1292807784}
@@ -8906,6 +8907,8 @@ GameObject:
   - component: {fileID: 1919699931}
   - component: {fileID: 1919699933}
   - component: {fileID: 1919699932}
+  - component: {fileID: 1919699934}
+  - component: {fileID: 1919699935}
   m_Layer: 8
   m_Name: Graph
   m_TagString: Untagged
@@ -8978,6 +8981,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   edgeGameObjectFactory: {fileID: 1919699932}
   nodeGameObjectFactory: {fileID: 1919699933}
+  lineFactory: {fileID: 1919699935}
 --- !u!114 &1919699932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8990,11 +8994,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e0ae1a201224aefb268e1bd6454230b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 1
-  debugSpherePrefab: {fileID: 7751082562957601977, guid: 0e8928f2afef7d04da1e28c03ba7a931,
-    type: 3}
   edgePrefab: {fileID: 6955056186729139999, guid: edcfaedcc49f0fe41a1bdddc4c863ce7,
     type: 3}
+  lineFactory: {fileID: 1919699935}
 --- !u!114 &1919699933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9009,6 +9011,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodePrefab: {fileID: 1624976333640040709, guid: 14915c5ed917327499e36eb13e881175,
     type: 3}
+--- !u!114 &1919699934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919699926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 662c09e2baa84e45bf7cbf2265566cb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1919699935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919699926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3bc0b5f47694599b7c52e94f89281bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugSphereFactory: {fileID: 2051443774}
+  bezierCurveFactory: {fileID: 1919699934}
+  debug: 0
 --- !u!1 &1926056950
 GameObject:
   m_ObjectHideFlags: 0
@@ -9989,6 +10018,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2051443773}
   - component: {fileID: 2051443772}
+  - component: {fileID: 2051443774}
   m_Layer: 0
   m_Name: GlobalScripts
   m_TagString: Untagged
@@ -10024,6 +10054,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2051443774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051443771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 871273cb58bd47379031c8cb83832b2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugSpherePrefab: {fileID: 7751082562957601977, guid: 0e8928f2afef7d04da1e28c03ba7a931,
+    type: 3}
 --- !u!1 &2054330962
 GameObject:
   m_ObjectHideFlags: 0

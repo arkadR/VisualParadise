@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Common.Extensions;
+using Assets.Scripts.Edges;
 using Assets.Scripts.Model;
 using UnityEngine;
 
@@ -9,6 +9,7 @@ namespace Assets.Scripts
   public class GraphService : MonoBehaviour
   {
     public EdgeGameObjectFactory edgeGameObjectFactory;
+    public LineFactory lineFactory;
     public NodeGameObjectFactory nodeGameObjectFactory;
     public Graph Graph { get; private set; }
 
@@ -23,10 +24,15 @@ namespace Assets.Scripts
         node.gameObject = sphere;
       }
 
-      foreach (var edge in graph.edges)
+      foreach (var edge in Graph.edges)
       {
-        //TODO[ME] EXTREMELY POORLY PERFORMING
-        edgeGameObjectFactory.CreateGameObjectEdgesFor(new HashSet<Edge> {edge});
+        edge.nodeFrom = Graph.FindNodeById(edge.from);
+        edge.nodeTo = Graph.FindNodeById(edge.to);
+      }
+
+      foreach (var edgeGroup in Graph.GetEdgesGroupedByNodes().Values)
+      {
+        edgeGameObjectFactory.CreateGameObjectEdgesFor(edgeGroup);
       }
     }
 
@@ -34,17 +40,6 @@ namespace Assets.Scripts
 
     public Node FindNodeByGameObject(GameObject gameObject) =>
       Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
-
-    public List<Edge> FindNodeEdges(Node node) => Graph.edges.Where(e => e.from == node.id || e.to == node.id).ToList();
-
-    public ISet<Edge> FindEdgesByNodes(Node node1, Node node2)
-    {
-      var nodes = new HashSet<Node> {node1, node2};
-      return (from edge in Graph.edges
-          where nodes.Contains(edge.nodeFrom) && nodes.Contains(edge.nodeTo)
-          select edge)
-        .ToSet();
-    }
 
     public void AddNode(Vector3 position, Quaternion rotation)
     {
@@ -71,7 +66,7 @@ namespace Assets.Scripts
         nodeFrom = node1,
         nodeTo = node2
       };
-      var existingEdges = FindEdgesByNodes(node1, node2);
+      var existingEdges = Graph.FindEdgesByNodes(node1, node2);
       existingEdges.Add(edge);
       edgeGameObjectFactory.CreateGameObjectEdgesFor(existingEdges);
       Graph.edges.Add(edge);
@@ -81,7 +76,7 @@ namespace Assets.Scripts
     {
       Destroy(node.gameObject);
       Graph.nodes.Remove(node);
-      var edgesToRemove = Graph.edges.Where(e => e.from == node.id || e.to == node.id).ToList();
+      var edgesToRemove = Graph.FindNodeEdges(node);
 
       foreach (var edge in edgesToRemove)
       {
@@ -91,7 +86,7 @@ namespace Assets.Scripts
 
     public void RemoveAllEdgesBetween(Node node1, Node node2)
     {
-      var edges = FindEdgesByNodes(node1, node2);
+      var edges = Graph.FindEdgesByNodes(node1, node2);
       foreach (var edge in edges)
       {
         Destroy(edge.gameObject);
@@ -99,23 +94,47 @@ namespace Assets.Scripts
       }
     }
 
-    public void FixEdge(Edge edge)
-    {
-      var lineRenderer = edge.gameObject.GetComponent<LineRenderer>();
-      var startingNode = Graph.FindNodeById(edge.from);
-      var endingNode = Graph.FindNodeById(edge.to);
-      lineRenderer.SetPosition(0, startingNode.Position);
-      lineRenderer.SetPosition(1, endingNode.Position);
-    }
-
     /// <summary>
     ///   Update edges positions based on corresponding nodes
     /// </summary>
     public void FixEdges()
     {
-      foreach (var e in Graph.edges)
+      foreach (var edgeGroup in Graph.GetEdgesGroupedByNodes())
       {
-        FixEdge(e);
+        var nodes = edgeGroup.Key.ToList();
+        var nodeFrom = nodes[0];
+        var nodeTo = nodes[1];
+        FixEdgeGroup(edgeGroup.Value, nodeFrom, nodeTo);
+      }
+    }
+
+    public void FixEdgesOfNode(Node node)
+    {
+      var edgeLists =
+        from edgeGroup in Graph.GetEdgesGroupedByNodes()
+        where edgeGroup.Key.Contains(node)
+        let nodes = edgeGroup.Key.ToList()
+        let nodeFrom = nodes[0]
+        let nodeTo = nodes[1]
+        select (edgeGroup.Value, nodeFrom, nodeTo);
+      foreach (var (edges, nodeFrom, nodeTo) in edgeLists)
+      {
+        FixEdgeGroup(edges, nodeFrom, nodeTo);
+      }
+    }
+
+    void FixEdgeGroup(IList<Edge> edges, Node nodeFrom, Node nodeTo)
+    {
+      var startingPosition = nodeFrom.Position;
+      var endingPosition = nodeTo.Position;
+
+      var linePositions = lineFactory.GetLinePositionsFor(startingPosition, endingPosition, edges.Count);
+      for (var i = 0; i < edges.Count; i++)
+      {
+        var linePositionsCount = linePositions[i].Count;
+        var lineRender = edges[i].gameObject.GetComponent<LineRenderer>();
+        lineRender.positionCount = linePositionsCount;
+        lineRender.SetPositions(linePositions[i].ToArray());
       }
     }
 
