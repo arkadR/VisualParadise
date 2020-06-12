@@ -31,6 +31,11 @@ namespace Assets.Scripts.Model
       return node;
     }
 
+    public string DefaultLabel
+    {
+      get => $"{id}";
+    }
+
     public Vector3 Position
     {
       get => point.position;
@@ -78,6 +83,6 @@ namespace Assets.Scripts.Model
 
     public Text Text => gameObject.GetComponentInChildren<Text>();
 
-    public void UpdateText() => Text.SetPositionOnScreen(Camera.main.WorldToScreenPoint(Position));
+    public void UpdateTextPosition() => Text.SetPositionOnScreen(Camera.main.WorldToScreenPoint(Position));
   }
 }
