@@ -12,12 +12,14 @@ namespace Assets.Scripts.Tools
     readonly Color _createGlowColor = Color.green;
     readonly Color _deleteGlowColor = Color.red;
     readonly GraphService _graphService;
+    readonly ToolPanelController _toolPanelController;
     EdgeMode _mode = EdgeMode.Create;
     Node _previouslyHitNode;
 
-    public EdgeTool(GraphService graphService)
+    public EdgeTool(GraphService graphService, ToolPanelController toolPanelController)
     {
       _graphService = graphService;
+      _toolPanelController = toolPanelController;
     }
 
     EdgeMode Mode
@@ -48,6 +50,8 @@ namespace Assets.Scripts.Tools
       Mode = EdgeMode.Delete;
       OnActionPerformed(isHit, raycastHit);
     }
+
+    public void OnSelect() => _toolPanelController.SetBackgroundColor(Color.green);
 
     public void OnToolsChanged(ITool newTool) => ClearPreviouslyHitNode();
 
