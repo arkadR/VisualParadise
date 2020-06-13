@@ -22,6 +22,8 @@ namespace Assets.Scripts
       _pauseMenu = FindObjectOfType<PauseMenu>();
 
       DontDestroyOnLoad(this);
+
+      Cursor.visible = false;
     }
 
     public void GlobalPauseGame()
@@ -42,6 +44,7 @@ namespace Assets.Scripts
       // gamePanel.SetActive(false);
       IsPaused = true;
       Cursor.lockState = CursorLockMode.None;
+      Cursor.visible = true;
     }
 
     public void UnPauseGame()
@@ -49,6 +52,7 @@ namespace Assets.Scripts
       // gamePanel.SetActive(true);
       IsPaused = false;
       Cursor.lockState = CursorLockMode.Locked;
+      Cursor.visible = false;
     }
 
     public void PauseGameWithoutResume()
@@ -56,6 +60,7 @@ namespace Assets.Scripts
       IsPaused = true;
       isResumableOnKeyPress = false;
       Cursor.lockState = CursorLockMode.None;
+      Cursor.visible = true;
     }
 
     public void UnPauseGameWithoutResume()
@@ -63,6 +68,7 @@ namespace Assets.Scripts
       IsPaused = false;
       isResumableOnKeyPress = true;
       Cursor.lockState = CursorLockMode.Locked;
+      Cursor.visible = false;
     }
   }
 }
