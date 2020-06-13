@@ -9,11 +9,12 @@ namespace Assets.Scripts
 {
   public class GraphService : MonoBehaviour
   {
+    bool _labelVisibility;
     public EdgeGameObjectFactory edgeGameObjectFactory;
     public LineFactory lineFactory;
     public NodeGameObjectFactory nodeGameObjectFactory;
     public Graph Graph { get; private set; }
-    private bool _labelVisibility = false;
+
     public bool LabelVisibility
     {
       get => _labelVisibility;
@@ -129,9 +130,7 @@ namespace Assets.Scripts
     {
       foreach (var edgeGroup in Graph.GetEdgesGroupedByNodes())
       {
-        var nodes = edgeGroup.Key.ToList();
-        var nodeFrom = nodes[0];
-        var nodeTo = nodes[1];
+        var (nodeFrom, nodeTo) = GetStartAndEndNodes(edgeGroup.Key);
         FixEdgeGroup(edgeGroup.Value, nodeFrom, nodeTo);
       }
     }
@@ -141,14 +140,23 @@ namespace Assets.Scripts
       var edgeLists =
         from edgeGroup in Graph.GetEdgesGroupedByNodes()
         where edgeGroup.Key.Contains(node)
-        let nodes = edgeGroup.Key.ToList()
-        let nodeFrom = nodes[0]
-        let nodeTo = nodes[1]
+        let nodes = GetStartAndEndNodes(edgeGroup.Key)
+        let nodeFrom = nodes.Item1
+        let nodeTo = nodes.Item2
         select (edgeGroup.Value, nodeFrom, nodeTo);
       foreach (var (edges, nodeFrom, nodeTo) in edgeLists)
       {
         FixEdgeGroup(edges, nodeFrom, nodeTo);
       }
+    }
+
+    (Node, Node) GetStartAndEndNodes(HashSet<Node> edgeGroupKey)
+    {
+      var nodes = edgeGroupKey.ToList();
+      return
+        nodes.Count == 1
+          ? (nodes[0], nodes[0])
+          : (nodes[0], nodes[1]);
     }
 
     void FixEdgeGroup(IList<Edge> edges, Node nodeFrom, Node nodeTo)

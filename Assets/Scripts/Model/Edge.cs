@@ -11,6 +11,7 @@ namespace Assets.Scripts.Model
     public int from;
 
     [NonSerialized] public GameObject gameObject;
+
     public int id;
     public string label;
     [NonSerialized] public Node nodeFrom;
