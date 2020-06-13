@@ -14,10 +14,10 @@ namespace Assets.Scripts.Tools
     ISet<IToolChangeObserver> _toolChangeObservers;
 
     IDictionary<KeyCode, ITool> _tools;
-    [SerializeField] Color activatedColor = Color.yellow;
-    [SerializeField] Image crosshair;
-    [SerializeField] float hitDistance = 40f;
-    [SerializeField] Color notActivatedColor = Color.white;
+    public Color activatedColor = Color.yellow;
+    public Image crosshair;
+    public float hitDistance = 40f;
+    public Color notActivatedColor = Color.white;
 
     public ITool ActiveTool
     {
