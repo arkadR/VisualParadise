@@ -8,13 +8,13 @@ namespace Assets.Scripts.Tools
 
   public class EdgeTool : ITool, IToolChangeObserver
   {
+    readonly Color _createGlowColor = Color.green;
+    readonly Color _deleteGlowColor = Color.red;
     readonly GraphService _graphService;
+    readonly float _nodeHitGlowStrength = 0.5f;
     readonly ToolPanelController _toolPanelController;
     EdgeMode _mode = EdgeMode.Create;
     Node _previouslyHitNode;
-    public Color createGlowColor = Color.green;
-    public Color deleteGlowColor = Color.red;
-    public float nodeHitGlowStrength = 0.5f;
 
     public EdgeTool(GraphService graphService, ToolPanelController toolPanelController)
     {
@@ -88,8 +88,8 @@ namespace Assets.Scripts.Tools
       {
         _previouslyHitNode = currentlyHitNode;
         _previouslyHitNode.gameObject.EnableGlow();
-        var glowColor = Mode == EdgeMode.Create ? createGlowColor : deleteGlowColor;
-        _previouslyHitNode.gameObject.SetGlow(glowColor * nodeHitGlowStrength);
+        var glowColor = Mode == EdgeMode.Create ? _createGlowColor : _deleteGlowColor;
+        _previouslyHitNode.gameObject.SetGlow(glowColor * _nodeHitGlowStrength);
         return;
       }
 

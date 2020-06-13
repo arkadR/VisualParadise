@@ -5,7 +5,7 @@ namespace Assets.Scripts.Edges
 {
   public class BezierCurveFactory : MonoBehaviour
   {
-    public int LinePoints { get; } = 15;
+    const int LinePoints = 15;
 
     public List<Vector3> BezierCurve(Vector3 startingPoint, Vector3 middlePoint, Vector3 endingPoint)
     {

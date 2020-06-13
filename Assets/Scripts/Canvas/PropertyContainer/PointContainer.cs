@@ -35,11 +35,12 @@ namespace Assets.Scripts.Canvas.PropertyContainer
     }
 
     public bool IsInputCorrect() =>
-      float.TryParse(x.text, out var x_res) && float.TryParse(y.text, out var y_res)
-                                            && float.TryParse(z.text, out var z_res) &&
-                                            float.TryParse(theta.text, out var theta_res)
-                                            && float.TryParse(phi.text, out var phi_res) &&
-                                            float.TryParse(psi.text, out var psi_res);
+      float.TryParse(x.text, out _)
+      && float.TryParse(y.text, out _)
+      && float.TryParse(z.text, out _)
+      && float.TryParse(theta.text, out _)
+      && float.TryParse(phi.text, out _)
+      && float.TryParse(psi.text, out _);
 
     public void SaveData()
     {

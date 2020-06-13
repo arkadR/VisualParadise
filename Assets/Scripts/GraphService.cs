@@ -138,19 +138,16 @@ namespace Assets.Scripts
     public void FixEdgesOfNode(Node node)
     {
       var edgeLists =
-        from edgeGroup in Graph.GetEdgesGroupedByNodes()
-        where edgeGroup.Key.Contains(node)
-        let nodes = GetStartAndEndNodes(edgeGroup.Key)
-        let nodeFrom = nodes.Item1
-        let nodeTo = nodes.Item2
-        select (edgeGroup.Value, nodeFrom, nodeTo);
-      foreach (var (edges, nodeFrom, nodeTo) in edgeLists)
+        Graph.GetEdgesGroupedByNodes()
+          .Where(edgeGroup => edgeGroup.Key.Contains(node))
+          .Select(edgeGroup => (edgeGroup.Value, GetStartAndEndNodes(edgeGroup.Key)));
+      foreach (var (edges, (startingNode, endingNode)) in edgeLists)
       {
-        FixEdgeGroup(edges, nodeFrom, nodeTo);
+        FixEdgeGroup(edges, startingNode, endingNode);
       }
     }
 
-    (Node, Node) GetStartAndEndNodes(HashSet<Node> edgeGroupKey)
+    (Node startingNode, Node endingNode) GetStartAndEndNodes(HashSet<Node> edgeGroupKey)
     {
       var nodes = edgeGroupKey.ToList();
       return

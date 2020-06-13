@@ -6,6 +6,8 @@ namespace Assets.Scripts.Edges
 {
   public class LineFactory : MonoBehaviour
   {
+    //the further the point is (bigger value) the stronger will the curve be
+    const int CurvePointDistance = 5;
     public BezierCurveFactory bezierCurveFactory;
     public bool debug;
     public DebugSphereFactory debugSphereFactory;
@@ -46,7 +48,7 @@ namespace Assets.Scripts.Edges
 
       var curvePointsForEdges = new List<IList<Vector3>>();
 
-      for (var _ = 0; _ < numberOfLines; _++)
+      for (var i = 0; i < numberOfLines; i++)
       {
         curvePointsForEdges.Add(
           CreateCurvedEdgeGameObject()
@@ -58,7 +60,8 @@ namespace Assets.Scripts.Edges
 
       IList<Vector3> CreateCurvedEdgeGameObject()
       {
-        var rotatedPoint = middlePoint + (Quaternion.AngleAxis(currentRotation, rotationAxis) * normalVector * 5);
+        var rotatedPoint = middlePoint +
+                           (Quaternion.AngleAxis(currentRotation, rotationAxis) * normalVector * CurvePointDistance);
         var curvePoints = bezierCurveFactory.BezierCurve(startingPoint, rotatedPoint, endingPoint);
         if (debug)
           debugSphereFactory.AddDebugSphere(rotatedPoint);

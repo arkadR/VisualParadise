@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace Assets.Scripts.Model
 {
   [Serializable]
   public class Graph
   {
-    public List<Node> nodes = new List<Node>();
     public List<Edge> edges = new List<Edge>();
+    public List<Node> nodes = new List<Node>();
 
 
     [OnDeserialized]
@@ -22,15 +22,12 @@ namespace Assets.Scripts.Model
         edges = new List<Edge>();
     }
 
-    public IList<Edge> FindEdgesByNodes(Node node1, Node node2)
-    {
-      var argSet = new HashSet<Node> {node1, node2};
-      return (
-        from edge in edges
-        where argSet.Contains(edge.nodeFrom) && argSet.Contains(edge.nodeTo)
-        select edge
-      ).ToList();
-    }
+    public IList<Edge> FindEdgesByNodes(Node node1, Node node2) =>
+      edges
+        .Where(edge =>
+          (edge.nodeFrom == node1 && edge.nodeTo == node2)
+          || (edge.nodeFrom == node2 && edge.nodeTo == node1)
+        ).ToList();
 
     public IList<Edge> FindNodeEdges(Node node) =>
       edges.Where(e => e.from == node.id || e.to == node.id).ToList();
