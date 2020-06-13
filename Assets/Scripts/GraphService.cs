@@ -3,6 +3,7 @@ using System.Linq;
 using Assets.Scripts.Edges;
 using Assets.Scripts.Model;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
@@ -12,6 +13,19 @@ namespace Assets.Scripts
     public LineFactory lineFactory;
     public NodeGameObjectFactory nodeGameObjectFactory;
     public Graph Graph { get; private set; }
+    private bool _labelVisibility = false;
+    public bool LabelVisibility
+    {
+      get => _labelVisibility;
+      set
+      {
+        _labelVisibility = value;
+        Graph?.nodes.ForEach(n => n.Text.enabled = _labelVisibility);
+        Graph?.edges.ForEach(n => n.Text.enabled = _labelVisibility);
+      }
+    }
+
+    public void ToggleLabelVisibility() => LabelVisibility = !LabelVisibility;
 
     public void SetGraph(Graph graph)
     {
@@ -22,24 +36,34 @@ namespace Assets.Scripts
         var sphere = nodeGameObjectFactory.CreateNodeGameObject(node.Position,
           Quaternion.Euler(node.Rotation));
         node.gameObject = sphere;
+        node.gameObject.GetComponentInChildren<Text>().text = node.label;
       }
 
       foreach (var edge in Graph.edges)
       {
-        edge.nodeFrom = Graph.FindNodeById(edge.from);
-        edge.nodeTo = Graph.FindNodeById(edge.to);
+        edge.nodeFrom = FindNodeById(edge.from);
+        edge.nodeTo = FindNodeById(edge.to);
       }
 
       foreach (var edgeGroup in Graph.GetEdgesGroupedByNodes().Values)
       {
         edgeGameObjectFactory.CreateGameObjectEdgesFor(edgeGroup);
       }
+
+      foreach (var edge in Graph.edges)
+      {
+        edge.gameObject.GetComponentInChildren<Text>().text = edge.label;
+      }
+
+      LabelVisibility = false;
     }
 
     public bool IsNode(GameObject gameObject) => FindNodeByGameObject(gameObject) != null;
 
     public Node FindNodeByGameObject(GameObject gameObject) =>
       Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
+
+    public Node FindNodeById(int id) => Graph.nodes.SingleOrDefault(n => n.id == id);
 
     public void AddNode(Vector3 position, Quaternion rotation)
     {
@@ -50,6 +74,7 @@ namespace Assets.Scripts
       var node = Node.EmptyNode(id, nodeGameObjectFactory.CreateNodeGameObject(position, rotation));
       node.Position = position;
       node.Rotation = rotation.eulerAngles;
+      node.Text.enabled = LabelVisibility;
       Graph.nodes.Add(node);
     }
 
@@ -69,6 +94,9 @@ namespace Assets.Scripts
       var existingEdges = Graph.FindEdgesByNodes(node1, node2);
       existingEdges.Add(edge);
       edgeGameObjectFactory.CreateGameObjectEdgesFor(existingEdges);
+      edge.label = edge.DefaultLabel;
+      edge.Text.text = edge.label;
+      edge.Text.enabled = LabelVisibility;
       Graph.edges.Add(edge);
     }
 
@@ -135,20 +163,6 @@ namespace Assets.Scripts
         var lineRender = edges[i].gameObject.GetComponent<LineRenderer>();
         lineRender.positionCount = linePositionsCount;
         lineRender.SetPositions(linePositions[i].ToArray());
-      }
-    }
-
-    /// <summary>
-    ///   Set velocity of all nodes to 0
-    /// </summary>
-    public void StopNodes()
-    {
-      foreach (var n in Graph.nodes)
-      {
-        n.Velocity = Vector3.zero;
-        n.AngularVelocity = Vector3.zero;
-        n.Acceleration = Vector3.zero;
-        n.AngularAcceleration = Vector3.zero;
       }
     }
   }

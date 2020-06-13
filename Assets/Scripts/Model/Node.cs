@@ -1,17 +1,41 @@
 ﻿using System;
+using Assets.Scripts.Common.Extensions;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Model
 {
   [Serializable]
   public class Node : IEquatable<Node>
   {
+    public int id;
+    public string label;
+    public Point point;
+    public VPoint vpoint;
     public APoint apoint;
 
     [NonSerialized] public GameObject gameObject;
-    public int id;
-    public Point point;
-    public VPoint vpoint;
+
+    public static Node EmptyNode(int id, GameObject gameObject)
+    {
+      var node = new Node
+      {
+        id = id,
+        label = id.ToString(),
+        point = new Point(),
+        apoint = new APoint(),
+        vpoint = new VPoint(),
+        gameObject = gameObject
+      };
+      node.Text.text = node.label;
+      return node;
+    }
+
+    public string DefaultLabel => id.ToString();
+
+    public Text Text => gameObject.GetComponentInChildren<Text>();
+
+    public void UpdateTextPosition() => Text.SetPositionOnScreen(Camera.main.WorldToScreenPoint(Position));
 
     public Vector3 Position
     {
@@ -20,6 +44,7 @@ namespace Assets.Scripts.Model
       {
         point.position = value;
         gameObject.transform.position = value;
+        Text.SetPositionOnScreen(Camera.main.WorldToScreenPoint(value));
       }
     }
 
@@ -63,15 +88,6 @@ namespace Assets.Scripts.Model
       if (ReferenceEquals(this, other)) return true;
       return id == other.id;
     }
-
-    public static Node EmptyNode(int id, GameObject gameObject) => new Node
-    {
-      id = id,
-      point = new Point(),
-      apoint = new APoint(),
-      vpoint = new VPoint(),
-      gameObject = gameObject
-    };
 
     public override bool Equals(object obj)
     {

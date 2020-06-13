@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
+using System.Linq;
+using Assets.Scripts.Common;
 using Assets.Scripts.Model;
 using UnityEngine;
 
@@ -14,13 +15,22 @@ namespace Assets.Scripts
       var graphFilePath = PlayerPrefs.GetString(Constants.GraphFilePathKey);
       var graph = LoadGraph(graphFilePath) ?? new Graph();
 
-      if (graph.nodes == null)
-        graph.nodes = new List<Node>();
+      graph.nodes.ForEach(n =>
+      {
+        if (string.IsNullOrEmpty(n.label))
+          n.label = n.DefaultLabel;
+      });
 
-      if (graph.edges == null)
-        graph.edges = new List<Edge>();
+      graph.edges.ForEach(e =>
+      {
+        if (string.IsNullOrEmpty(e.label))
+          e.label = e.DefaultLabel;
 
-      Debug.Log($"Nodes count: {graph?.nodes.Count}\nEdges count: {graph?.edges.Count}");
+        e.nodeFrom = graph.nodes.Single(n => n.id == e.from);
+        e.nodeTo = graph.nodes.Single(n => n.id == e.to);
+      });
+
+      Debug.Log($"Nodes count: {graph.nodes.Count}\nEdges count: {graph.edges.Count}");
       graphService.SetGraph(graph);
     }
 
@@ -28,7 +38,7 @@ namespace Assets.Scripts
     {
       //TODO: Try/catch file for bad formats.
       var graphJson = File.ReadAllText(filePath);
-      var graph = JsonUtility.FromJson<Graph>(graphJson);
+      var graph = JsonSerializer.Deserialize<Graph>(graphJson);
       return graph;
     }
   }
