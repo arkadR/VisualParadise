@@ -10,6 +10,7 @@ namespace Assets.Scripts.Tools
     ITool _activeTool;
     Camera _attachedCamera;
     GraphService _graphService;
+    ToolgunRecoil _toolgunRecoil;
     ISet<IToolChangeObserver> _toolChangeObservers;
 
     IDictionary<KeyCode, ITool> _tools;
@@ -35,6 +36,7 @@ namespace Assets.Scripts.Tools
     {
       _attachedCamera = Camera.main;
       _graphService = FindObjectOfType<GraphService>();
+      _toolgunRecoil = FindObjectOfType<ToolgunRecoil>();
 
       var toolPanelController = FindObjectOfType<ToolPanelController>();
       var edgeTool = new EdgeTool(_graphService, toolPanelController);
@@ -74,9 +76,15 @@ namespace Assets.Scripts.Tools
     void HandleMouseClick(bool isHit, RaycastHit raycastHit)
     {
       if (Input.GetButtonDown("Fire1"))
+      {
         ActiveTool.OnLeftClick(_attachedCamera.transform, isHit, raycastHit);
+        _toolgunRecoil.AddRecoil();
+      }
       else if (Input.GetButtonDown("Fire2"))
+      {
         ActiveTool.OnRightClick(_attachedCamera.transform, isHit, raycastHit);
+        _toolgunRecoil.AddRecoil();
+      }
     }
 
     void HandleChangeTool()

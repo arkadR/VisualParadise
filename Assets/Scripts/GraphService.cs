@@ -48,7 +48,7 @@ namespace Assets.Scripts
 
       foreach (var edgeGroup in Graph.GetEdgesGroupedByNodes().Values)
       {
-        edgeGameObjectFactory.CreateGameObjectEdgesFor(edgeGroup);
+        edgeGameObjectFactory.CreateGameObjectEdgesFor(edgeGroup, LabelVisibility);
       }
 
       foreach (var edge in Graph.edges)
@@ -92,12 +92,10 @@ namespace Assets.Scripts
         nodeFrom = node1,
         nodeTo = node2
       };
+      edge.label = edge.DefaultLabel;
       var existingEdges = Graph.FindEdgesByNodes(node1, node2);
       existingEdges.Add(edge);
-      edgeGameObjectFactory.CreateGameObjectEdgesFor(existingEdges);
-      edge.label = edge.DefaultLabel;
-      edge.Text.text = edge.label;
-      edge.Text.enabled = LabelVisibility;
+      edgeGameObjectFactory.CreateGameObjectEdgesFor(existingEdges,LabelVisibility);
       Graph.edges.Add(edge);
     }
 
