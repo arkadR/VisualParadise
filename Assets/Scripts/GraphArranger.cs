@@ -8,7 +8,6 @@ namespace Assets.Scripts
     const float _attractFunPower = 1.5f; // safe range <1, 3>
     const float _maxVelocityMagnitude = 25f;
 
-    bool _shouldArrange;
     int _velocityModifier = 1;
 
     GraphService _graphService;
@@ -20,7 +19,7 @@ namespace Assets.Scripts
       if (GameService.Instance.IsPaused)
         return;
 
-      if (!_shouldArrange)
+      if (!ArrangeEnabled)
         return;
 
       Attract();
@@ -28,17 +27,19 @@ namespace Assets.Scripts
       _graphService.FixEdges();
     }
 
+    public bool ArrangeEnabled { get; private set; }
+
     public void ToggleArrangement()
     {
-      _shouldArrange = !_shouldArrange;
-      Debug.Log("Arranger " + (_shouldArrange ? "enabled" : "disabled"));
+      ArrangeEnabled = !ArrangeEnabled;
+      Debug.Log("Arranger " + (ArrangeEnabled ? "enabled" : "disabled"));
     }
 
     public void ToggleReverse() => _velocityModifier *= -1;
 
     public void DisableArrangement()
     {
-      if (_shouldArrange)
+      if (ArrangeEnabled)
         ToggleArrangement();
     }
 
