@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace Assets.Scripts.Model
 {
   [Serializable]
-  public class Node
+  public class Node : IEquatable<Node>
   {
     public int id;
     public string label;
@@ -31,10 +31,11 @@ namespace Assets.Scripts.Model
       return node;
     }
 
-    public string DefaultLabel
-    {
-      get => $"{id}";
-    }
+    public string DefaultLabel => id.ToString();
+
+    public Text Text => gameObject.GetComponentInChildren<Text>();
+
+    public void UpdateTextPosition() => Text.SetPositionOnScreen(Camera.main.WorldToScreenPoint(Position));
 
     public Vector3 Position
     {
@@ -81,8 +82,25 @@ namespace Assets.Scripts.Model
       set => apoint.angularAcceleration = value;
     }
 
-    public Text Text => gameObject.GetComponentInChildren<Text>();
+    public bool Equals(Node other)
+    {
+      if (ReferenceEquals(null, other)) return false;
+      if (ReferenceEquals(this, other)) return true;
+      return id == other.id;
+    }
 
-    public void UpdateTextPosition() => Text.SetPositionOnScreen(Camera.main.WorldToScreenPoint(Position));
+    public override bool Equals(object obj)
+    {
+      if (ReferenceEquals(null, obj)) return false;
+      if (ReferenceEquals(this, obj)) return true;
+      if (obj.GetType() != GetType()) return false;
+      return Equals((Node)obj);
+    }
+
+    public override int GetHashCode() => id;
+
+    public static bool operator ==(Node left, Node right) => Equals(left, right);
+
+    public static bool operator !=(Node left, Node right) => !Equals(left, right);
   }
 }

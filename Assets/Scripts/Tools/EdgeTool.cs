@@ -8,10 +8,10 @@ namespace Assets.Scripts.Tools
 
   public class EdgeTool : ITool, IToolChangeObserver
   {
-    const float _nodeHitGlowStrength = 0.5f;
     readonly Color _createGlowColor = Color.green;
     readonly Color _deleteGlowColor = Color.red;
     readonly GraphService _graphService;
+    readonly float _nodeHitGlowStrength = 0.5f;
     readonly ToolPanelController _toolPanelController;
     EdgeMode _mode = EdgeMode.Create;
     Node _previouslyHitNode;
@@ -93,25 +93,16 @@ namespace Assets.Scripts.Tools
         return;
       }
 
-      var existingEdge = _graphService.FindEdgeByNodes(_previouslyHitNode, currentlyHitNode);
-
       switch (Mode)
       {
         case EdgeMode.Create:
         {
-          //Don't create duplicate edge
-          if (existingEdge != null)
-            return;
-
           _graphService.AddEdge(currentlyHitNode, _previouslyHitNode);
           break;
         }
         case EdgeMode.Delete:
         {
-          if (existingEdge == null)
-            return;
-
-          _graphService.RemoveEdge(existingEdge);
+          _graphService.RemoveAllEdgesBetween(currentlyHitNode, _previouslyHitNode);
           break;
         }
       }
