@@ -10,7 +10,7 @@ namespace Assets.Scripts.Edges
     public GameObject edgePrefab;
     public LineFactory lineFactory;
 
-    public void CreateGameObjectEdgesFor(IList<Edge> edges)
+    public void CreateGameObjectEdgesFor(IList<Edge> edges, bool labelVisibility)
     {
       var startingPoint = edges.First().nodeFrom.Position;
       var endingPoint = edges.First().nodeTo.Position;
@@ -21,6 +21,8 @@ namespace Assets.Scripts.Edges
         if (edge.gameObject != null)
           Destroy(edge.gameObject);
         CreateNewEdgeGameObjectFor(edge, edgePointsForEachEdge[i]);
+        edge.Text.text = edge.label;
+        edge.Text.enabled = labelVisibility;
       }
     }
 
