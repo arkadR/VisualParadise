@@ -23,6 +23,10 @@ namespace Assets.Scripts
     public void StartNew()
     {
       var graphName = GraphNameInput.text;
+
+      if (!Directory.Exists(Constants.GraphFolder))
+        Directory.CreateDirectory(Constants.GraphFolder);
+
       var filePath = $"{Constants.GraphFolder}{graphName}.json";
       File.Create(filePath);
       PlayerPrefs.SetString(Constants.GraphFilePathKey, filePath);
