@@ -36,20 +36,20 @@ namespace Assets.Scripts.Tools
       _attachedCamera = Camera.main;
       _graphService = FindObjectOfType<GraphService>();
 
-      var toolGunController = FindObjectOfType<ToolTextPanelController>();
-      var edgeTool = new EdgeTool(_graphService);
-      var labelVisibilityTool = new LabelVisibilityTool(_graphService);
+      var toolPanelController = FindObjectOfType<ToolPanelController>();
+      var edgeTool = new EdgeTool(_graphService, toolPanelController);
+      var labelVisibilityTool = new LabelVisibilityTool(_graphService, toolPanelController);
 
       _tools = new Dictionary<KeyCode, ITool>
       {
         [KeyCode.Alpha1] = gameObject.AddComponent<NodeTool>(),
         [KeyCode.Alpha2] = edgeTool,
-        [KeyCode.Alpha3] = new MovementExecutorTool(FindObjectOfType<MovementExecutor>()),
-        [KeyCode.Alpha4] = new GraphArrangerTool(FindObjectOfType<GraphArranger>()),
+        [KeyCode.Alpha3] = new MovementExecutorTool(FindObjectOfType<MovementExecutor>(), toolPanelController),
+        [KeyCode.Alpha4] = new GraphArrangerTool(FindObjectOfType<GraphArranger>(), toolPanelController),
         [KeyCode.Alpha5] = labelVisibilityTool
       };
 
-      _toolChangeObservers = new HashSet<IToolChangeObserver> {toolGunController, edgeTool};
+      _toolChangeObservers = new HashSet<IToolChangeObserver> { toolPanelController, edgeTool };
 
       ActiveTool = _tools.First().Value;
     }
@@ -96,6 +96,7 @@ namespace Assets.Scripts.Tools
         DisableMovementTools(newTool);
 
       ActiveTool = newTool;
+      ActiveTool.OnSelect();
     }
 
     

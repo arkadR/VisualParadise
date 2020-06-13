@@ -4,7 +4,6 @@ namespace Assets.Scripts
 {
   public class MovementExecutor : MonoBehaviour
   {
-    bool _shouldMove;
     int _velocityModifier = 1;
     GraphService graphService;
 
@@ -16,7 +15,7 @@ namespace Assets.Scripts
       if (GameService.Instance.IsPaused)
         return;
 
-      if (_shouldMove == false)
+      if (MovementEnabled == false)
         return;
 
       Move();
@@ -24,15 +23,17 @@ namespace Assets.Scripts
       graphService.FixEdges();
     }
 
+    public bool MovementEnabled { get; private set; }
+
     public void ToggleMovement()
     {
-      _shouldMove = !_shouldMove;
-      Debug.Log("Node movement " + (_shouldMove ? "enabled" : "disabled"));
+      MovementEnabled = !MovementEnabled;
+      Debug.Log("Node movement " + (MovementEnabled ? "enabled" : "disabled"));
     }
 
     public void DisableMovement()
     {
-      if (_shouldMove)
+      if (MovementEnabled)
         ToggleMovement();
     }
 

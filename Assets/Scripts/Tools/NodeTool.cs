@@ -6,8 +6,13 @@ namespace Assets.Scripts.Tools
   public class NodeTool : MonoBehaviour, ITool
   {
     GraphService _graphService;
+    ToolPanelController _toolPanelController;
 
-    public void Start() => _graphService = FindObjectOfType<GraphService>();
+    public void Start()
+    {
+      _graphService = FindObjectOfType<GraphService>();
+      _toolPanelController = FindObjectOfType<ToolPanelController>();
+    }
 
     public string ToolName => "Node";
     
@@ -29,5 +34,7 @@ namespace Assets.Scripts.Tools
       var contextMenuHandler = FindObjectOfType<ContextMenuHandler>();
       contextMenuHandler.OpenContextMenu(node);
     }
+
+    public void OnSelect() => _toolPanelController.SetBackgroundColor(Color.green);
   }
 }
