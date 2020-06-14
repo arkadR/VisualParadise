@@ -9,7 +9,7 @@ namespace Assets.Scripts.Edges
     //the further the point is (bigger value) the stronger will the curve be
     const int CurvePointDistance = 5;
     public BezierCurveFactory bezierCurveFactory;
-    public bool debug = true;
+    public bool debug;
     public DebugSphereFactory debugSphereFactory;
 
     /// <summary>
@@ -85,7 +85,7 @@ namespace Assets.Scripts.Edges
       {
         var rotatedPoint = middlePoint +
                            (Quaternion.AngleAxis(currentRotation, rotationAxis) * normalVector * CurvePointDistance);
-        var curvePoints = bezierCurveFactory.BezierCurve(startingPoint, rotatedPoint, endingPoint);
+        var curvePoints = bezierCurveFactory.BezierCurve3(startingPoint, rotatedPoint, endingPoint);
         if (debug)
           debugSphereFactory.AddDebugSphere(rotatedPoint);
         return curvePoints;

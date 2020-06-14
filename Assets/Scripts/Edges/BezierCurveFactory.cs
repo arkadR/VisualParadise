@@ -8,7 +8,7 @@ namespace Assets.Scripts.Edges
   {
     const int LinePoints = 15;
 
-    public List<Vector3> BezierCurve(Vector3 startingPoint, Vector3 middlePoint, Vector3 endingPoint)
+    public List<Vector3> BezierCurve3(Vector3 startingPoint, Vector3 middlePoint, Vector3 endingPoint)
     {
       var steps = Enumerable.Range(0, LinePoints).Select(i => i / (float)(LinePoints - 1));
       var curvePoints = steps.Select(step => CurvePoint(step, startingPoint, middlePoint, endingPoint));
