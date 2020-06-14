@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - PHYSICAL_NODE_TAG
+  - PHYSICAL_EDGE_TAG
   layers:
   - Default
   - TransparentFX

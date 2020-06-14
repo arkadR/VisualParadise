@@ -166,6 +166,11 @@ namespace Assets.Scripts
         var lineRender = edges[i].gameObject.GetComponent<LineRenderer>();
         lineRender.positionCount = linePositionsCount;
         lineRender.SetPositions(linePositions[i].ToArray());
+
+        var mesh = new Mesh();
+        lineRender.BakeMesh(mesh, true);
+        var meshCollider = edges[i].gameObject.GetComponent<MeshCollider>();
+        meshCollider.sharedMesh = mesh;
       }
     }
   }

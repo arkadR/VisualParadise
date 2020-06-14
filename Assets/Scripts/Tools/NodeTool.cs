@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Canvas;
+using Assets.Scripts.Common;
 using UnityEngine;
 
 namespace Assets.Scripts.Tools
@@ -27,7 +28,7 @@ namespace Assets.Scripts.Tools
 
     public void OnRightClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit)
     {
-      if (isRayCastHit == false)
+      if (!isRayCastHit || raycastHit.collider.gameObject.tag != Constants.PhysicalNodeTag)
         return;
 
       var node = raycastHit.collider.gameObject;

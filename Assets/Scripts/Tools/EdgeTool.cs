@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Common.Extensions;
+﻿using Assets.Scripts.Common;
+using Assets.Scripts.Common.Extensions;
 using Assets.Scripts.Model;
 using UnityEngine;
 
@@ -41,12 +42,18 @@ namespace Assets.Scripts.Tools
 
     public void OnLeftClick(Transform cameraTransform, bool isHit, RaycastHit raycastHit)
     {
+      if (!isHit || raycastHit.collider.gameObject.tag != Constants.PhysicalNodeTag)
+        return;
+
       Mode = EdgeMode.Create;
       OnActionPerformed(isHit, raycastHit);
     }
 
     public void OnRightClick(Transform cameraTransform, bool isHit, RaycastHit raycastHit)
     {
+      if (!isHit || raycastHit.collider.gameObject.tag != Constants.PhysicalNodeTag)
+        return;
+
       Mode = EdgeMode.Delete;
       OnActionPerformed(isHit, raycastHit);
     }
