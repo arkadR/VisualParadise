@@ -37,6 +37,12 @@ namespace Assets.Scripts.Model
 
     public void UpdateTextPosition() => Text.SetPositionOnScreen(Camera.main.WorldToScreenPoint(Position));
 
+    public void UpdateLabel(string label)
+    {
+      this.label = label;
+      Text.text = label;
+    }
+
     public Vector3 Position
     {
       get => point.position;
