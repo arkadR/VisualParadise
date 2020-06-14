@@ -64,6 +64,11 @@ namespace Assets.Scripts
     public Node FindNodeByGameObject(GameObject gameObject) =>
       Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
 
+    public bool IsEdge(GameObject gameObject) => FindEdgeByGameObject(gameObject) != null;
+
+    public Edge FindEdgeByGameObject(GameObject gameObject) =>
+      Graph.edges.SingleOrDefault(n => n.gameObject == gameObject);
+
     public Node FindNodeById(int id) => Graph.nodes.SingleOrDefault(n => n.id == id);
 
     public void AddNode(Vector3 position, Quaternion rotation)

@@ -38,7 +38,10 @@ namespace Assets.Scripts.Tools
 
     public string ToolName => "Edge";
 
-    public bool CanInteractWith(RaycastHit hitInfo) => _graphService.IsNode(hitInfo.collider.gameObject);
+    public bool CanInteractWith(RaycastHit hitInfo)
+    {
+      return _graphService.IsNode(hitInfo.collider.gameObject) || _graphService.IsEdge(hitInfo.collider.gameObject);
+    }
 
     public void OnLeftClick(Transform cameraTransform, bool isHit, RaycastHit raycastHit)
     {
