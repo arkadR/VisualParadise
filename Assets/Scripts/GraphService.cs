@@ -116,6 +116,13 @@ namespace Assets.Scripts
       }
     }
 
+    public void RemoveEdge(Edge edge)
+    {
+      Destroy(edge.gameObject);
+      Graph.edges.Remove(edge);
+      FixEdges();
+    }
+
     public void RemoveAllEdgesBetween(Node node1, Node node2)
     {
       var edges = Graph.FindEdgesByNodes(node1, node2);
