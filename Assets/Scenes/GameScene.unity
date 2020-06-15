@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3001,6 +3001,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: DisplayModel
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 1bc2a4f315c21bd48bf858793366fb88,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4293551092024144603, guid: 1bc2a4f315c21bd48bf858793366fb88,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4542935624842794462, guid: 1bc2a4f315c21bd48bf858793366fb88,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8980229857594684672, guid: 1bc2a4f315c21bd48bf858793366fb88,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bc2a4f315c21bd48bf858793366fb88, type: 3}
 --- !u!1 &512725038
@@ -5389,7 +5409,7 @@ GameObject:
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
   - component: {fileID: 963194231}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -5557,7 +5577,7 @@ GameObject:
   - component: {fileID: 969613249}
   - component: {fileID: 969613251}
   - component: {fileID: 969613250}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GunModeLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6694,7 +6714,7 @@ GameObject:
   - component: {fileID: 1360377197}
   - component: {fileID: 1360377199}
   - component: {fileID: 1360377198}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7010,7 +7030,7 @@ GameObject:
   - component: {fileID: 1451145814}
   - component: {fileID: 1451145816}
   - component: {fileID: 1451145815}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Dot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7083,7 +7103,7 @@ GameObject:
   - component: {fileID: 1454458438}
   - component: {fileID: 1454458440}
   - component: {fileID: 1454458439}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GunModeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7429,7 +7449,7 @@ GameObject:
   - component: {fileID: 1515649761}
   - component: {fileID: 1515649760}
   - component: {fileID: 1515649762}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -7496,7 +7516,7 @@ GameObject:
   - component: {fileID: 1520164289}
   - component: {fileID: 1520164288}
   - component: {fileID: 1520164287}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: CrosshairCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10358,6 +10378,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Toolgun
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 232cd1a584cfaf742a4e92af354c9513,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 232cd1a584cfaf742a4e92af354c9513, type: 3}
 --- !u!4 &1989424588 stripped
@@ -10863,7 +10888,7 @@ GameObject:
   - component: {fileID: 2040796853}
   - component: {fileID: 2040796852}
   - component: {fileID: 2040796851}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
