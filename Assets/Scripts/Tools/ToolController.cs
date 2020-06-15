@@ -13,7 +13,7 @@ namespace Assets.Scripts.Tools
     ToolgunRecoil _toolgunRecoil;
     ISet<IToolChangeObserver> _toolChangeObservers;
 
-    IDictionary<KeyCode, ITool> _tools;
+    List<(KeyCode keyCode, ITool tool)> _tools;
     public Color activatedColor = Color.green;
     public Image crosshair;
     public float hitDistance = 40f;
@@ -41,20 +41,25 @@ namespace Assets.Scripts.Tools
       _toolgunRecoil = FindObjectOfType<ToolgunRecoil>();
 
       var toolPanelController = FindObjectOfType<ToolPanelController>();
+
+      var nodeTool = gameObject.AddComponent<NodeTool>();
+      var edgeTool = gameObject.AddComponent<EdgeTool>();
+      var movementExecutorTool = new MovementExecutorTool(FindObjectOfType<MovementExecutor>(), toolPanelController);
+      var graphArrangerTool = new GraphArrangerTool(FindObjectOfType<GraphArranger>(), toolPanelController);
       var labelVisibilityTool = new LabelVisibilityTool(_graphService, toolPanelController);
 
-      _tools = new Dictionary<KeyCode, ITool>
+      _tools = new List<(KeyCode, ITool)>
       {
-        [KeyCode.Alpha1] = gameObject.AddComponent<NodeTool>(),
-        [KeyCode.Alpha2] = gameObject.AddComponent<EdgeTool>(),
-        [KeyCode.Alpha3] = new MovementExecutorTool(FindObjectOfType<MovementExecutor>(), toolPanelController),
-        [KeyCode.Alpha4] = new GraphArrangerTool(FindObjectOfType<GraphArranger>(), toolPanelController),
-        [KeyCode.Alpha5] = labelVisibilityTool
+        (KeyCode.Alpha1, nodeTool),
+        (KeyCode.Alpha2, edgeTool),
+        (KeyCode.Alpha3, movementExecutorTool),
+        (KeyCode.Alpha4, graphArrangerTool),
+        (KeyCode.Alpha5, labelVisibilityTool)
       };
 
-      _toolChangeObservers = new HashSet<IToolChangeObserver> { toolPanelController, gameObject.GetComponent<EdgeTool>() };
+      _toolChangeObservers = new HashSet<IToolChangeObserver> { toolPanelController, edgeTool };
 
-      ActiveTool = _tools.First().Value;
+      ActiveTool = _tools.First().tool;
     }
 
     void Update()
@@ -103,28 +108,37 @@ namespace Assets.Scripts.Tools
 
     void HandleChangeTool()
     {
-      var pressedToolKey = _tools
-        .Keys
-        .FirstOrDefault(Input.GetKeyDown);
+      var selectedTool = _tools
+        .FirstOrDefault(r => Input.GetKeyDown(r.keyCode) == true);
 
-      if (pressedToolKey == KeyCode.None)
+      if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+      {
+        var currIdx = _tools.FindIndex(t => t.tool == ActiveTool);
+        selectedTool = currIdx == _tools.Count - 1 ? _tools.First() : _tools[currIdx + 1];
+      }
+      else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+      {
+        var currIdx = _tools.FindIndex(t => t.tool == ActiveTool);
+        selectedTool = currIdx == 0 ? _tools.Last() : _tools[currIdx - 1];
+      }
+
+      if (selectedTool == default)
         return;
 
-      var newTool = _tools[pressedToolKey];
-      if (ActiveTool == newTool)
+      if (ActiveTool == selectedTool.tool)
         return;
 
-      if (newTool is IMovementTool)
-        DisableMovementTools(newTool);
+      if (selectedTool.tool is IMovementTool)
+        DisableMovementTools(selectedTool.tool);
 
-      ActiveTool = newTool;
+      ActiveTool = selectedTool.tool;
       ActiveTool.OnSelect();
     }
 
     
     void DisableMovementTools(ITool toolNotToDisable)
     {
-      foreach (var tool in _tools.Values)
+      foreach (var (_, tool) in _tools)
       {
         if (tool != toolNotToDisable && tool is IMovementTool movementTool)
           movementTool.Disable();
