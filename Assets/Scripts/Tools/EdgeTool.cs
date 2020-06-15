@@ -26,7 +26,8 @@ namespace Assets.Scripts.Tools
 
     public bool CanInteractWith(RaycastHit hitInfo)
     {
-      return _graphService.IsNode(hitInfo.collider.gameObject) || _graphService.IsEdge(hitInfo.collider.gameObject);
+      return _graphService.IsNode(hitInfo.collider.gameObject) 
+        || _graphService.IsEdge(hitInfo.collider.gameObject) && _previouslyHitNode == null;
     }
 
     public void OnLeftClick(Transform cameraTransform, bool isHit, RaycastHit raycastHit)
