@@ -70,14 +70,6 @@ namespace Assets.Scripts.Tools
       if (currentlyHitNode == null)
         return;
 
-      // If player hit the same node twice, don't do anything
-      if (currentlyHitNode == _previouslyHitNode)
-      {
-        _previouslyHitNode.gameObject.DisableGlow();
-        _previouslyHitNode = null;
-        return;
-      }
-
       if (_previouslyHitNode == null)
       {
         _previouslyHitNode = currentlyHitNode;
