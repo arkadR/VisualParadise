@@ -28,6 +28,10 @@ namespace Assets.Scripts.Tools
     public void OnRightClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit) =>
       _graphArranger.ToggleReverse();
 
+    public void OnLeftMouseButtonHeld(Transform cameraTransform) { }
+
+    public void OnLeftMouseButtonReleased() { }
+
     public void OnSelect() => _toolPanelController.SetBackgroundColor(GetPanelColor());
 
     private Color GetPanelColor() => _graphArranger.ArrangeEnabled ? Color.green : Color.red;

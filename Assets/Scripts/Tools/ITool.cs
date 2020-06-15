@@ -8,6 +8,8 @@ namespace Assets.Scripts.Tools
     bool CanInteractWith(RaycastHit hitInfo);
     void OnLeftClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit);
     void OnRightClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit);
+    void OnLeftMouseButtonHeld(Transform cameraTransform);
+    void OnLeftMouseButtonReleased();
     void OnSelect();
   }
 }

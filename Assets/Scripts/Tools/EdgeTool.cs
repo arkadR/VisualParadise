@@ -46,6 +46,10 @@ namespace Assets.Scripts.Tools
       FindObjectOfType<EdgeMenuHandler>().OpenContextMenu(raycastHit.collider.gameObject);
     }
 
+    public void OnLeftMouseButtonHeld(Transform cameraTransform) { }
+
+    public void OnLeftMouseButtonReleased() { }
+
     public void OnSelect() => _toolPanelController.SetBackgroundColor(Color.green);
 
     public void OnToolsChanged(ITool newTool) => ClearPreviouslyHitNode();
