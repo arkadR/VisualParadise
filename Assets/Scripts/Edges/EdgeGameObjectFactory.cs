@@ -35,6 +35,11 @@ namespace Assets.Scripts.Edges
         lineRenderer.SetPosition(i, edgePoints[i]);
       }
 
+      var mesh = new Mesh();
+      lineRenderer.BakeMesh(mesh, true);
+      var meshCollider = line.GetComponent<MeshCollider>();
+      meshCollider.sharedMesh = mesh;
+
       edge.gameObject = line;
     }
 

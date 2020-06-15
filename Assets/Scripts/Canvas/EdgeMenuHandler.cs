@@ -1,43 +1,49 @@
-﻿using Assets.Scripts.Model;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Assets.Scripts.Model;
 using UnityEngine;
 
 namespace Assets.Scripts.Canvas
 {
-  public class ContextMenuHandler : MonoBehaviour
+  public class EdgeMenuHandler : MonoBehaviour
   {
-    private Node _node;
+    private Edge _edge;
 
-    public UnityEngine.GameObject contextMenu;
     private GraphService _graphService;
+
+    public UnityEngine.GameObject edgeMenu;
 
     public void Start()
     {
       _graphService = FindObjectOfType<GraphService>();
-      contextMenu.SetActive(false);
+      edgeMenu.SetActive(false);
     }
 
     public void OpenContextMenu(UnityEngine.GameObject gameObjectHit)
     {
-      var node = _graphService.FindNodeByGameObject(gameObjectHit);
-      _node = node;
-      contextMenu.SetActive(true);
+      var edge = _graphService.FindEdgeByGameObject(gameObjectHit);
+      _edge = edge;
+      edgeMenu.SetActive(true);
       GameService.Instance.PauseGameWithoutResume();
     }
 
     public void ChangeParametersButtonOnClick()
     {
-      FindObjectOfType<PropertiesMenuHandler>().OpenPropertiesMenu(_node, contextMenu);
+      FindObjectOfType<LabelMenuHandler>().OpenLabelMenu(_edge, edgeMenu);
     }
 
     public void DeleteButtonOnClick()
     {
-      _graphService.RemoveNode(_node);
+      _graphService.RemoveEdge(_edge);
       ExitButtonOnClick();
     }
 
     public void ExitButtonOnClick()
     {
-      contextMenu.SetActive(false);
+      edgeMenu.SetActive(false);
       GameService.Instance.UnPauseGameWithoutResume();
     }
   }

@@ -35,6 +35,12 @@ namespace Assets.Scripts.Model
       Text.rectTransform.rotation = LabelAngle();
     }
 
+    public void UpdateLabel(string label)
+    {
+      this.label = label;
+      Text.text = label;
+    }
+
     Vector3 LabelPosition()
     {
       var lineRenderer = gameObject.GetComponent<LineRenderer>();

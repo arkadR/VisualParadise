@@ -109,9 +109,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4432389579877558899}
   - component: {fileID: 353517413308183234}
+  - component: {fileID: -2560886796165766478}
   m_Layer: 0
   m_Name: EdgePrefab
-  m_TagString: Untagged
+  m_TagString: PHYSICAL_EDGE_TAG
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -228,6 +229,20 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!64 &-2560886796165766478
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6955056186729139999}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &8649433791220454845
 GameObject:
   m_ObjectHideFlags: 0

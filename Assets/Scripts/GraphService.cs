@@ -64,6 +64,11 @@ namespace Assets.Scripts
     public Node FindNodeByGameObject(GameObject gameObject) =>
       Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
 
+    public bool IsEdge(GameObject gameObject) => FindEdgeByGameObject(gameObject) != null;
+
+    public Edge FindEdgeByGameObject(GameObject gameObject) =>
+      Graph.edges.SingleOrDefault(n => n.gameObject == gameObject);
+
     public Node FindNodeById(int id) => Graph.nodes.SingleOrDefault(n => n.id == id);
 
     public void AddNode(Vector3 position, Quaternion rotation)
@@ -109,6 +114,13 @@ namespace Assets.Scripts
       {
         RemoveAllEdgesBetween(edge.nodeFrom, edge.nodeTo);
       }
+    }
+
+    public void RemoveEdge(Edge edge)
+    {
+      Destroy(edge.gameObject);
+      Graph.edges.Remove(edge);
+      FixEdges();
     }
 
     public void RemoveAllEdgesBetween(Node node1, Node node2)
@@ -166,6 +178,11 @@ namespace Assets.Scripts
         var lineRender = edges[i].gameObject.GetComponent<LineRenderer>();
         lineRender.positionCount = linePositionsCount;
         lineRender.SetPositions(linePositions[i].ToArray());
+
+        var mesh = new Mesh();
+        lineRender.BakeMesh(mesh, true);
+        var meshCollider = edges[i].gameObject.GetComponent<MeshCollider>();
+        meshCollider.sharedMesh = mesh;
       }
     }
   }

@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Common.Extensions;
+﻿using Assets.Scripts.Canvas;
+using Assets.Scripts.Common;
+using Assets.Scripts.Common.Extensions;
 using Assets.Scripts.Model;
 using UnityEngine;
 
@@ -6,49 +8,42 @@ namespace Assets.Scripts.Tools
 {
   enum EdgeMode { Create, Delete }
 
-  public class EdgeTool : ITool, IToolChangeObserver
+  public class EdgeTool : MonoBehaviour, ITool, IToolChangeObserver
   {
     readonly Color _createGlowColor = Color.green;
-    readonly Color _deleteGlowColor = Color.red;
-    readonly GraphService _graphService;
     readonly float _nodeHitGlowStrength = 0.5f;
-    readonly ToolPanelController _toolPanelController;
-    EdgeMode _mode = EdgeMode.Create;
+    GraphService _graphService;
+    ToolPanelController _toolPanelController;
     Node _previouslyHitNode;
 
-    public EdgeTool(GraphService graphService, ToolPanelController toolPanelController)
+    public void Start()
     {
-      _graphService = graphService;
-      _toolPanelController = toolPanelController;
-    }
-
-    EdgeMode Mode
-    {
-      get => _mode;
-      set
-      {
-        if (_mode != value)
-        {
-          ClearPreviouslyHitNode();
-          _mode = value;
-        }
-      }
+      _graphService = FindObjectOfType<GraphService>();
+      _toolPanelController = FindObjectOfType<ToolPanelController>();
     }
 
     public string ToolName => "Edge";
 
-    public bool CanInteractWith(RaycastHit hitInfo) => _graphService.IsNode(hitInfo.collider.gameObject);
+    public bool CanInteractWith(RaycastHit hitInfo)
+    {
+      return _graphService.IsNode(hitInfo.collider.gameObject) 
+        || _graphService.IsEdge(hitInfo.collider.gameObject) && _previouslyHitNode == null;
+    }
 
     public void OnLeftClick(Transform cameraTransform, bool isHit, RaycastHit raycastHit)
     {
-      Mode = EdgeMode.Create;
+      if (!isHit || raycastHit.collider.gameObject.tag != Constants.PhysicalNodeTag)
+        return;
+
       OnActionPerformed(isHit, raycastHit);
     }
 
     public void OnRightClick(Transform cameraTransform, bool isHit, RaycastHit raycastHit)
     {
-      Mode = EdgeMode.Delete;
-      OnActionPerformed(isHit, raycastHit);
+      if (!isHit || raycastHit.collider.gameObject.tag != Constants.PhysicalEdgeTag)
+        return;
+
+      FindObjectOfType<EdgeMenuHandler>().OpenContextMenu(raycastHit.collider.gameObject);
     }
 
     public void OnSelect() => _toolPanelController.SetBackgroundColor(Color.green);
@@ -80,25 +75,12 @@ namespace Assets.Scripts.Tools
       {
         _previouslyHitNode = currentlyHitNode;
         _previouslyHitNode.gameObject.EnableGlow();
-        var glowColor = Mode == EdgeMode.Create ? _createGlowColor : _deleteGlowColor;
+        var glowColor = _createGlowColor;
         _previouslyHitNode.gameObject.SetGlow(glowColor * _nodeHitGlowStrength);
         return;
       }
 
-      switch (Mode)
-      {
-        case EdgeMode.Create:
-        {
-          _graphService.AddEdge(currentlyHitNode, _previouslyHitNode);
-          break;
-        }
-        case EdgeMode.Delete:
-        {
-          _graphService.RemoveAllEdgesBetween(currentlyHitNode, _previouslyHitNode);
-          break;
-        }
-      }
-
+      _graphService.AddEdge(currentlyHitNode, _previouslyHitNode);
       _previouslyHitNode.gameObject.DisableGlow();
       _previouslyHitNode = null;
     }

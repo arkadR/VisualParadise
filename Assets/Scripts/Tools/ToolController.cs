@@ -39,19 +39,18 @@ namespace Assets.Scripts.Tools
       _toolgunRecoil = FindObjectOfType<ToolgunRecoil>();
 
       var toolPanelController = FindObjectOfType<ToolPanelController>();
-      var edgeTool = new EdgeTool(_graphService, toolPanelController);
       var labelVisibilityTool = new LabelVisibilityTool(_graphService, toolPanelController);
 
       _tools = new Dictionary<KeyCode, ITool>
       {
         [KeyCode.Alpha1] = gameObject.AddComponent<NodeTool>(),
-        [KeyCode.Alpha2] = edgeTool,
+        [KeyCode.Alpha2] = gameObject.AddComponent<EdgeTool>(),
         [KeyCode.Alpha3] = new MovementExecutorTool(FindObjectOfType<MovementExecutor>(), toolPanelController),
         [KeyCode.Alpha4] = new GraphArrangerTool(FindObjectOfType<GraphArranger>(), toolPanelController),
         [KeyCode.Alpha5] = labelVisibilityTool
       };
 
-      _toolChangeObservers = new HashSet<IToolChangeObserver> { toolPanelController, edgeTool };
+      _toolChangeObservers = new HashSet<IToolChangeObserver> { toolPanelController, gameObject.GetComponent<EdgeTool>() };
 
       ActiveTool = _tools.First().Value;
     }
