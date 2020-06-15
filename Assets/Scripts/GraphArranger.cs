@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -76,7 +77,11 @@ namespace Assets.Scripts
     /// </summary>
     void Attract()
     {
-      foreach (var e in _graphService.Graph.edges)
+      var uniqueEdges = _graphService.Graph.edges
+        .GroupBy(e => new {e.from, e.to})
+        .Select(g => g.First());
+
+      foreach (var e in uniqueEdges)
       {
         var node1 = _graphService.FindNodeById(e.from);
         var node2 = _graphService.FindNodeById(e.to);

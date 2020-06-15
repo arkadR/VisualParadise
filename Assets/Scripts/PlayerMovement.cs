@@ -39,20 +39,20 @@ namespace Assets.Scripts
     void ApplyMovementAxisBased()
     {
       var x = Input.GetAxis("Horizontal");
-      var z = Input.GetAxis("Vertical");
       var y = Input.GetAxis("Up");
-
-      var offset = (transform.right * x) + (transform.forward * z) + (transform.up * y);
-
+      var z = Input.GetAxis("Vertical");
+      
+      var offset = (transform.right * x) + (transform.up * y) + (transform.forward * z);
       controller.Move(offset * speed * Time.deltaTime);
     }
 
     void ApplyMovementFollowCamera()
     {
       var x = Input.GetAxis("Horizontal");
+      var y = Input.GetAxis("Up");
       var z = Input.GetAxis("Vertical");
 
-      var offset = (transform.right * x) + (Camera.main.transform.forward * z);
+      var offset = (transform.right * x) + (transform.up * y) + (Camera.main.transform.forward * z);
       controller.Move(offset * speed * Time.deltaTime);
     }
   }
