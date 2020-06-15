@@ -14,10 +14,12 @@ namespace Assets.Scripts.Tools
     ISet<IToolChangeObserver> _toolChangeObservers;
 
     IDictionary<KeyCode, ITool> _tools;
-    public Color activatedColor = Color.yellow;
+    public Color activatedColor = Color.green;
     public Image crosshair;
     public float hitDistance = 40f;
     public Color notActivatedColor = Color.white;
+
+    bool _isLeftMouseButtonHeld = false;
 
     public ITool ActiveTool
     {
@@ -74,6 +76,7 @@ namespace Assets.Scripts.Tools
 
     void HandleMouseClick(bool isHit, RaycastHit raycastHit)
     {
+      // Only clicked event, holding down does not call those
       if (Input.GetButtonDown("Fire1"))
       {
         ActiveTool.OnLeftClick(_attachedCamera.transform, isHit, raycastHit);
@@ -83,6 +86,18 @@ namespace Assets.Scripts.Tools
       {
         ActiveTool.OnRightClick(_attachedCamera.transform, isHit, raycastHit);
         _toolgunRecoil.AddRecoil();
+      }
+
+      // Updated for every frame
+      if (Input.GetMouseButton(0))
+      {
+        ActiveTool.OnLeftMouseButtonHeld(_attachedCamera.transform);
+        _isLeftMouseButtonHeld = true;
+      }
+      else if (_isLeftMouseButtonHeld)
+      {
+        ActiveTool.OnLeftMouseButtonReleased();
+        _isLeftMouseButtonHeld = false;
       }
     }
 

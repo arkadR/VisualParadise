@@ -24,6 +24,10 @@ namespace Assets.Scripts.Tools
     }
 
     public void OnRightClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit) { }
+    public void OnLeftMouseButtonHeld(Transform cameraTransform) { }
+
+    public void OnLeftMouseButtonReleased() { }
+
     public void OnSelect() => _toolPanelController.SetBackgroundColor(GetPanelColor());
 
     private Color GetPanelColor() => _graphService.LabelVisibility ? Color.green : Color.red;

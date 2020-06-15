@@ -12553,7 +12553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b851677b596d43bf810ba821a40332c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activatedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  activatedColor: {r: 0, g: 0.85882354, b: 0, a: 1}
   crosshair: {fileID: 1451145815}
   hitDistance: 40
   notActivatedColor: {r: 1, g: 1, b: 1, a: 1}
