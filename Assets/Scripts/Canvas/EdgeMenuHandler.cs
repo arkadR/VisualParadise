@@ -32,7 +32,7 @@ namespace Assets.Scripts.Canvas
 
     public void ChangeParametersButtonOnClick()
     {
-      FindObjectOfType<LabelMenuHandler>().OpenLabelMenu(_edge);
+      FindObjectOfType<LabelMenuHandler>().OpenLabelMenu(_edge, edgeMenu);
     }
 
     public void DeleteButtonOnClick()

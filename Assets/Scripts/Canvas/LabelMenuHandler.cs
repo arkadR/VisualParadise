@@ -13,6 +13,8 @@ namespace Assets.Scripts.Canvas
   {
     private Edge _edge;
 
+    private GameObject _previousMenu;
+
     public GameObject labelMenu;
 
     public InputField labelInput;
@@ -35,9 +37,10 @@ namespace Assets.Scripts.Canvas
       saveButton.interactable = IsInputCorrect();
     }
 
-    public void OpenLabelMenu(Edge edge)
+    public void OpenLabelMenu(Edge edge, GameObject previousMenu)
     {
       _edge = edge;
+      _previousMenu = previousMenu;
       labelMenu.SetActive(true);
       labelInput.text = _edge.label;
     }
@@ -48,7 +51,9 @@ namespace Assets.Scripts.Canvas
         return;
 
       _edge.UpdateLabel(labelInput.text);
-      ExitButtonOnClick();
+      labelMenu.SetActive(false);
+      _previousMenu.SetActive(false);
+      GameService.Instance.UnPauseGameWithoutResume();
     }
 
     public void ExitButtonOnClick()

@@ -7,6 +7,8 @@ namespace Assets.Scripts.Canvas
 {
   public class PropertiesMenuHandler : MonoBehaviour
   {
+    private UnityEngine.GameObject _previousMenu;
+
     private PointContainer _pointContainerObject;
 
     private VPointContainer _vPointContainerObject;
@@ -27,7 +29,7 @@ namespace Assets.Scripts.Canvas
 
     public Button saveButton;
 
-    private bool AreValuesCorrect()
+    private bool IsInputCorrect()
     {
       return (_pointContainerObject.IsInputCorrect() && _vPointContainerObject.IsInputCorrect()
         && _aPointContainerObject.IsInputCorrect() && labelInput.text.Length > 0);
@@ -46,12 +48,13 @@ namespace Assets.Scripts.Canvas
 
     public void Update()
     {
-      saveButton.interactable = AreValuesCorrect();
+      saveButton.interactable = IsInputCorrect();
     }
 
-    public void OpenPropertiesMenu(Node node)
+    public void OpenPropertiesMenu(Node node, GameObject previousMenu)
     {
       _node = node;
+      _previousMenu = previousMenu;
       propertiesMenu.SetActive(true);
 
       labelInput.text = _node.label;
@@ -62,14 +65,16 @@ namespace Assets.Scripts.Canvas
 
     public void SaveDataButtonOnClick()
     {
-      if (!AreValuesCorrect())
+      if (!IsInputCorrect())
         return;
 
       _node.UpdateLabel(labelInput.text);
       _pointContainerObject.SaveData();
       _vPointContainerObject.SaveData();
       _aPointContainerObject.SaveData();
-      ExitButtonOnClick();
+      propertiesMenu.SetActive(false);
+      _previousMenu.SetActive(false);
+      GameService.Instance.UnPauseGameWithoutResume();
     }
 
     public void ExitButtonOnClick()

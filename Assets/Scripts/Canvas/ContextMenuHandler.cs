@@ -26,7 +26,7 @@ namespace Assets.Scripts.Canvas
 
     public void ChangeParametersButtonOnClick()
     {
-      FindObjectOfType<PropertiesMenuHandler>().OpenPropertiesMenu(_node);
+      FindObjectOfType<PropertiesMenuHandler>().OpenPropertiesMenu(_node, contextMenu);
     }
 
     public void DeleteButtonOnClick()
