@@ -35,7 +35,7 @@ namespace Assets.Scripts.Model
 
     public Text Text => gameObject.GetComponentInChildren<Text>();
 
-    public void UpdateTextPosition() => Text.SetPositionOnScreen(Camera.main.WorldToScreenPoint(Position));
+    public void UpdateTextPosition(Camera camera) => Text.SetPositionOnScreen(camera.WorldToScreenPoint(Position));
 
     public void UpdateLabel(string label)
     {
@@ -50,7 +50,6 @@ namespace Assets.Scripts.Model
       {
         point.position = value;
         gameObject.transform.position = value;
-        Text.SetPositionOnScreen(Camera.main.WorldToScreenPoint(value));
       }
     }
 

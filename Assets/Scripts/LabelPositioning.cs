@@ -21,8 +21,9 @@ namespace Assets.Scripts
     /// </summary>
     void UpdateLabelPositions()
     {
-      graphService.Graph?.nodes.ForEach(n => n.UpdateTextPosition());
-      graphService.Graph?.edges.ForEach(e => e.UpdateTextPosition());
+      var camera = Camera.main;
+      graphService.Graph?.nodes.ForEach(n => n.UpdateTextPosition(camera));
+      graphService.Graph?.edges.ForEach(e => e.UpdateTextPosition(camera));
     }
   }
 }

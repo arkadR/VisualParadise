@@ -8,15 +8,15 @@ namespace Assets.Scripts.Model
   [Serializable]
   public class Edge : IEquatable<Edge>
   {
-    public int from;
-
-    [NonSerialized] public GameObject gameObject;
     public int id;
     public string label;
-    [NonSerialized] public Node nodeFrom;
-    [NonSerialized] public Node nodeTo;
+    public int from;
     public int to;
     public int weight;
+
+    [NonSerialized] public GameObject gameObject;
+    [NonSerialized] public Node nodeFrom;
+    [NonSerialized] public Node nodeTo;
 
     public Text Text => gameObject.GetComponentInChildren<Text>();
 
@@ -29,10 +29,10 @@ namespace Assets.Scripts.Model
       return id == other.id;
     }
 
-    public void UpdateTextPosition()
+    public void UpdateTextPosition(Camera camera)
     {
-      Text.SetPositionOnScreen(LabelPosition());
-      Text.rectTransform.rotation = LabelAngle();
+      Text.SetPositionOnScreen(GetLabelPosition(camera));
+      Text.rectTransform.rotation = GetLabelAngle(camera);
     }
 
     public void UpdateLabel(string label)
@@ -41,32 +41,32 @@ namespace Assets.Scripts.Model
       Text.text = label;
     }
 
-    Vector3 LabelPosition()
+    Vector3 GetLabelPosition(Camera camera)
     {
       var lineRenderer = gameObject.GetComponent<LineRenderer>();
       return
         lineRenderer.positionCount == 2
-          ? StraightLineMiddle()
-          : CurvedLineMiddlePoint(lineRenderer);
+          ? StraightLineMiddle(camera)
+          : CurvedLineMiddlePoint(camera, lineRenderer);
     }
 
-    Vector3 CurvedLineMiddlePoint(LineRenderer lineRenderer)
+    Vector3 CurvedLineMiddlePoint(Camera camera, LineRenderer lineRenderer)
     {
       var middleIndex = lineRenderer.positionCount / 2;
       var middlePointPosition = lineRenderer.GetPosition(middleIndex);
-      return Camera.main.WorldToScreenPoint(middlePointPosition);
+      return camera.WorldToScreenPoint(middlePointPosition);
     }
 
-    Vector3 StraightLineMiddle()
+    Vector3 StraightLineMiddle(Camera camera)
     {
       var middle = (nodeFrom.Position + nodeTo.Position) / 2;
-      return Camera.main.WorldToScreenPoint(middle);
+      return camera.WorldToScreenPoint(middle);
     }
 
-    Quaternion LabelAngle()
+    Quaternion GetLabelAngle(Camera camera)
     {
-      var (x1, y1, z1) = Camera.main.WorldToScreenPoint(nodeFrom.Position);
-      var (x2, y2, z2) = Camera.main.WorldToScreenPoint(nodeTo.Position);
+      var (x1, y1, z1) = camera.WorldToScreenPoint(nodeFrom.Position);
+      var (x2, y2, z2) = camera.WorldToScreenPoint(nodeTo.Position);
       var tan = (y1 - y2) / (x1 - x2);
       tan = float.IsNaN(tan) ? 0 : tan;
       var angle = Mathf.Atan(tan) * Mathf.Rad2Deg;
