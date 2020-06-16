@@ -6906,7 +6906,7 @@ GameObject:
   - component: {fileID: 969613251}
   - component: {fileID: 969613250}
   m_Layer: 8
-  m_Name: GunModeLabel
+  m_Name: ToolgunModeLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6920,7 +6920,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 969613248}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -4, y: 0, z: 3}
+  m_LocalPosition: {x: -4, y: -0, z: 2.5}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 2040796850}
@@ -6941,8 +6941,8 @@ TextMesh:
   m_Anchor: 3
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 100
-  m_FontStyle: 0
+  m_FontSize: 170
+  m_FontStyle: 1
   m_RichText: 1
   m_Font: {fileID: 0}
   m_Color:
@@ -8982,7 +8982,7 @@ GameObject:
   - component: {fileID: 1454458440}
   - component: {fileID: 1454458439}
   m_Layer: 8
-  m_Name: GunModeText
+  m_Name: ToolgunModeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8996,7 +8996,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1454458437}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -4, y: 0, z: 1}
+  m_LocalPosition: {x: -4, y: -0, z: -1}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 2040796850}
@@ -9017,8 +9017,8 @@ TextMesh:
   m_Anchor: 3
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 100
-  m_FontStyle: 0
+  m_FontSize: 170
+  m_FontStyle: 1
   m_RichText: 1
   m_Font: {fileID: 0}
   m_Color:
@@ -11665,7 +11665,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: FPS
 --- !u!222 &1919449217
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12571,7 +12571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba8c9640e417d57488cd9c8090087040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunModeText: {fileID: 1454458439}
+  toolgunModeText: {fileID: 0}
   panel: {fileID: 2040796852}
 --- !u!114 &1989424592
 MonoBehaviour:

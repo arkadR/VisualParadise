@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Common.Utils;
+using UnityEngine;
 
 namespace Assets.Scripts.Tools
 {
@@ -17,6 +18,8 @@ namespace Assets.Scripts.Tools
 
     public string ToolName => "Arrange";
 
+    private void SetGunModeText() => _toolPanelController.SetToolgunModeText($"{ToolName}\n{GetArrangerMode()}");
+
     public bool CanInteractWith(RaycastHit hitInfo) => false;
     public void UpdateRaycast(bool isHit, RaycastHit hitInfo) { }
 
@@ -26,15 +29,24 @@ namespace Assets.Scripts.Tools
       _toolPanelController.SetBackgroundColor(GetPanelColor());
     }
 
-    public void OnRightClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit) =>
+    public void OnRightClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit)
+    {
       _graphArranger.ToggleMode();
+      SetGunModeText();
+    }
 
     public void OnLeftMouseButtonHeld(Transform cameraTransform) { }
 
     public void OnLeftMouseButtonReleased() { }
 
-    public void OnSelect() => _toolPanelController.SetBackgroundColor(GetPanelColor());
+    public void OnSelect()
+    {
+      _toolPanelController.SetBackgroundColor(GetPanelColor());
+      SetGunModeText();
+    }
 
     private Color GetPanelColor() => _graphArranger.ArrangeEnabled ? Color.green : Color.red;
+
+    private string GetArrangerMode() => EnumUtils<GraphArrangerMode>.GetName(_graphArranger.ArrangeMode).Substring(1);
   }
 }

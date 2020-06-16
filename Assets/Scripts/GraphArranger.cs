@@ -9,7 +9,7 @@ namespace Assets.Scripts
     const float _repelFunCoefficient = 5.0f; // higher values causes more distortion
     const float _attractFunPower = 1.5f; // safe range <1, 3>
     const float _maxVelocityMagnitude = 25f;
-    private GraphArrangerMode _arrangeMode = default;
+    public GraphArrangerMode ArrangeMode { get; private set; }  = default;
     GraphService _graphService;
 
     public void Start() => _graphService = FindObjectOfType<GraphService>();
@@ -24,7 +24,7 @@ namespace Assets.Scripts
 
       Attract();
       Repel();
-      if (_arrangeMode == GraphArrangerMode._2D)
+      if (ArrangeMode == GraphArrangerMode._2D)
         SquashTo2D();
       _graphService.FixEdges();
     }
@@ -37,7 +37,7 @@ namespace Assets.Scripts
       Debug.Log("Arranger " + (ArrangeEnabled ? "enabled" : "disabled"));
     }
 
-    public void ToggleMode() => _arrangeMode = (GraphArrangerMode)EnumUtils<GraphArrangerMode>.GetNextValue((int)_arrangeMode);
+    public void ToggleMode() => ArrangeMode = (GraphArrangerMode)EnumUtils<GraphArrangerMode>.GetNextValue((int)ArrangeMode);
 
     public void DisableArrangement()
     {
