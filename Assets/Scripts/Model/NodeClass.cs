@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using UnityEngine;
 
 namespace Assets.Scripts.Model
@@ -9,17 +11,12 @@ namespace Assets.Scripts.Model
   public class NodeClass
   {
     public int id;
-    public string shape;
+    [JsonConverter(typeof(StringEnumConverter))]
+    public PrimitiveType? shape;
     [CanBeNull]
     public string texturePath;
 
     public float? scale;
 
-    [NonSerialized]
-    public PrimitiveType? objectType;
-    
-
-    [OnDeserialized]
-    public void OnDeserialized(StreamingContext context) => objectType = Enum.Parse(typeof(PrimitiveType), shape) as PrimitiveType?;
   }
 }

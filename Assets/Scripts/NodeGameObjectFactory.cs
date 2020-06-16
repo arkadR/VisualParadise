@@ -30,9 +30,9 @@ namespace Assets.Scripts
 
       var material = _materialCache.GetByClassId(node.nodeClass.id);
 
-      var gameObject = node.nodeClass.objectType == null
+      var gameObject = node.nodeClass.shape == null
         ? GameObject.CreatePrimitive(c_defaultNodeType)
-        : GameObject.CreatePrimitive(node.nodeClass.objectType.Value);
+        : GameObject.CreatePrimitive(node.nodeClass.shape.Value);
 
       gameObject.transform.localScale = Vector3.one * (node.nodeClass.scale ?? 1);
       gameObject.transform.position = node.Position;
