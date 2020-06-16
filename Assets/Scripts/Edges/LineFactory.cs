@@ -7,7 +7,7 @@ namespace Assets.Scripts.Edges
   public class LineFactory : MonoBehaviour
   {
     //the further the point is (bigger value) the stronger will the curve be
-    const int CurvePointDistance = 5;
+    const int EdgeOnOneNodeCurveStrength = 3;
     public BezierCurveFactory bezierCurveFactory;
     public bool debug;
     public DebugSphereFactory debugSphereFactory;
@@ -33,20 +33,19 @@ namespace Assets.Scripts.Edges
 
     IList<IList<Vector3>> GetEdgePointsForEdgeOnOneNode(Vector3 point, int numberOfLines)
     {
-
       var rotation = 360f / numberOfLines;
-      var centerVector = Vector3.up * CurvePointDistance;
+      var centerVector = Vector3.up * EdgeOnOneNodeCurveStrength;
       var v1 = Quaternion.Euler(60, 0, 0) * centerVector;
       var v2 = Quaternion.Euler(-60, 0, 0) * centerVector;
 
       var curvePointsForEdges = new List<IList<Vector3>>();
 
-      for (int i = 0; i < numberOfLines; i++)
+      for (var i = 0; i < numberOfLines; i++)
       {
         curvePointsForEdges.Add(bezierCurveFactory.BezierCurve4(
-          point, 
-          point + Quaternion.Euler(0, 0, i * rotation) * v1, 
-          point + Quaternion.Euler(0, 0, i * rotation) * v2, 
+          point,
+          point + (Quaternion.Euler(0, 0, i * rotation) * v1),
+          point + (Quaternion.Euler(0, 0, i * rotation) * v2),
           point));
       }
 
@@ -84,8 +83,9 @@ namespace Assets.Scripts.Edges
 
       IList<Vector3> CreateCurvedEdgeGameObject()
       {
+        var curvePointDistance = (endingPoint - startingPoint).magnitude / 3;
         var rotatedPoint = middlePoint +
-                           (Quaternion.AngleAxis(currentRotation, rotationAxis) * normalVector * CurvePointDistance);
+                           (Quaternion.AngleAxis(currentRotation, rotationAxis) * normalVector * curvePointDistance);
         var curvePoints = bezierCurveFactory.BezierCurve3(startingPoint, rotatedPoint, endingPoint);
         if (debug)
           debugSphereFactory.AddDebugSphere(rotatedPoint);
