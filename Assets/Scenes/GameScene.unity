@@ -12571,7 +12571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba8c9640e417d57488cd9c8090087040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolgunModeText: {fileID: 0}
+  toolgunModeText: {fileID: 1454458439}
   panel: {fileID: 2040796852}
 --- !u!114 &1989424592
 MonoBehaviour:

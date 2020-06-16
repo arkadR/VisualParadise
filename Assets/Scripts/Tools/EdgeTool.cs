@@ -34,11 +34,49 @@ namespace Assets.Scripts.Tools
       if (!isHit || raycastHit.collider.gameObject.tag != Constants.PhysicalNodeTag)
         return;
 
-      OnActionPerformed(isHit, raycastHit);
+      if (!isHit)
+        return;
+
+      var gameObjectHit = raycastHit.collider.gameObject;
+      var currentlyHitNode = _graphService.FindNodeByGameObject(gameObjectHit);
+
+      // If not a node, don't do anything
+      if (currentlyHitNode == null)
+        return;
+
+      if (_previouslyHitNode == null)
+      {
+        _previouslyHitNode = currentlyHitNode;
+        EnablePreviouslyHitNode();
+        return;
+      }
+
+      _graphService.AddEdge(currentlyHitNode, _previouslyHitNode);
+      DisablePreviouslyHitNode();
+    }
+
+    private void EnablePreviouslyHitNode()
+    {
+      _previouslyHitNode.gameObject.EnableGlow();
+      var glowColor = _createGlowColor;
+      _previouslyHitNode.gameObject.SetGlow(glowColor * _nodeHitGlowStrength);
+    }
+
+    private void DisablePreviouslyHitNode()
+    {
+      _previouslyHitNode.gameObject.DisableGlow();
+      _previouslyHitNode = null;
     }
 
     public void OnRightClick(Transform cameraTransform, bool isHit, RaycastHit raycastHit)
     {
+
+      if (isHit && raycastHit.collider.gameObject.tag == Constants.PhysicalNodeTag && _previouslyHitNode != null)
+      {
+        DisablePreviouslyHitNode();
+        return;
+      }
+
       if (!isHit || raycastHit.collider.gameObject.tag != Constants.PhysicalEdgeTag)
         return;
 
@@ -60,32 +98,6 @@ namespace Assets.Scripts.Tools
         _previouslyHitNode.gameObject.DisableGlow();
         _previouslyHitNode = null;
       }
-    }
-
-    void OnActionPerformed(bool isHit, RaycastHit raycastHit)
-    {
-      if (!isHit)
-        return;
-
-      var gameObjectHit = raycastHit.collider.gameObject;
-      var currentlyHitNode = _graphService.FindNodeByGameObject(gameObjectHit);
-
-      // If not a node, don't do anything
-      if (currentlyHitNode == null)
-        return;
-
-      if (_previouslyHitNode == null)
-      {
-        _previouslyHitNode = currentlyHitNode;
-        _previouslyHitNode.gameObject.EnableGlow();
-        var glowColor = _createGlowColor;
-        _previouslyHitNode.gameObject.SetGlow(glowColor * _nodeHitGlowStrength);
-        return;
-      }
-
-      _graphService.AddEdge(currentlyHitNode, _previouslyHitNode);
-      _previouslyHitNode.gameObject.DisableGlow();
-      _previouslyHitNode = null;
     }
   }
 }
