@@ -7,7 +7,7 @@ namespace Assets.Scripts.Canvas
   {
     private Node _node;
 
-    public UnityEngine.GameObject contextMenu;
+    public GameObject contextMenu;
     private GraphService _graphService;
 
     public void Start()
@@ -16,7 +16,7 @@ namespace Assets.Scripts.Canvas
       contextMenu.SetActive(false);
     }
 
-    public void OpenContextMenu(UnityEngine.GameObject gameObjectHit)
+    public void OpenContextMenu(GameObject gameObjectHit)
     {
       var node = _graphService.FindNodeByGameObject(gameObjectHit);
       _node = node;

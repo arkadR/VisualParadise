@@ -100,7 +100,7 @@ namespace Assets.Scripts
       edge.label = edge.DefaultLabel;
       var existingEdges = Graph.FindEdgesByNodes(node1, node2);
       existingEdges.Add(edge);
-      edgeGameObjectFactory.CreateGameObjectEdgesFor(existingEdges,LabelVisibility);
+      edgeGameObjectFactory.CreateGameObjectEdgesFor(existingEdges, LabelVisibility);
       Graph.edges.Add(edge);
     }
 
@@ -183,6 +183,21 @@ namespace Assets.Scripts
         var meshCollider = edges[i].gameObject.GetComponent<MeshCollider>();
         lineRenderer.BakeMesh(meshCollider.sharedMesh, true);
       }
+    }
+
+    public void SetNodeClass(Node node, NodeClass nodeClass)
+    {
+      var newClassId = nodeClass?.id ?? null;
+      if (node.classId == newClassId)
+        return;
+
+      node.classId = newClassId;
+      node.nodeClass = Graph.classes.SingleOrDefault(c => c.id == newClassId);
+      Destroy(node.gameObject);
+      node.gameObject = nodeGameObjectFactory.CreateNodeGameObject(node);
+      var text = node.gameObject.GetComponentInChildren<Text>();
+      text.text = node.label;
+      text.enabled = LabelVisibility;
     }
   }
 }
