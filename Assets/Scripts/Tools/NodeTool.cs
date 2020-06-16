@@ -10,7 +10,7 @@ namespace Assets.Scripts.Tools
     GraphService _graphService;
     ToolPanelController _toolPanelController;
     private Camera _attachedCamera;
-    private bool _shouldGhostNodeBeActive = false;
+    bool _lastCanInteractWithResult = false;
     private GameObject _ghostNode;
     private const float c_maxInteractDistance = 10f;
     private const float c_addNodeDistance = 4f;
@@ -20,26 +20,31 @@ namespace Assets.Scripts.Tools
 
     public void Start()
     {
-      _ghostNode = GetGhostNode();
+      _ghostNode = CreateGhostNode();
       _graphService = FindObjectOfType<GraphService>();
       _toolPanelController = FindObjectOfType<ToolPanelController>();
       _attachedCamera = Camera.main;
-      if (_shouldGhostNodeBeActive)
-        _ghostNode.SetActive(true);
     }
 
     public void Update()
     {
-      if (!_shouldGhostNodeBeActive)
-        return;
-
-      var position = _attachedCamera.transform.position + (_attachedCamera.transform.forward * c_addNodeDistance);
-      _ghostNode.transform.position = position;
+      if (_movedNode != null || _lastCanInteractWithResult == true)
+        _ghostNode.SetActive(false);
+      else
+      {
+        _ghostNode.SetActive(true);
+        var position = _attachedCamera.transform.position + (_attachedCamera.transform.forward * c_addNodeDistance);
+        _ghostNode.transform.position = position;
+      }
     }
 
     public string ToolName => "Node";
     
-    public bool CanInteractWith(RaycastHit hitInfo) => _graphService.IsNode(hitInfo.collider.gameObject) && hitInfo.distance <= c_maxInteractDistance;
+    public bool CanInteractWith(RaycastHit hitInfo) => 
+      _graphService.IsNode(hitInfo.collider.gameObject) && hitInfo.distance <= c_maxInteractDistance;
+
+    public void UpdateRaycast(bool isHit, RaycastHit hitInfo) => 
+      _lastCanInteractWithResult = isHit && CanInteractWith(hitInfo);
 
     public void OnLeftClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit)
     {
@@ -71,15 +76,11 @@ namespace Assets.Scripts.Tools
       var position = cameraTransform.position + (cameraTransform.forward * _movedNodeDistance);
       _movedNode.Position = position;
       _graphService.FixEdgesOfNode(_movedNode);
-
-      _shouldGhostNodeBeActive = false;
-      _ghostNode.SetActive(false);
     }
-
+    
     public void OnLeftMouseButtonReleased()
     {
       _movedNode = null;
-      _shouldGhostNodeBeActive = true;
       _ghostNode.SetActive(true);
     }
 
@@ -95,24 +96,21 @@ namespace Assets.Scripts.Tools
 
     public void OnSelect()
     {
-      _shouldGhostNodeBeActive = true;
-      if (_toolPanelController != null)
-        _toolPanelController.SetBackgroundColor(Color.green);
-      if (_ghostNode != null)
-        _ghostNode.SetActive(true);
+      enabled = true;
+      _toolPanelController?.SetBackgroundColor(Color.green);
+      _ghostNode?.SetActive(true);
     }
 
     public void OnToolsChanged(ITool newTool)
     {
-      _shouldGhostNodeBeActive = false;
-      if(_ghostNode != null)
-        _ghostNode.SetActive(false);
+      _ghostNode?.SetActive(false);
+      enabled = false;
     }
 
-    private GameObject GetGhostNode()
+    private GameObject CreateGhostNode()
     {
-      NodeGameObjectFactory nodeGameObjectFactory = FindObjectOfType<NodeGameObjectFactory>();
-      GameObject ghostNode = nodeGameObjectFactory.CreateGhostNodeGameObject(Vector3.zero, Quaternion.identity);
+      var nodeGameObjectFactory = FindObjectOfType<NodeGameObjectFactory>();
+      var ghostNode = nodeGameObjectFactory.CreateGhostNodeGameObject(Vector3.zero, Quaternion.identity);
       ghostNode.SetActive(false);
       return ghostNode;
     }
