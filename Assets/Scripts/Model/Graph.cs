@@ -8,25 +8,40 @@ namespace Assets.Scripts.Model
   [Serializable]
   public class Graph
   {
-    public List<Edge> edges = new List<Edge>();
     public List<Node> nodes = new List<Node>();
-
-
+    public List<Edge> edges = new List<Edge>();
+    public List<NodeClass> classes = new List<NodeClass>();
+    
     [OnDeserialized]
-    internal void OnDeserializedMethod(StreamingContext context)
+    public void OnDeserializedMethod(StreamingContext context)
     {
       if (nodes == null)
         nodes = new List<Node>();
 
       if (edges == null)
         edges = new List<Edge>();
+
+      if (classes == null)
+        classes = new List<NodeClass>();
+
+      foreach (var edge in edges)
+      {
+        edge.nodeFrom = nodes.Single(n => n.id == edge.from);
+        edge.nodeTo = nodes.Single(n => n.id == edge.to);
+      }
+
+      foreach (var node in nodes)
+      {
+        if (node.classId != null)
+          node.nodeClass = classes.Single(c => c.id == node.classId);
+      }
     }
 
     public IList<Edge> FindEdgesByNodes(Node node1, Node node2) =>
       edges
         .Where(edge =>
-          (edge.nodeFrom == node1 && edge.nodeTo == node2)
-          || (edge.nodeFrom == node2 && edge.nodeTo == node1)
+          (edge.nodeFrom == node1 && edge.nodeTo == node2) || 
+          (edge.nodeFrom == node2 && edge.nodeTo == node1)
         ).ToList();
 
     public IList<Edge> FindNodeEdges(Node node) =>

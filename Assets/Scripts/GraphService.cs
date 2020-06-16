@@ -34,8 +34,7 @@ namespace Assets.Scripts
 
       foreach (var node in graph.nodes)
       {
-        var sphere = nodeGameObjectFactory.CreateNodeGameObject(node.Position,
-          Quaternion.Euler(node.Rotation));
+        var sphere = nodeGameObjectFactory.CreateNodeGameObject(node);
         node.gameObject = sphere;
         node.gameObject.GetComponentInChildren<Text>().text = node.label;
       }
@@ -77,7 +76,7 @@ namespace Assets.Scripts
         ? Graph.nodes.Max(n => n.id) + 1
         : 0;
 
-      var node = Node.EmptyNode(id, nodeGameObjectFactory.CreateNodeGameObject(position, rotation));
+      var node = Node.EmptyNode(id, nodeGameObjectFactory.CreateDefaultNode(position, rotation));
       node.Position = position;
       node.Rotation = rotation.eulerAngles;
       node.Text.enabled = LabelVisibility;

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11796,6 +11796,8 @@ MonoBehaviour:
     type: 3}
   ghostNodePrefab: {fileID: 1624976333640040709, guid: 53a2189454a920e46af71929c931e21e,
     type: 3}
+  nodeCanvasPrefab: {fileID: 6533530558405086692, guid: 8944b41376a9e3641a08ac2d2763f81a,
+    type: 3}
 --- !u!114 &1919699934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13206,6 +13208,7 @@ GameObject:
   - component: {fileID: 2051443773}
   - component: {fileID: 2051443772}
   - component: {fileID: 2051443774}
+  - component: {fileID: 2051443775}
   m_Layer: 0
   m_Name: GlobalScripts
   m_TagString: Untagged
@@ -13254,6 +13257,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugSpherePrefab: {fileID: 7751082562957601977, guid: 0e8928f2afef7d04da1e28c03ba7a931,
     type: 3}
+--- !u!114 &2051443775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051443771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f1806a449af87742bf2e8a63493bfd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2054330962
 GameObject:
   m_ObjectHideFlags: 0

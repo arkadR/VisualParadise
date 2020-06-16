@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using Assets.Scripts.Common.Extensions;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,11 +11,13 @@ namespace Assets.Scripts.Model
   {
     public int id;
     public string label;
+    public int? classId;
     public Point point;
     public VPoint vpoint;
     public APoint apoint;
 
     [NonSerialized] public GameObject gameObject;
+    [NonSerialized] public NodeClass nodeClass;
 
     public static Node EmptyNode(int id, GameObject gameObject)
     {
@@ -107,5 +110,12 @@ namespace Assets.Scripts.Model
     public static bool operator ==(Node left, Node right) => Equals(left, right);
 
     public static bool operator !=(Node left, Node right) => !Equals(left, right);
+
+    [OnDeserialized]
+    internal void OnDeserialized(StreamingContext context)
+    {
+      if (string.IsNullOrEmpty(label))
+        label = id.ToString();
+    }
   }
 }
