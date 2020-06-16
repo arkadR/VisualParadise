@@ -89,6 +89,7 @@ namespace Assets.Scripts
       var id = Graph.edges.Any()
         ? Graph.edges.Max(n => n.id) + 1
         : 0;
+
       var edge = new Edge
       {
         id = id,
@@ -151,6 +152,7 @@ namespace Assets.Scripts
         Graph.GetEdgesGroupedByNodes()
           .Where(edgeGroup => edgeGroup.Key.Contains(node))
           .Select(edgeGroup => (edgeGroup.Value, GetStartAndEndNodes(edgeGroup.Key)));
+
       foreach (var (edges, (startingNode, endingNode)) in edgeLists)
       {
         FixEdgeGroup(edges, startingNode, endingNode);
@@ -175,13 +177,14 @@ namespace Assets.Scripts
       for (var i = 0; i < edges.Count; i++)
       {
         var linePositionsCount = linePositions[i].Count;
-        var lineRender = edges[i].gameObject.GetComponent<LineRenderer>();
-        lineRender.positionCount = linePositionsCount;
-        lineRender.SetPositions(linePositions[i].ToArray());
+        var lineRenderer = edges[i].gameObject.GetComponent<LineRenderer>();
+        lineRenderer.positionCount = linePositionsCount;
+        lineRenderer.SetPositions(linePositions[i].ToArray());
 
         var mesh = new Mesh();
-        lineRender.BakeMesh(mesh, true);
+        lineRenderer.BakeMesh(mesh, true);
         var meshCollider = edges[i].gameObject.GetComponent<MeshCollider>();
+        Destroy(meshCollider.sharedMesh);
         meshCollider.sharedMesh = mesh;
       }
     }
