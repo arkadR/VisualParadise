@@ -57,9 +57,10 @@ namespace Assets.Scripts.Tools
         (KeyCode.Alpha5, labelVisibilityTool)
       };
 
-      _toolChangeObservers = new HashSet<IToolChangeObserver> { toolPanelController, edgeTool };
+      _toolChangeObservers = new HashSet<IToolChangeObserver> { toolPanelController, edgeTool, nodeTool };
 
       ActiveTool = _tools.First().tool;
+      ActiveTool.OnSelect();
     }
 
     void Update()
@@ -135,7 +136,7 @@ namespace Assets.Scripts.Tools
       ActiveTool.OnSelect();
     }
 
-    
+
     void DisableMovementTools(ITool toolNotToDisable)
     {
       foreach (var (_, tool) in _tools)

@@ -36,17 +36,18 @@ namespace Assets.Scripts.Edges
 
       var rotation = 360f / numberOfLines;
       var centerVector = Vector3.up * CurvePointDistance;
+      var v1 = Quaternion.Euler(60, 0, 0) * centerVector;
+      var v2 = Quaternion.Euler(-60, 0, 0) * centerVector;
 
       var curvePointsForEdges = new List<IList<Vector3>>();
 
       for (int i = 0; i < numberOfLines; i++)
       {
-        var v1 = Quaternion.Euler(60, 0, 0) * centerVector;
-        var v2 = Quaternion.Euler(-60, 0, 0) * centerVector;
-
-        curvePointsForEdges.Add(bezierCurveFactory.BezierCurve4(point, point + v1, point + v2, point));
-
-        centerVector = Quaternion.Euler(0, 0, rotation) * centerVector;
+        curvePointsForEdges.Add(bezierCurveFactory.BezierCurve4(
+          point, 
+          point + Quaternion.Euler(0, 0, i * rotation) * v1, 
+          point + Quaternion.Euler(0, 0, i * rotation) * v2, 
+          point));
       }
 
       return curvePointsForEdges;
