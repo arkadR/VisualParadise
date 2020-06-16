@@ -181,11 +181,8 @@ namespace Assets.Scripts
         lineRenderer.positionCount = linePositionsCount;
         lineRenderer.SetPositions(linePositions[i].ToArray());
 
-        var mesh = new Mesh();
-        lineRenderer.BakeMesh(mesh, true);
         var meshCollider = edges[i].gameObject.GetComponent<MeshCollider>();
-        Destroy(meshCollider.sharedMesh);
-        meshCollider.sharedMesh = mesh;
+        lineRenderer.BakeMesh(meshCollider.sharedMesh, true);
       }
     }
   }
