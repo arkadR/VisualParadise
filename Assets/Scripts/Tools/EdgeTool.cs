@@ -26,8 +26,8 @@ namespace Assets.Scripts.Tools
 
     public bool CanInteractWith(RaycastHit hitInfo) =>
       _graphService.IsNode(hitInfo.collider.gameObject) || 
-      _graphService.IsEdge(hitInfo.collider.gameObject) && 
-      _previouslyHitNode == null;
+      (_graphService.IsEdge(hitInfo.collider.gameObject) && 
+      _previouslyHitNode == null);
 
     public void UpdateRaycast(bool isHit, RaycastHit hitInfo) { }
 
