@@ -69,6 +69,7 @@ namespace Assets.Scripts.Tools
         return;
 
       var isHit = RayCast(out var raycastHit);
+      ActiveTool.UpdateRaycast(isHit, raycastHit);
       crosshair.color = isHit && ActiveTool.CanInteractWith(raycastHit) ? activatedColor : notActivatedColor;
       HandleChangeTool();
       HandleMouseClick(isHit, raycastHit);

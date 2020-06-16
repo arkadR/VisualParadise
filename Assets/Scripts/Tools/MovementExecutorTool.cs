@@ -18,6 +18,7 @@ namespace Assets.Scripts.Tools
     public string ToolName => "Move";
 
     public bool CanInteractWith(RaycastHit hitInfo) => false;
+    public void UpdateRaycast(bool isHit, RaycastHit hitInfo) { }
 
     public void OnLeftClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit)
     {
