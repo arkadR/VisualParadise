@@ -142,11 +142,13 @@
   "classes": [
     {
       "id": 1,
+      "name": "cat1",
       "texturePath": ".\\data\\textures\\cat.jpg",
       "shape": "Cube"
     },
     {
       "id": 2,
+      "name": "cat2",
       "texturePath": ".\\data\\textures\\cat2.jpg",
       "shape": "Capsule",
       "scale": 3
