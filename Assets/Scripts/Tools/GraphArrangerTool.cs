@@ -18,7 +18,7 @@ namespace Assets.Scripts.Tools
 
     public string ToolName => "Arrange";
 
-    private void SetToolgunModeText() => _toolPanelController.SetToolgunModeText($"{ToolName}\n{GetArrangerMode()}");
+    private void RefreshToolgunModeText() => _toolPanelController.SetToolgunModeInfoText(GetArrangerMode());
 
     public bool CanInteractWith(RaycastHit hitInfo) => false;
     public void UpdateRaycast(bool isHit, RaycastHit hitInfo) { }
@@ -32,7 +32,7 @@ namespace Assets.Scripts.Tools
     public void OnRightClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit)
     {
       _graphArranger.ToggleMode();
-      SetToolgunModeText();
+      RefreshToolgunModeText();
     }
 
     public void OnLeftMouseButtonHeld(Transform cameraTransform) { }
@@ -42,7 +42,7 @@ namespace Assets.Scripts.Tools
     public void OnSelect()
     {
       _toolPanelController.SetBackgroundColor(GetPanelColor());
-      SetToolgunModeText();
+      RefreshToolgunModeText();
     }
 
     private Color GetPanelColor() => _graphArranger.ArrangeEnabled ? Color.green : Color.red;

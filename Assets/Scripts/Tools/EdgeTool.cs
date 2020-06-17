@@ -34,9 +34,6 @@ namespace Assets.Scripts.Tools
       if (!isHit || raycastHit.collider.gameObject.tag != Constants.PhysicalNodeTag)
         return;
 
-      if (!isHit)
-        return;
-
       var gameObjectHit = raycastHit.collider.gameObject;
       var currentlyHitNode = _graphService.FindNodeByGameObject(gameObjectHit);
 
@@ -47,22 +44,21 @@ namespace Assets.Scripts.Tools
       if (_previouslyHitNode == null)
       {
         _previouslyHitNode = currentlyHitNode;
-        EnablePreviouslyHitNode();
+        EnableSelectedNodeGlow();
         return;
       }
 
       _graphService.AddEdge(currentlyHitNode, _previouslyHitNode);
-      DisablePreviouslyHitNode();
+      DeselectNode();
     }
 
-    private void EnablePreviouslyHitNode()
+    private void EnableSelectedNodeGlow()
     {
       _previouslyHitNode.gameObject.EnableGlow();
-      var glowColor = _createGlowColor;
-      _previouslyHitNode.gameObject.SetGlow(glowColor * _nodeHitGlowStrength);
+      _previouslyHitNode.gameObject.SetGlow(_createGlowColor * _nodeHitGlowStrength);
     }
 
-    private void DisablePreviouslyHitNode()
+    private void DeselectNode()
     {
       _previouslyHitNode.gameObject.DisableGlow();
       _previouslyHitNode = null;
@@ -70,10 +66,10 @@ namespace Assets.Scripts.Tools
 
     public void OnRightClick(Transform cameraTransform, bool isHit, RaycastHit raycastHit)
     {
-
+      //DeselectNode when hit is PhysicalNode and previouslyHitNode is set
       if (isHit && raycastHit.collider.gameObject.tag == Constants.PhysicalNodeTag && _previouslyHitNode != null)
       {
-        DisablePreviouslyHitNode();
+        DeselectNode();
         return;
       }
 

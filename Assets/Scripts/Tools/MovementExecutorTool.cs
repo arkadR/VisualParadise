@@ -17,7 +17,7 @@ namespace Assets.Scripts.Tools
 
     public string ToolName => "Move";
 
-    public void SetToolgunModeText() => _toolPanelController.SetToolgunModeText($"{ToolName}\n{GetMovementExecutorMode()}");
+    public void RefreshToolgunModeText() => _toolPanelController.SetToolgunModeInfoText(GetMovementExecutorMode());
 
     public bool CanInteractWith(RaycastHit hitInfo) => false;
     public void UpdateRaycast(bool isHit, RaycastHit hitInfo) { }
@@ -31,7 +31,7 @@ namespace Assets.Scripts.Tools
     public void OnRightClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit)
     {
       _movementExecutor.ToggleReverse();
-      SetToolgunModeText();
+      RefreshToolgunModeText();
     }
 
     public void OnLeftMouseButtonHeld(Transform cameraTransform) { }
@@ -41,7 +41,7 @@ namespace Assets.Scripts.Tools
     public void OnSelect()
     {
       _toolPanelController.SetBackgroundColor(GetPanelColor());
-      SetToolgunModeText();
+      RefreshToolgunModeText();
     }
 
     private Color GetPanelColor() => _movementExecutor.MovementEnabled ? Color.green : Color.red;
