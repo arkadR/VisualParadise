@@ -9,6 +9,8 @@ namespace Assets.Scripts
 
     public void Start() => graphService = FindObjectOfType<GraphService>();
 
+    public bool Reverse() => _velocityModifier < 0;
+
     // Update for physics
     public void FixedUpdate()
     {
