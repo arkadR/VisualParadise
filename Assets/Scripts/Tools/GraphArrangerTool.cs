@@ -18,7 +18,7 @@ namespace Assets.Scripts.Tools
 
     public string ToolName => "Arrange";
 
-    private void RefreshToolgunModeText() => _toolPanelController.SetToolgunModeInfoText(GetArrangerMode());
+    private void RefreshToolgunModeText() => _toolPanelController.SetToolgunModeInfoText(GetArrangerModeLabel());
 
     public bool CanInteractWith(RaycastHit hitInfo) => false;
     public void UpdateRaycast(bool isHit, RaycastHit hitInfo) { }
@@ -47,6 +47,6 @@ namespace Assets.Scripts.Tools
 
     private Color GetPanelColor() => _graphArranger.ArrangeEnabled ? Color.green : Color.red;
 
-    private string GetArrangerMode() => EnumUtils<GraphArrangerMode>.GetName(_graphArranger.ArrangeMode).Substring(1);
+    private string GetArrangerModeLabel() => EnumUtils<GraphArrangerMode>.GetName(_graphArranger.ArrangeMode).Substring(1);
   }
 }

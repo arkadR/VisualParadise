@@ -11,7 +11,7 @@ namespace Assets.Scripts.Tools
     public void OnToolsChanged(ITool newTool)
     {
       toolgunModeName.text = newTool.ToolName;
-      SetToolgunModeInfoText("");
+      SetToolgunModeInfoText(string.Empty);
     }
 
     public void SetBackgroundColor(Color color) => panel.material.color = color;

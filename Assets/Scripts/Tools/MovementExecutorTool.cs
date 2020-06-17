@@ -17,7 +17,7 @@ namespace Assets.Scripts.Tools
 
     public string ToolName => "Move";
 
-    public void RefreshToolgunModeText() => _toolPanelController.SetToolgunModeInfoText(GetMovementExecutorMode());
+    public void RefreshToolgunModeText() => _toolPanelController.SetToolgunModeInfoText(GetMovementExecutorModeLabel());
 
     public bool CanInteractWith(RaycastHit hitInfo) => false;
     public void UpdateRaycast(bool isHit, RaycastHit hitInfo) { }
@@ -46,6 +46,6 @@ namespace Assets.Scripts.Tools
 
     private Color GetPanelColor() => _movementExecutor.MovementEnabled ? Color.green : Color.red;
 
-    private string GetMovementExecutorMode() => _movementExecutor.Reverse() ? "Reverse" : "Forward";
+    private string GetMovementExecutorModeLabel() => _movementExecutor.Reverse() ? "Reverse" : "Forward";
   }
 }
