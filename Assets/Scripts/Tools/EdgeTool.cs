@@ -6,8 +6,6 @@ using UnityEngine;
 
 namespace Assets.Scripts.Tools
 {
-  enum EdgeMode { Create, Delete }
-
   public class EdgeTool : MonoBehaviour, ITool, IToolChangeObserver
   {
     readonly Color _createGlowColor = Color.green;

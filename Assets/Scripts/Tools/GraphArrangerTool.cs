@@ -27,7 +27,7 @@ namespace Assets.Scripts.Tools
     }
 
     public void OnRightClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit) =>
-      _graphArranger.ToggleReverse();
+      _graphArranger.ToggleMode();
 
     public void OnLeftMouseButtonHeld(Transform cameraTransform) { }
 
