@@ -17,6 +17,8 @@ namespace Assets.Scripts.Tools
 
     public string ToolName => "Move";
 
+    public void RefreshToolgunModeText() => _toolPanelController.SetToolgunModeInfoText(GetMovementExecutorModeLabel());
+
     public bool CanInteractWith(RaycastHit hitInfo) => false;
     public void UpdateRaycast(bool isHit, RaycastHit hitInfo) { }
 
@@ -26,15 +28,24 @@ namespace Assets.Scripts.Tools
       _toolPanelController.SetBackgroundColor(GetPanelColor());
     }
 
-    public void OnRightClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit) =>
+    public void OnRightClick(Transform cameraTransform, bool isRayCastHit, RaycastHit raycastHit)
+    {
       _movementExecutor.ToggleReverse();
+      RefreshToolgunModeText();
+    }
 
     public void OnLeftMouseButtonHeld(Transform cameraTransform) { }
 
     public void OnLeftMouseButtonReleased() { }
 
-    public void OnSelect() => _toolPanelController.SetBackgroundColor(GetPanelColor());
+    public void OnSelect()
+    {
+      _toolPanelController.SetBackgroundColor(GetPanelColor());
+      RefreshToolgunModeText();
+    }
 
     private Color GetPanelColor() => _movementExecutor.MovementEnabled ? Color.green : Color.red;
+
+    private string GetMovementExecutorModeLabel() => _movementExecutor.Reverse() ? "Reverse" : "Forward";
   }
 }

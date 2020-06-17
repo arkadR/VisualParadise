@@ -78,19 +78,24 @@ build-StandaloneWindows64:
   variables:
     BUILD_TARGET: StandaloneWindows64
 
+build-StandaloneLinux64:
+  <<: *build
+  variables:
+    BUILD_TARGET: StandaloneLinux64
+#
 # build-WebGL:
 #   <<: *build
 #   image: gableroux/unity3d:2019.3.7f1-webgl
 #   variables:
 #     BUILD_TARGET: WebGL
-
-pages:
-  image: alpine:latest
-  stage: deploy
-  script:
-    - mv "./Builds/WebGL/${BUILD_NAME}" public
-  artifacts:
-    paths:
-      - public
-  only:
-    - master
+#
+# pages:
+#   image: alpine:latest
+#   stage: deploy
+#   script:
+#     - mv "./Builds/WebGL/${BUILD_NAME}" public
+#   artifacts:
+#     paths:
+#       - public
+#   only:
+#     - master
