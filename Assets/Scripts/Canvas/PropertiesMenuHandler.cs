@@ -12,7 +12,7 @@ namespace Assets.Scripts.Canvas
     List<NodeClass> _nodeClasses;
     GraphService _graphService;
 
-    string c_noneClassLabel = "None";
+    const string c_noneClassLabel = "None";
 
     private GameObject _previousMenu;
 
@@ -62,7 +62,7 @@ namespace Assets.Scripts.Canvas
         _graphService = FindObjectOfType<GraphService>();
         if (_graphService != null)
         {
-          var classes = FindObjectOfType<GraphService>().Graph.classes;
+          var classes = _graphService.Graph.classes;
           _nodeClasses = new List<NodeClass> { null }.Union(classes).ToList();
           nodeClassDropdown.ClearOptions();
           nodeClassDropdown.AddOptions(_nodeClasses.Select(n => n?.name ?? c_noneClassLabel).ToList());

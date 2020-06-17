@@ -115,7 +115,7 @@ namespace Assets.Scripts.Model
     internal void OnDeserialized(StreamingContext context)
     {
       if (string.IsNullOrEmpty(label))
-        label = id.ToString();
+        label = DefaultLabel;
     }
   }
 }

@@ -6,7 +6,7 @@ namespace Assets.Scripts
 {
   public class NodeGameObjectFactory : MonoBehaviour
   {
-    TextureCache _materialCache;
+    MaterialCache _materialCache;
 
     public GameObject nodePrefab;
     public GameObject ghostNodePrefab;
@@ -16,14 +16,14 @@ namespace Assets.Scripts
 
     public void Start()
     {
-      _materialCache = FindObjectOfType<TextureCache>();
+      _materialCache = FindObjectOfType<MaterialCache>();
     }
 
 
     public GameObject CreateNodeGameObject(Node node)
     {
       if (_materialCache == null)
-        _materialCache = FindObjectOfType<TextureCache>();
+        _materialCache = FindObjectOfType<MaterialCache>();
 
       if (node.nodeClass == null)
         return CreateDefaultNode(node.Position, Quaternion.Euler(node.Rotation));

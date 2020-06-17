@@ -15,7 +15,7 @@ namespace Assets.Scripts
       var graphFilePath = PlayerPrefs.GetString(Constants.GraphFilePathKey);
       var graph = LoadGraph(graphFilePath) ?? new Graph();
 
-      FindObjectOfType<TextureCache>().Load(graph.classes);
+      FindObjectOfType<MaterialCache>().Load(graph.classes);
 
       Debug.Log($"Nodes count: {graph.nodes.Count}\nEdges count: {graph.edges.Count}");
       graphService.SetGraph(graph);
