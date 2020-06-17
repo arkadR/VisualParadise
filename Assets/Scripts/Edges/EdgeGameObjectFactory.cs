@@ -33,12 +33,9 @@ namespace Assets.Scripts.Edges
       for (var i = 0; i < edgePointsCount; i++)
       {
         lineRenderer.SetPosition(i, edgePoints[i]);
-      }
 
-      var mesh = new Mesh();
-      lineRenderer.BakeMesh(mesh, true);
-      var meshCollider = line.GetComponent<MeshCollider>();
-      meshCollider.sharedMesh = mesh;
+        if (i > 0) GenerateCollider(line, edgePoints[i - 1], edgePoints[i]);
+      }
 
       edge.gameObject = line;
     }
@@ -49,6 +46,23 @@ namespace Assets.Scripts.Edges
       var lineRenderer = line.GetComponent<LineRenderer>();
       lineRenderer.positionCount = positionCount;
       return (line, lineRenderer);
+    }
+
+    private void GenerateCollider(GameObject line, Vector3 firstEdgePoint, Vector3 secondEdgePoint)
+    {
+      var collider = new GameObject("Collider");
+      collider.transform.parent = line.transform;
+      var capsule = collider.AddComponent<CapsuleCollider>();
+      collider.transform.parent = capsule.transform;
+
+      capsule.radius = 0.09f;
+      capsule.height = Vector3.Distance(secondEdgePoint, firstEdgePoint);
+      capsule.direction = 2;
+
+      collider.transform.position = (firstEdgePoint + secondEdgePoint) * 0.5f;
+
+      var direction = secondEdgePoint - firstEdgePoint;
+      collider.transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
     }
   }
 }

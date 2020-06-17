@@ -180,9 +180,6 @@ namespace Assets.Scripts
         var lineRenderer = edges[i].gameObject.GetComponent<LineRenderer>();
         lineRenderer.positionCount = linePositionsCount;
         lineRenderer.SetPositions(linePositions[i].ToArray());
-
-        var meshCollider = edges[i].gameObject.GetComponent<MeshCollider>();
-        lineRenderer.BakeMesh(meshCollider.sharedMesh, true);
       }
     }
   }
