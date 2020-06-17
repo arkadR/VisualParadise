@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Common.Utils;
+﻿using Assets.Scripts.Common.Extensions;
 using UnityEngine;
 
 namespace Assets.Scripts.Tools
@@ -47,6 +47,6 @@ namespace Assets.Scripts.Tools
 
     private Color GetPanelColor() => _graphArranger.ArrangeEnabled ? Color.green : Color.red;
 
-    private string GetArrangerModeLabel() => EnumUtils<GraphArrangerMode>.GetName(_graphArranger.ArrangeMode).Substring(1);
+    private string GetArrangerModeLabel() => _graphArranger.ArrangeMode.GetDescription();
   }
 }
