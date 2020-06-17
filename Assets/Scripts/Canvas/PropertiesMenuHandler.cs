@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Canvas.PropertyContainer;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts.Canvas.PropertyContainer;
 using Assets.Scripts.Model;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +9,12 @@ namespace Assets.Scripts.Canvas
 {
   public class PropertiesMenuHandler : MonoBehaviour
   {
-    private UnityEngine.GameObject _previousMenu;
+    List<NodeClass> _nodeClasses;
+    GraphService _graphService;
+
+    const string c_noneClassLabel = "None";
+
+    private GameObject _previousMenu;
 
     private PointContainer _pointContainerObject;
 
@@ -17,23 +24,25 @@ namespace Assets.Scripts.Canvas
 
     private Node _node;
 
-    public UnityEngine.GameObject propertiesMenu;
+    public GameObject propertiesMenu;
 
-    public UnityEngine.GameObject pointContainer;
+    public GameObject pointContainer;
 
-    public UnityEngine.GameObject vPointContainer;
+    public GameObject vPointContainer;
 
-    public UnityEngine.GameObject aPointContainer;
+    public GameObject aPointContainer;
 
     public InputField labelInput;
 
+    public Dropdown nodeClassDropdown;
+
     public Button saveButton;
 
-    private bool IsInputCorrect()
-    {
-      return (_pointContainerObject.IsInputCorrect() && _vPointContainerObject.IsInputCorrect()
-        && _aPointContainerObject.IsInputCorrect() && labelInput.text.Length > 0);
-    }
+    private bool IsInputCorrect() =>
+      _pointContainerObject.IsInputCorrect() && 
+      _vPointContainerObject.IsInputCorrect() && 
+      _aPointContainerObject.IsInputCorrect() && 
+      labelInput.text.Length > 0;
 
     public void Start()
     {
@@ -48,6 +57,17 @@ namespace Assets.Scripts.Canvas
 
     public void Update()
     {
+      if (_nodeClasses == null)
+      {
+        _graphService = FindObjectOfType<GraphService>();
+        if (_graphService != null)
+        {
+          var classes = _graphService.Graph.classes;
+          _nodeClasses = new List<NodeClass> { null }.Union(classes).ToList();
+          nodeClassDropdown.ClearOptions();
+          nodeClassDropdown.AddOptions(_nodeClasses.Select(n => n?.name ?? c_noneClassLabel).ToList());
+        }
+      }
       saveButton.interactable = IsInputCorrect();
     }
 
@@ -55,9 +75,11 @@ namespace Assets.Scripts.Canvas
     {
       _node = node;
       _previousMenu = previousMenu;
+      _previousMenu.SetActive(false);
       propertiesMenu.SetActive(true);
 
       labelInput.text = _node.label;
+      nodeClassDropdown.value = _nodeClasses.IndexOf(_node.nodeClass);
       _pointContainerObject.SetNode(_node);
       _vPointContainerObject.SetNode(_node);
       _aPointContainerObject.SetNode(_node);
@@ -74,11 +96,13 @@ namespace Assets.Scripts.Canvas
       _aPointContainerObject.SaveData();
       propertiesMenu.SetActive(false);
       _previousMenu.SetActive(false);
+      _graphService.SetNodeClass(_node, _nodeClasses[nodeClassDropdown.value]);
       GameService.Instance.UnPauseGameWithoutResume();
     }
 
     public void ExitButtonOnClick()
     {
+      _previousMenu.SetActive(true);
       propertiesMenu.SetActive(false);
     }
   }

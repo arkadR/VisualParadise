@@ -100,12 +100,13 @@ namespace Assets.Scripts
 
     private void SquashTo2D()
     {
-      float avgY = _graphService.Graph.nodes.Average(n => n.Position.y);
+      var avgY = _graphService.Graph.nodes.Average(n => n.Position.y);
       foreach(var n in _graphService.Graph.nodes)
       {
-        float distanceY = Mathf.Abs(n.Position.y - avgY);
+        var distanceY = Mathf.Abs(n.Position.y - avgY);
         if (distanceY < 0.005)
           continue;
+
         var newPosition = n.Position;
         var shrinkMultiplier = distanceY > 1 ? 8 : 20;
         newPosition.y = Mathf.Lerp(n.Position.y, avgY, Time.deltaTime * shrinkMultiplier);
