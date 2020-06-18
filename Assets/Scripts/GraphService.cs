@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Common;
 using Assets.Scripts.Edges;
 using Assets.Scripts.Model;
 using UnityEngine;
@@ -180,6 +181,30 @@ namespace Assets.Scripts
         var lineRenderer = edges[i].gameObject.GetComponent<LineRenderer>();
         lineRenderer.positionCount = linePositionsCount;
         lineRenderer.SetPositions(linePositions[i].ToArray());
+
+        UpdateEdgeColliders(edges[i], linePositions[i]);
+      }
+    }
+
+    void UpdateEdgeColliders(Edge edge, IList<Vector3> linePositions)
+    {
+      var edgeColliderTransforms = edge.gameObject.GetComponentsInChildren<Transform>()
+        .Where(t => t.gameObject.name == Constants.ColliderGameObjectName).ToList();
+
+      for (int i = 0; i < linePositions.Count; i++)
+      {
+        if (i > 0)
+        {
+          var collider = edgeColliderTransforms[i - 1];
+          var capsule = collider.GetComponent<CapsuleCollider>();
+          capsule.radius = 0.09f;
+          capsule.height = Vector3.Distance(linePositions[i], linePositions[i - 1]);
+          capsule.direction = 2;
+
+          collider.position = (linePositions[i - 1] + linePositions[i]) * 0.5f;
+          var direction = linePositions[i] - linePositions[i - 1];
+          collider.rotation = Quaternion.LookRotation(direction, Vector3.up);
+        }
       }
     }
   }

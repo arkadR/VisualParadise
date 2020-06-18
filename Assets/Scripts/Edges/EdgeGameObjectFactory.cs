@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Common;
 using Assets.Scripts.Model;
 using UnityEngine;
 
@@ -50,7 +51,7 @@ namespace Assets.Scripts.Edges
 
     private void GenerateCollider(GameObject line, Vector3 firstEdgePoint, Vector3 secondEdgePoint)
     {
-      var collider = new GameObject("Collider");
+      var collider = new GameObject(Constants.ColliderGameObjectName);
       collider.transform.parent = line.transform;
       var capsule = collider.AddComponent<CapsuleCollider>();
       collider.transform.parent = capsule.transform;
