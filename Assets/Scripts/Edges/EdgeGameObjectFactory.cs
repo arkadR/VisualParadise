@@ -8,6 +8,8 @@ namespace Assets.Scripts.Edges
 {
   public class EdgeGameObjectFactory : MonoBehaviour
   {
+    private readonly float _additionalColliderLength = 0.1f;
+    private readonly float _edgeColliderRadius = 0.09f;
     public GameObject edgePrefab;
     public LineFactory lineFactory;
 
@@ -51,18 +53,23 @@ namespace Assets.Scripts.Edges
 
     private void GenerateCollider(GameObject line, Vector3 firstEdgePoint, Vector3 secondEdgePoint)
     {
-      var collider = new GameObject(Constants.ColliderGameObjectName);
-      collider.transform.parent = line.transform;
-      var capsule = collider.AddComponent<CapsuleCollider>();
-      collider.transform.parent = capsule.transform;
+      var colliderGameObject = new GameObject(Constants.ColliderGameObjectName);
+      colliderGameObject.transform.parent = line.transform;
+      var capsule = colliderGameObject.AddComponent<CapsuleCollider>();
+      SetColliderProperties(colliderGameObject, firstEdgePoint, secondEdgePoint);
+    }
 
-      capsule.radius = 0.09f;
-      capsule.height = Vector3.Distance(secondEdgePoint, firstEdgePoint) + Constants.AdditionalColliderLength;
+    public void SetColliderProperties(GameObject colliderGameObject, Vector3 firstEdgePoint, Vector3 secondEdgePoint)
+    {
+      var capsule = colliderGameObject.GetComponent<CapsuleCollider>();
+      capsule.radius = _edgeColliderRadius;
+      capsule.height = Vector3.Distance(secondEdgePoint, firstEdgePoint) + _additionalColliderLength;
+      //capsule collider direction can be 0, 1 or 2 corresponding to the X, Y and Z axes, respectively
       capsule.direction = 2;
 
-      collider.transform.position = (firstEdgePoint + secondEdgePoint) * 0.5f;
-
+      var collider = capsule.gameObject;
       var direction = secondEdgePoint - firstEdgePoint;
+      collider.transform.position = (firstEdgePoint + secondEdgePoint) * 0.5f;
       collider.transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
     }
   }
