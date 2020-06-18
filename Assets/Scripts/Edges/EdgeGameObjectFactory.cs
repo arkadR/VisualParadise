@@ -57,7 +57,7 @@ namespace Assets.Scripts.Edges
       collider.transform.parent = capsule.transform;
 
       capsule.radius = 0.09f;
-      capsule.height = Vector3.Distance(secondEdgePoint, firstEdgePoint);
+      capsule.height = Vector3.Distance(secondEdgePoint, firstEdgePoint) + Constants.AdditionalColliderLength;
       capsule.direction = 2;
 
       collider.transform.position = (firstEdgePoint + secondEdgePoint) * 0.5f;
