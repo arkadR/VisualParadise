@@ -35,8 +35,7 @@ namespace Assets.Scripts
 
       foreach (var node in graph.nodes)
       {
-        var sphere = nodeGameObjectFactory.CreateNodeGameObject(node.Position,
-          Quaternion.Euler(node.Rotation));
+        var sphere = nodeGameObjectFactory.CreateNodeGameObject(node);
         node.gameObject = sphere;
         node.gameObject.GetComponentInChildren<Text>().text = node.label;
       }
@@ -78,7 +77,7 @@ namespace Assets.Scripts
         ? Graph.nodes.Max(n => n.id) + 1
         : 0;
 
-      var node = Node.EmptyNode(id, nodeGameObjectFactory.CreateNodeGameObject(position, rotation));
+      var node = Node.EmptyNode(id, nodeGameObjectFactory.CreateDefaultNode(position, rotation));
       node.Position = position;
       node.Rotation = rotation.eulerAngles;
       node.Text.enabled = LabelVisibility;
@@ -102,7 +101,7 @@ namespace Assets.Scripts
       edge.label = edge.DefaultLabel;
       var existingEdges = Graph.FindEdgesByNodes(node1, node2);
       existingEdges.Add(edge);
-      edgeGameObjectFactory.CreateGameObjectEdgesFor(existingEdges,LabelVisibility);
+      edgeGameObjectFactory.CreateGameObjectEdgesFor(existingEdges, LabelVisibility);
       Graph.edges.Add(edge);
     }
 
@@ -210,6 +209,21 @@ namespace Assets.Scripts
           Destroy(edgeColliderTransforms[i].gameObject);
         }
       }
+    }
+
+    public void SetNodeClass(Node node, NodeClass nodeClass)
+    {
+      var newClassId = nodeClass?.id ?? null;
+      if (node.classId == newClassId)
+        return;
+
+      node.classId = newClassId;
+      node.nodeClass = Graph.classes.SingleOrDefault(c => c.id == newClassId);
+      Destroy(node.gameObject);
+      node.gameObject = nodeGameObjectFactory.CreateNodeGameObject(node);
+      var text = node.gameObject.GetComponentInChildren<Text>();
+      text.text = node.label;
+      text.enabled = LabelVisibility;
     }
   }
 }

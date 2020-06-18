@@ -1,7 +1,7 @@
 ﻿using System.IO;
-using System.Linq;
 using Assets.Scripts.Common;
 using Assets.Scripts.Model;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -15,20 +15,7 @@ namespace Assets.Scripts
       var graphFilePath = PlayerPrefs.GetString(Constants.GraphFilePathKey);
       var graph = LoadGraph(graphFilePath) ?? new Graph();
 
-      graph.nodes.ForEach(n =>
-      {
-        if (string.IsNullOrEmpty(n.label))
-          n.label = n.DefaultLabel;
-      });
-
-      graph.edges.ForEach(e =>
-      {
-        if (string.IsNullOrEmpty(e.label))
-          e.label = e.DefaultLabel;
-
-        e.nodeFrom = graph.nodes.Single(n => n.id == e.from);
-        e.nodeTo = graph.nodes.Single(n => n.id == e.to);
-      });
+      FindObjectOfType<MaterialCache>().Load(graph.classes);
 
       Debug.Log($"Nodes count: {graph.nodes.Count}\nEdges count: {graph.edges.Count}");
       graphService.SetGraph(graph);
@@ -38,7 +25,7 @@ namespace Assets.Scripts
     {
       //TODO: Try/catch file for bad formats.
       var graphJson = File.ReadAllText(filePath);
-      var graph = JsonSerializer.Deserialize<Graph>(graphJson);
+      var graph = JsonConvert.DeserializeObject<Graph>(graphJson);
       return graph;
     }
   }

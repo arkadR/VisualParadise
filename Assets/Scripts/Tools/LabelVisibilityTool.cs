@@ -7,7 +7,7 @@ namespace Assets.Scripts.Tools
     readonly GraphService _graphService;
     readonly ToolPanelController _toolPanelController;
 
-    public string ToolName => "Label visibility";
+    public string ToolName => "Label\nvisibility";
 
     public LabelVisibilityTool(GraphService graphService, ToolPanelController toolPanelController)
     {

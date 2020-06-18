@@ -113,12 +113,12 @@ namespace Assets.Scripts.Tools
       var selectedTool = _tools
         .FirstOrDefault(r => Input.GetKeyDown(r.keyCode) == true);
 
-      if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+      if (Input.GetAxis("Mouse ScrollWheel") < 0f)
       {
         var currIdx = _tools.FindIndex(t => t.tool == ActiveTool);
         selectedTool = currIdx == _tools.Count - 1 ? _tools.First() : _tools[currIdx + 1];
       }
-      else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+      else if (Input.GetAxis("Mouse ScrollWheel") > 0f)
       {
         var currIdx = _tools.FindIndex(t => t.tool == ActiveTool);
         selectedTool = currIdx == 0 ? _tools.Last() : _tools[currIdx - 1];
