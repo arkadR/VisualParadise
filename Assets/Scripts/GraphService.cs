@@ -191,19 +191,23 @@ namespace Assets.Scripts
       var edgeColliderTransforms = edge.gameObject.GetComponentsInChildren<Transform>()
         .Where(t => t.gameObject.name == Constants.ColliderGameObjectName).ToList();
 
-      for (int i = 0; i < linePositions.Count; i++)
+      for (int i = 0; i < edgeColliderTransforms.Count; i++)
       {
-        if (i > 0)
+        if (i < linePositions.Count - 1)
         {
-          var collider = edgeColliderTransforms[i - 1];
+          var collider = edgeColliderTransforms[i];
           var capsule = collider.GetComponent<CapsuleCollider>();
           capsule.radius = 0.09f;
-          capsule.height = Vector3.Distance(linePositions[i], linePositions[i - 1]);
+          capsule.height = Vector3.Distance(linePositions[i + 1], linePositions[i]);
           capsule.direction = 2;
 
-          collider.position = (linePositions[i - 1] + linePositions[i]) * 0.5f;
-          var direction = linePositions[i] - linePositions[i - 1];
+          collider.position = (linePositions[i] + linePositions[i + 1]) * 0.5f;
+          var direction = linePositions[i + 1] - linePositions[i];
           collider.rotation = Quaternion.LookRotation(direction, Vector3.up);
+        }
+        else
+        {
+          Destroy(edgeColliderTransforms[i].gameObject);
         }
       }
     }
