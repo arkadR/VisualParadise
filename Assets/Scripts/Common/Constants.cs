@@ -10,5 +10,7 @@
 
     public static readonly string GameScene = "GameScene";
     public static readonly string MainMenuScene = "MainMenu";
+
+    public static readonly string ColliderGameObjectName = "Collider";
   }
 }
