@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Common.Extensions;
+using Assets.Scripts.Edges;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,11 +17,12 @@ namespace Assets.Scripts.Model
     public int to;
     public int weight;
 
-    [NonSerialized] public GameObject gameObject;
+    [NonSerialized] public GameObject labelGameObject;
     [NonSerialized] public Node nodeFrom;
     [NonSerialized] public Node nodeTo;
+    [NonSerialized] public SegmentGroup segmentGroup;
 
-    public Text Text => gameObject.GetComponentInChildren<Text>();
+    public Text Text => labelGameObject.GetComponent<Text>();
 
     public string DefaultLabel => $"{from}-{to}";
 
@@ -43,11 +47,8 @@ namespace Assets.Scripts.Model
 
     Vector3 GetLabelPosition(Camera camera)
     {
-      var lineRenderer = gameObject.GetComponent<LineRenderer>();
-      return
-        lineRenderer.positionCount == 2
-          ? StraightLineMiddle(camera)
-          : CurvedLineMiddlePoint(camera, lineRenderer);
+      var position = segmentGroup.MiddleSegment.transform.position;
+      return camera.WorldToScreenPoint(position);
     }
 
     Vector3 CurvedLineMiddlePoint(Camera camera, LineRenderer lineRenderer)

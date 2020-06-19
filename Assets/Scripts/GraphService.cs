@@ -48,13 +48,19 @@ namespace Assets.Scripts
 
       foreach (var edgeGroup in Graph.GetEdgesGroupedByNodes().Values)
       {
-        edgeGameObjectFactory.CreateGameObjectEdgesFor(edgeGroup, LabelVisibility);
+        var x = edgeGameObjectFactory.CreateGameObjectEdgesFor(edgeGroup, LabelVisibility);
+        for (var i = 0; i < edgeGroup.Count; i++)
+        {
+          var (segmentGroup, label) = x[i];
+          edgeGroup[i].segmentGroup = segmentGroup;
+          edgeGroup[i].labelGameObject = label;
+        }
       }
 
-      foreach (var edge in Graph.edges)
-      {
-        edge.gameObject.GetComponentInChildren<Text>().text = edge.label;
-      }
+      // foreach (var edge in Graph.edges)
+      // {
+      //   edge.gameObject.GetComponentInChildren<Text>().text = edge.label;
+      // }
 
       LabelVisibility = false;
     }
@@ -67,7 +73,7 @@ namespace Assets.Scripts
     public bool IsEdge(GameObject gameObject) => FindEdgeByGameObject(gameObject) != null;
 
     public Edge FindEdgeByGameObject(GameObject gameObject) =>
-      Graph.edges.SingleOrDefault(n => n.gameObject == gameObject);
+      Graph.edges.SingleOrDefault(n => n.segmentGroup.Contains(gameObject));
 
     public Node FindNodeById(int id) => Graph.nodes.SingleOrDefault(n => n.id == id);
 
@@ -100,8 +106,19 @@ namespace Assets.Scripts
       };
       edge.label = edge.DefaultLabel;
       var existingEdges = Graph.FindEdgesByNodes(node1, node2);
+      foreach (var existingEdge in existingEdges)
+      {
+        existingEdge.segmentGroup.Destroy();
+        Destroy(existingEdge.labelGameObject);
+      }
       existingEdges.Add(edge);
-      edgeGameObjectFactory.CreateGameObjectEdgesFor(existingEdges, LabelVisibility);
+      var x = edgeGameObjectFactory.CreateGameObjectEdgesFor(existingEdges, LabelVisibility);
+      for (var i = 0; i < existingEdges.Count; i++)
+      {
+        var (segmentGroup, label) = x[i];
+        existingEdges[i].segmentGroup = segmentGroup;
+        existingEdges[i].labelGameObject = label;
+      }
       Graph.edges.Add(edge);
     }
 
@@ -119,7 +136,7 @@ namespace Assets.Scripts
 
     public void RemoveEdge(Edge edge)
     {
-      Destroy(edge.gameObject);
+      edge.segmentGroup.Destroy();
       Graph.edges.Remove(edge);
       FixEdges();
     }
@@ -129,13 +146,13 @@ namespace Assets.Scripts
       var edges = Graph.FindEdgesByNodes(node1, node2);
       foreach (var edge in edges)
       {
-        Destroy(edge.gameObject);
+        edge.segmentGroup.Destroy();
         Graph.edges.Remove(edge);
       }
     }
 
     /// <summary>
-    ///   Update edges positions based on corresponding nodes
+    /// Update edges positions based on corresponding nodes
     /// </summary>
     public void FixEdges()
     {
@@ -176,31 +193,7 @@ namespace Assets.Scripts
       var linePositions = lineFactory.GetLinePositionsFor(startingPosition, endingPosition, edges.Count);
       for (var i = 0; i < edges.Count; i++)
       {
-        var linePositionsCount = linePositions[i].Count;
-        var lineRenderer = edges[i].gameObject.GetComponent<LineRenderer>();
-        lineRenderer.positionCount = linePositionsCount;
-        lineRenderer.SetPositions(linePositions[i].ToArray());
-
-        UpdateEdgeColliders(edges[i], linePositions[i]);
-      }
-    }
-
-    void UpdateEdgeColliders(Edge edge, IList<Vector3> linePositions)
-    {
-      var edgeColliderTransforms = edge.gameObject.GetComponentsInChildren<Transform>()
-        .Where(t => t.gameObject.name == Constants.ColliderGameObjectName).ToList();
-
-      for (int i = 0; i < edgeColliderTransforms.Count; i++)
-      {
-        if (i < linePositions.Count - 1)
-        {
-          var colliderGameObject = edgeColliderTransforms[i].gameObject;
-          edgeGameObjectFactory.SetColliderProperties(colliderGameObject, linePositions[i], linePositions[i + 1]);
-        }
-        else
-        {
-          Destroy(edgeColliderTransforms[i].gameObject);
-        }
+        edges[i].segmentGroup.PlaceAlongPoints(linePositions[i]);
       }
     }
 

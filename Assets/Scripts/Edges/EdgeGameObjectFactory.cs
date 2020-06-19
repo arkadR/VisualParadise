@@ -1,76 +1,49 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Common;
 using Assets.Scripts.Model;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Edges
 {
   public class EdgeGameObjectFactory : MonoBehaviour
   {
-    private readonly float _additionalColliderLength = 0.1f;
-    private readonly float _edgeColliderRadius = 0.09f;
+    const float c_edgeThickness = 0.1f;
     public GameObject edgePrefab;
     public LineFactory lineFactory;
 
-    public void CreateGameObjectEdgesFor(IList<Edge> edges, bool labelVisibility)
+    public List<(SegmentGroup, GameObject)> CreateGameObjectEdgesFor(IList<Edge> edges, bool labelVisibility)
     {
       var startingPoint = edges.First().nodeFrom.Position;
       var endingPoint = edges.First().nodeTo.Position;
       var edgePointsForEachEdge = lineFactory.GetLinePositionsFor(startingPoint, endingPoint, edges.Count);
+      var segmentGroups = new List<(SegmentGroup, GameObject)>();
       for (var i = 0; i < edges.Count; i++)
       {
         var edge = edges[i];
-        if (edge.gameObject != null)
-          Destroy(edge.gameObject);
-        CreateNewEdgeGameObjectFor(edge, edgePointsForEachEdge[i]);
-        edge.Text.text = edge.label;
-        edge.Text.enabled = labelVisibility;
-      }
-    }
+        var edgePoints = edgePointsForEachEdge[i];
+        var segmentGameObjects = Enumerable
+          .Range(0, edgePoints.Count - 1)
+          .Select(_ => CreateCylinder())
+          .ToArray();
 
-    void CreateNewEdgeGameObjectFor(Edge edge, IList<Vector3> edgePoints)
-    {
-      var edgePointsCount = edgePoints.Count;
-      var (line, lineRenderer) = InstantiateLine(edgePointsCount);
-      for (var i = 0; i < edgePointsCount; i++)
-      {
-        lineRenderer.SetPosition(i, edgePoints[i]);
-
-        if (i > 0) GenerateCollider(line, edgePoints[i - 1], edgePoints[i]);
+        var segments = new SegmentGroup(segmentGameObjects);
+        segments.PlaceAlongPoints(edgePoints);
+        var text = new GameObject("Text");
+        var t = text.AddComponent<Text>();
+        t.text = edge.label;
+        t.enabled = labelVisibility;
+        segmentGroups.Add((segments, text));
       }
 
-      edge.gameObject = line;
+      return segmentGroups;
     }
 
-    (GameObject, LineRenderer) InstantiateLine(int positionCount)
+    private GameObject CreateCylinder()
     {
-      var line = Instantiate(edgePrefab);
-      var lineRenderer = line.GetComponent<LineRenderer>();
-      lineRenderer.positionCount = positionCount;
-      return (line, lineRenderer);
-    }
-
-    private void GenerateCollider(GameObject line, Vector3 firstEdgePoint, Vector3 secondEdgePoint)
-    {
-      var colliderGameObject = new GameObject(Constants.ColliderGameObjectName);
-      colliderGameObject.transform.parent = line.transform;
-      var capsule = colliderGameObject.AddComponent<CapsuleCollider>();
-      SetColliderProperties(colliderGameObject, firstEdgePoint, secondEdgePoint);
-    }
-
-    public void SetColliderProperties(GameObject colliderGameObject, Vector3 firstEdgePoint, Vector3 secondEdgePoint)
-    {
-      var capsule = colliderGameObject.GetComponent<CapsuleCollider>();
-      capsule.radius = _edgeColliderRadius;
-      capsule.height = Vector3.Distance(secondEdgePoint, firstEdgePoint) + _additionalColliderLength;
-      //capsule collider direction can be 0, 1 or 2 corresponding to the X, Y and Z axes, respectively
-      capsule.direction = 2;
-
-      var collider = capsule.gameObject;
-      var direction = secondEdgePoint - firstEdgePoint;
-      collider.transform.position = (firstEdgePoint + secondEdgePoint) * 0.5f;
-      collider.transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+      var cylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+      cylinder.transform.localScale = new Vector3(c_edgeThickness, 1, c_edgeThickness);
+      return cylinder;
     }
   }
 }
