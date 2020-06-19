@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Common;
 using Assets.Scripts.Edges;
 using Assets.Scripts.Model;
 using UnityEngine;
@@ -59,7 +58,7 @@ namespace Assets.Scripts
 
       // foreach (var edge in Graph.edges)
       // {
-      //   edge.gameObject.GetComponentInChildren<Text>().text = edge.label;
+      //   edge.Text .GetComponentInChildren<Text>().text = edge.label;
       // }
 
       LabelVisibility = false;

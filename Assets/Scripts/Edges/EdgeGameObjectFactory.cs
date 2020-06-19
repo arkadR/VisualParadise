@@ -9,7 +9,7 @@ namespace Assets.Scripts.Edges
   public class EdgeGameObjectFactory : MonoBehaviour
   {
     const float c_edgeThickness = 0.1f;
-    public GameObject edgePrefab;
+    public GameObject labelPrefab;
     public LineFactory lineFactory;
 
     public List<(SegmentGroup, GameObject)> CreateGameObjectEdgesFor(IList<Edge> edges, bool labelVisibility)
@@ -29,10 +29,9 @@ namespace Assets.Scripts.Edges
 
         var segments = new SegmentGroup(segmentGameObjects);
         segments.PlaceAlongPoints(edgePoints);
-        var text = new GameObject("Text");
-        var t = text.AddComponent<Text>();
-        t.text = edge.label;
-        t.enabled = labelVisibility;
+        var text = Instantiate(labelPrefab);
+        text.GetComponentInChildren<Text>().enabled = labelVisibility;
+        text.GetComponentInChildren<Text>().text = edge.label;
         segmentGroups.Add((segments, text));
       }
 

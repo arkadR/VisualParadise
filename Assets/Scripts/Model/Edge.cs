@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Assets.Scripts.Common.Extensions;
 using Assets.Scripts.Edges;
 using UnityEngine;
@@ -22,7 +20,7 @@ namespace Assets.Scripts.Model
     [NonSerialized] public Node nodeTo;
     [NonSerialized] public SegmentGroup segmentGroup;
 
-    public Text Text => labelGameObject.GetComponent<Text>();
+    public Text Text => labelGameObject.GetComponentInChildren<Text>();
 
     public string DefaultLabel => $"{from}-{to}";
 
