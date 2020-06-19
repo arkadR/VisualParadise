@@ -190,17 +190,15 @@ namespace Assets.Scripts
       var edgeColliderTransforms = edge.gameObject.GetComponentsInChildren<Transform>()
         .Where(t => t.gameObject.name == Constants.ColliderGameObjectName).ToList();
 
-      for (int i = 0; i < edgeColliderTransforms.Count; i++)
+      for (int i = 0; i < linePositions.Count - 1; i++)
       {
-        if (i < linePositions.Count - 1)
-        {
-          var colliderGameObject = edgeColliderTransforms[i].gameObject;
-          edgeGameObjectFactory.SetColliderProperties(colliderGameObject, linePositions[i], linePositions[i + 1]);
-        }
-        else
-        {
-          Destroy(edgeColliderTransforms[i].gameObject);
-        }
+        var colliderGameObject = edgeColliderTransforms[i].gameObject;
+        edgeGameObjectFactory.SetColliderProperties(colliderGameObject, linePositions[i], linePositions[i + 1]);
+      }
+
+      for (int i = linePositions.Count - 1; i < edgeColliderTransforms.Count; i++)
+      {
+        Destroy(edgeColliderTransforms[i].gameObject);
       }
     }
 

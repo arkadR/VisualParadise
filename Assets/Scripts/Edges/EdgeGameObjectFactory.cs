@@ -8,8 +8,8 @@ namespace Assets.Scripts.Edges
 {
   public class EdgeGameObjectFactory : MonoBehaviour
   {
-    private readonly float _additionalColliderLength = 0.1f;
-    private readonly float _edgeColliderRadius = 0.09f;
+    private const float _additionalColliderLength = 0.1f;
+    private const float _edgeColliderRadius = 0.09f;
     public GameObject edgePrefab;
     public LineFactory lineFactory;
 
