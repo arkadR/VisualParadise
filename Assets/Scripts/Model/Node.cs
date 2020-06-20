@@ -50,7 +50,7 @@ namespace Assets.Scripts.Model
 
     public void UpdateLabel(string label)
     {
-      this.Label = label;
+      Label = label;
       Text.text = label;
     }
 

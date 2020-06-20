@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using UnityEngine;
 
 namespace Assets.Scripts.Model
@@ -11,10 +10,7 @@ namespace Assets.Scripts.Model
   {
     [JsonProperty] public int Id { get; private set; }
     [JsonProperty] public string Name { get; private set; }
-
-    // [field: JsonConverter(typeof(StringEnumConverter))]
     [JsonProperty] public PrimitiveType? Shape { get; private set; }
-
     [JsonProperty] public string TexturePath { get; private set; }
     [JsonProperty] public float? Scale { get; private set; }
 
