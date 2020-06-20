@@ -183,14 +183,14 @@ namespace Assets.Scripts
       }
     }
 
-    public void SetNodeClass(Node node, NodeClass nodeClass)
+    public void SetNodeClass(Node node, GraphElementClass nodeClass)
     {
       var newClassId = nodeClass?.Id ?? null;
       if (node.ClassId == newClassId)
         return;
 
       node.ClassId = newClassId;
-      node.nodeClass = Graph.NodeClasses.SingleOrDefault(c => c.Id == newClassId);
+      node.nodeClass = Graph.Classes.SingleOrDefault(c => c.Id == newClassId);
       Destroy(node.gameObject);
       node.gameObject = nodeGameObjectFactory.CreateNodeGameObject(node);
       var text = node.gameObject.GetComponentInChildren<Text>();

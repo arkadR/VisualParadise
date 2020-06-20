@@ -33,10 +33,10 @@ namespace Assets.Scripts.Edges
         
         var segmentGameObjects = Enumerable
           .Range(0, edgePoints.Count - 1)
-          .Select(_ => CreateCylinder(edge.Class?.Thickness ?? 1f))
+          .Select(_ => CreateCylinder(edge.EdgeClass?.Scale ?? 1f))
           .ToArray();
 
-        var material = _materialCache.GetByTexturePath(edge.Class?.TexturePath);
+        var material = _materialCache.GetByTexturePath(edge.EdgeClass?.TexturePath);
         foreach (var segmentGameObject in segmentGameObjects)
         {
           segmentGameObject.GetComponent<Renderer>().material = material;

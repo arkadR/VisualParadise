@@ -16,12 +16,13 @@ namespace Assets.Scripts
     public Lazy<Material> DefaultMaterial = new Lazy<Material>(
       () => new Material(Shader.Find("Standard")) { mainTexture = LoadDefaultTexture() });
     
-    public void Load(IEnumerable<NodeClass> nodeClasses, IEnumerable<EdgeClass> edgeClasses)
+    public void Load(IEnumerable<GraphElementClass> nodeClasses)
     {
       var texturePaths = nodeClasses
         .Select(c => c.TexturePath)
-        .Union(edgeClasses.Select(c => c.TexturePath))
-        .Where(tp => string.IsNullOrEmpty(tp) == false);
+        .Where(tp => string.IsNullOrEmpty(tp) == false)
+        .Distinct()
+        .Where(tp => cache.ContainsKey(tp) == false);
 
       foreach (var texturePath in texturePaths)
       {

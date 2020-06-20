@@ -11,8 +11,7 @@ namespace Assets.Scripts.Model
   {
     [JsonProperty] public List<Node> Nodes { get; private set; } = new List<Node>();
     [JsonProperty] public List<Edge> Edges { get; private set; } = new List<Edge>();
-    [JsonProperty] public List<NodeClass> NodeClasses { get; private set; } = new List<NodeClass>();
-    [JsonProperty] public List<EdgeClass> EdgeClasses { get; private set; } = new List<EdgeClass>();
+    [JsonProperty] public List<GraphElementClass> Classes { get; private set; } = new List<GraphElementClass>();
     
     [OnDeserialized]
     public void OnDeserializedMethod(StreamingContext context)
@@ -21,14 +20,18 @@ namespace Assets.Scripts.Model
       {
         edge.nodeFrom = Nodes.Single(n => n.Id == edge.From);
         edge.nodeTo = Nodes.Single(n => n.Id == edge.To);
-        if (edge.ClassId != null)
-          edge.Class = EdgeClasses.Single(c => c.Id == edge.ClassId);
+        if (edge.EdgeClassId != null)
+          edge.EdgeClass = Classes.Single(c => c.Id == edge.EdgeClassId);
+        if (edge.StartClassId != null)
+          edge.StartClass = Classes.Single(c => c.Id == edge.StartClassId);
+        if (edge.EndClassId != null)
+          edge.EndClass = Classes.Single(c => c.Id == edge.EndClassId);
       }
 
       foreach (var node in Nodes)
       {
         if (node.ClassId != null)
-          node.nodeClass = NodeClasses.Single(c => c.Id == node.ClassId);
+          node.nodeClass = Classes.Single(c => c.Id == node.ClassId);
       }
     }
 
