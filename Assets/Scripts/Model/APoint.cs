@@ -6,7 +6,7 @@ namespace Assets.Scripts.Model
   [Serializable]
   public class APoint
   {
-    public Vector3 acceleration;
-    public Vector3 angularAcceleration;
+    public Vector3 Acceleration { get; set; }
+    public Vector3 AngularAcceleration { get; set; }
   }
 }

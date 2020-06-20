@@ -21,8 +21,8 @@ namespace Assets.Scripts
       set
       {
         _labelVisibility = value;
-        Graph?.nodes.ForEach(n => n.Text.enabled = _labelVisibility);
-        Graph?.edges.ForEach(n => n.Text.enabled = _labelVisibility);
+        Graph?.Nodes.ForEach(n => n.Text.enabled = _labelVisibility);
+        Graph?.Edges.ForEach(n => n.Text.enabled = _labelVisibility);
       }
     }
 
@@ -32,17 +32,17 @@ namespace Assets.Scripts
     {
       Graph = graph;
 
-      foreach (var node in graph.nodes)
+      foreach (var node in graph.Nodes)
       {
         var sphere = nodeGameObjectFactory.CreateNodeGameObject(node);
         node.gameObject = sphere;
-        node.gameObject.GetComponentInChildren<Text>().text = node.label;
+        node.gameObject.GetComponentInChildren<Text>().text = node.Label;
       }
 
-      foreach (var edge in Graph.edges)
+      foreach (var edge in Graph.Edges)
       {
-        edge.nodeFrom = FindNodeById(edge.from);
-        edge.nodeTo = FindNodeById(edge.to);
+        edge.nodeFrom = FindNodeById(edge.From);
+        edge.nodeTo = FindNodeById(edge.To);
       }
 
       foreach (var edgeGroup in Graph.GetEdgesGroupedByNodes().Values)
@@ -56,9 +56,9 @@ namespace Assets.Scripts
         }
       }
 
-      // foreach (var edge in Graph.edges)
+      // foreach (var edge in Graph.Edges)
       // {
-      //   edge.Text .GetComponentInChildren<Text>().text = edge.label;
+      //   edge.Text .GetComponentInChildren<Text>().text = edge.Label;
       // }
 
       LabelVisibility = false;
@@ -67,43 +67,35 @@ namespace Assets.Scripts
     public bool IsNode(GameObject gameObject) => FindNodeByGameObject(gameObject) != null;
 
     public Node FindNodeByGameObject(GameObject gameObject) =>
-      Graph.nodes.SingleOrDefault(n => n.gameObject == gameObject);
+      Graph.Nodes.SingleOrDefault(n => n.gameObject == gameObject);
 
     public bool IsEdge(GameObject gameObject) => FindEdgeByGameObject(gameObject) != null;
 
     public Edge FindEdgeByGameObject(GameObject gameObject) =>
-      Graph.edges.SingleOrDefault(n => n.segmentGroup.Contains(gameObject));
+      Graph.Edges.SingleOrDefault(n => n.segmentGroup.Contains(gameObject));
 
-    public Node FindNodeById(int id) => Graph.nodes.SingleOrDefault(n => n.id == id);
+    public Node FindNodeById(int id) => Graph.Nodes.SingleOrDefault(n => n.Id == id);
 
     public void AddNode(Vector3 position, Quaternion rotation)
     {
-      var id = Graph.nodes.Any()
-        ? Graph.nodes.Max(n => n.id) + 1
+      var id = Graph.Nodes.Any()
+        ? Graph.Nodes.Max(n => n.Id) + 1
         : 0;
 
       var node = Node.EmptyNode(id, nodeGameObjectFactory.CreateDefaultNode(position, rotation));
       node.Position = position;
       node.Rotation = rotation.eulerAngles;
       node.Text.enabled = LabelVisibility;
-      Graph.nodes.Add(node);
+      Graph.Nodes.Add(node);
     }
 
     public void AddEdge(Node node1, Node node2)
     {
-      var id = Graph.edges.Any()
-        ? Graph.edges.Max(n => n.id) + 1
+      var id = Graph.Edges.Any()
+        ? Graph.Edges.Max(n => n.Id) + 1
         : 0;
 
-      var edge = new Edge
-      {
-        id = id,
-        from = node1.id,
-        to = node2.id,
-        nodeFrom = node1,
-        nodeTo = node2
-      };
-      edge.label = edge.DefaultLabel;
+      var edge = Edge.BetweenNodes(id, null, node1, node2);
       var existingEdges = Graph.FindEdgesByNodes(node1, node2);
       foreach (var existingEdge in existingEdges)
       {
@@ -118,13 +110,13 @@ namespace Assets.Scripts
         existingEdges[i].segmentGroup = segmentGroup;
         existingEdges[i].labelGameObject = label;
       }
-      Graph.edges.Add(edge);
+      Graph.Edges.Add(edge);
     }
 
     public void RemoveNode(Node node)
     {
       Destroy(node.gameObject);
-      Graph.nodes.Remove(node);
+      Graph.Nodes.Remove(node);
       var edgesToRemove = Graph.FindNodeEdges(node);
 
       foreach (var edge in edgesToRemove)
@@ -136,7 +128,7 @@ namespace Assets.Scripts
     public void RemoveEdge(Edge edge)
     {
       edge.segmentGroup.Destroy();
-      Graph.edges.Remove(edge);
+      Graph.Edges.Remove(edge);
       FixEdges();
     }
 
@@ -146,12 +138,12 @@ namespace Assets.Scripts
       foreach (var edge in edges)
       {
         edge.segmentGroup.Destroy();
-        Graph.edges.Remove(edge);
+        Graph.Edges.Remove(edge);
       }
     }
 
     /// <summary>
-    /// Update edges positions based on corresponding nodes
+    /// Update Edges positions based on corresponding Nodes
     /// </summary>
     public void FixEdges()
     {
@@ -198,16 +190,16 @@ namespace Assets.Scripts
 
     public void SetNodeClass(Node node, NodeClass nodeClass)
     {
-      var newClassId = nodeClass?.id ?? null;
-      if (node.classId == newClassId)
+      var newClassId = nodeClass?.Id ?? null;
+      if (node.ClassId == newClassId)
         return;
 
-      node.classId = newClassId;
-      node.nodeClass = Graph.classes.SingleOrDefault(c => c.id == newClassId);
+      node.ClassId = newClassId;
+      node.nodeClass = Graph.NodeClasses.SingleOrDefault(c => c.Id == newClassId);
       Destroy(node.gameObject);
       node.gameObject = nodeGameObjectFactory.CreateNodeGameObject(node);
       var text = node.gameObject.GetComponentInChildren<Text>();
-      text.text = node.label;
+      text.text = node.Label;
       text.enabled = LabelVisibility;
     }
   }

@@ -62,10 +62,10 @@ namespace Assets.Scripts.Canvas
         _graphService = FindObjectOfType<GraphService>();
         if (_graphService != null)
         {
-          var classes = _graphService.Graph.classes;
+          var classes = _graphService.Graph.NodeClasses;
           _nodeClasses = new List<NodeClass> { null }.Union(classes).ToList();
           nodeClassDropdown.ClearOptions();
-          nodeClassDropdown.AddOptions(_nodeClasses.Select(n => n?.name ?? c_noneClassLabel).ToList());
+          nodeClassDropdown.AddOptions(_nodeClasses.Select(n => n?.Name ?? c_noneClassLabel).ToList());
         }
       }
       saveButton.interactable = IsInputCorrect();
@@ -78,7 +78,7 @@ namespace Assets.Scripts.Canvas
       _previousMenu.SetActive(false);
       propertiesMenu.SetActive(true);
 
-      labelInput.text = _node.label;
+      labelInput.text = _node.Label;
       nodeClassDropdown.value = _nodeClasses.IndexOf(_node.nodeClass);
       _pointContainerObject.SetNode(_node);
       _vPointContainerObject.SetNode(_node);

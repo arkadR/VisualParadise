@@ -1,6 +1,7 @@
 ﻿using System;
 using Assets.Scripts.Common.Extensions;
 using Assets.Scripts.Edges;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,26 +10,47 @@ namespace Assets.Scripts.Model
   [Serializable]
   public class Edge : IEquatable<Edge>
   {
-    public int id;
-    public string label;
-    public int from;
-    public int to;
+    [JsonProperty] public int Id { get; private set; }
+    [JsonProperty] public string Label { get; private set; }
+    [JsonProperty] public int From { get; private set; }
+    [JsonProperty] public int To { get; private set; }
+    [JsonProperty] public int? ClassId { get; private set; }
+
     public int weight;
 
+    [NonSerialized] public EdgeClass Class;
     [NonSerialized] public GameObject labelGameObject;
     [NonSerialized] public Node nodeFrom;
     [NonSerialized] public Node nodeTo;
     [NonSerialized] public SegmentGroup segmentGroup;
 
+    public Edge(int id, string label, int from, int to, int? classId)
+    {
+      Id = id;
+      From = from;
+      To = to;
+      Label = string.IsNullOrEmpty(label) ? DefaultLabel : label;
+      ClassId = classId;
+    }
+
+    public static Edge BetweenNodes(int id, string label, Node node1, Node node2)
+    {
+      var edge = new Edge(id, label, node1.Id, node2.Id, null)
+      {
+        nodeTo = node1, 
+        nodeFrom = node2
+      };
+      return edge;
+    }
+
     public Text Text => labelGameObject.GetComponentInChildren<Text>();
 
-    public string DefaultLabel => $"{from}-{to}";
+    public string DefaultLabel => $"{From}-{To}";
 
-    public bool Equals(Edge other)
+    public void SetLabel(string label)
     {
-      if (ReferenceEquals(null, other)) return false;
-      if (ReferenceEquals(this, other)) return true;
-      return id == other.id;
+      Label = label;
+      Text.text = label;
     }
 
     public void UpdateTextPosition(Camera camera)
@@ -36,30 +58,11 @@ namespace Assets.Scripts.Model
       Text.SetPositionOnScreen(GetLabelPosition(camera));
       Text.rectTransform.rotation = GetLabelAngle(camera);
     }
-
-    public void UpdateLabel(string label)
-    {
-      this.label = label;
-      Text.text = label;
-    }
-
+    
     Vector3 GetLabelPosition(Camera camera)
     {
       var position = segmentGroup.MiddleSegment.transform.position;
       return camera.WorldToScreenPoint(position);
-    }
-
-    Vector3 CurvedLineMiddlePoint(Camera camera, LineRenderer lineRenderer)
-    {
-      var middleIndex = lineRenderer.positionCount / 2;
-      var middlePointPosition = lineRenderer.GetPosition(middleIndex);
-      return camera.WorldToScreenPoint(middlePointPosition);
-    }
-
-    Vector3 StraightLineMiddle(Camera camera)
-    {
-      var middle = (nodeFrom.Position + nodeTo.Position) / 2;
-      return camera.WorldToScreenPoint(middle);
     }
 
     Quaternion GetLabelAngle(Camera camera)
@@ -72,6 +75,16 @@ namespace Assets.Scripts.Model
       return Quaternion.Euler(0, 0, angle);
     }
 
+    public bool Equals(Edge other)
+    {
+      if (ReferenceEquals(null, other))
+        return false;
+      if (ReferenceEquals(this, other))
+        return true;
+      return Id == other.Id;
+    }
+
+
     public override bool Equals(object obj)
     {
       if (ReferenceEquals(null, obj))
@@ -83,7 +96,7 @@ namespace Assets.Scripts.Model
       return Equals((Edge)obj);
     }
 
-    public override int GetHashCode() => id;
+    public override int GetHashCode() => Id;
 
     public static bool operator ==(Edge left, Edge right) => Equals(left, right);
 

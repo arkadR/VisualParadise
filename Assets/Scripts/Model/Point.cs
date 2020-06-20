@@ -6,7 +6,7 @@ namespace Assets.Scripts.Model
   [Serializable]
   public class Point
   {
-    public Vector3 position;
-    public Vector3 rotation;
+    public Vector3 Position { get; set; }
+    public Vector3 Rotation { get; set; }
   }
 }

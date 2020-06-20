@@ -1,432 +1,447 @@
 {
-  "edges": [
+  "Edges": [
     {
-      "id": 0,
-      "label": "0-4",
-      "from": 0,
-      "to": 4,
+      "Id": 0,
+      "Label": "0-4",
+      "From": 0,
+      "To": 4,
+      "weight": 0,
+      "ClassId": 0
+    },
+    {
+      "Id": 1,
+      "Label": "1-0",
+      "From": 1,
+      "To": 0,
+      "weight": 0,
+      "ClassId": 0
+    },
+    {
+      "Id": 2,
+      "Label": "2-1",
+      "From": 2,
+      "To": 1,
+      "weight": 0,
+      "ClassId": 0
+    },
+    {
+      "Id": 3,
+      "Label": "3-2",
+      "From": 3,
+      "To": 2,
+      "weight": 0,
+      "ClassId": 0
+    },
+    {
+      "Id": 4,
+      "Label": "4-3",
+      "From": 4,
+      "To": 3,
+      "weight": 0,
+      "ClassId": 0
+    },
+    {
+      "Id": 5,
+      "Label": "6-5",
+      "From": 6,
+      "To": 5,
+      "weight": 0,
+      "ClassId": 0
+    },
+    {
+      "Id": 6,
+      "Label": "7-6",
+      "From": 7,
+      "To": 6,
+      "weight": 0,
+      "ClassId": 0
+    },
+    {
+      "Id": 7,
+      "Label": "8-7",
+      "From": 8,
+      "To": 7,
+      "weight": 0,
+      "ClassId": 0
+    },
+    {
+      "Id": 8,
+      "Label": "9-5",
+      "From": 9,
+      "To": 5,
+      "weight": 0,
+      "ClassId": 0
+    },
+    {
+      "Id": 9,
+      "Label": "8-9",
+      "From": 8,
+      "To": 9,
+      "weight": 0,
+      "ClassId": 0
+    },
+    {
+      "Id": 10,
+      "Label": "3-5",
+      "From": 3,
+      "To": 5,
+      "weight": 0,
+      "ClassId": 0
+    },
+    {
+      "Id": 11,
+      "Label": "5-4",
+      "From": 5,
+      "To": 4,
+      "weight": 0,
+      "ClassId": 0
+    },
+    {
+      "Id": 12,
+      "Label": "4-6",
+      "From": 4,
+      "To": 6,
+      "weight": 0,
+      "ClassId": 0
+    },
+    {
+      "Id": 13,
+      "Label": "0-6",
+      "From": 0,
+      "To": 6,
+      "weight": 0,
+      "ClassId": 0
+    },
+    {
+      "Id": 14,
+      "Label": "1-7",
+      "From": 1,
+      "To": 7,
+      "weight": 0,
+      "ClassId": 0
+    },
+    {
+      "Id": 15,
+      "Label": "1-8",
+      "From": 1,
+      "To": 8,
       "weight": 0
     },
     {
-      "id": 1,
-      "label": "1-0",
-      "from": 1,
-      "to": 0,
+      "Id": 16,
+      "Label": "2-8",
+      "From": 2,
+      "To": 8,
       "weight": 0
     },
     {
-      "id": 2,
-      "label": "2-1",
-      "from": 2,
-      "to": 1,
+      "Id": 17,
+      "Label": "2-9",
+      "From": 2,
+      "To": 9,
       "weight": 0
     },
     {
-      "id": 3,
-      "label": "3-2",
-      "from": 3,
-      "to": 2,
+      "Id": 18,
+      "Label": "3-9",
+      "From": 3,
+      "To": 9,
       "weight": 0
     },
     {
-      "id": 4,
-      "label": "4-3",
-      "from": 4,
-      "to": 3,
+      "Id": 19,
+      "Label": "0-7",
+      "From": 0,
+      "To": 7,
       "weight": 0
     },
     {
-      "id": 5,
-      "label": "6-5",
-      "from": 6,
-      "to": 5,
+      "Id": 20,
+      "Label": "10-1",
+      "From": 10,
+      "To": 1,
       "weight": 0
     },
     {
-      "id": 6,
-      "label": "7-6",
-      "from": 7,
-      "to": 6,
+      "Id": 21,
+      "Label": "10-2",
+      "From": 10,
+      "To": 2,
       "weight": 0
     },
     {
-      "id": 7,
-      "label": "8-7",
-      "from": 8,
-      "to": 7,
+      "Id": 22,
+      "Label": "3-10",
+      "From": 3,
+      "To": 10,
       "weight": 0
     },
     {
-      "id": 8,
-      "label": "9-5",
-      "from": 9,
-      "to": 5,
+      "Id": 23,
+      "Label": "4-10",
+      "From": 4,
+      "To": 10,
       "weight": 0
     },
     {
-      "id": 9,
-      "label": "8-9",
-      "from": 8,
-      "to": 9,
+      "Id": 24,
+      "Label": "0-10",
+      "From": 0,
+      "To": 10,
       "weight": 0
     },
     {
-      "id": 10,
-      "label": "3-5",
-      "from": 3,
-      "to": 5,
+      "Id": 25,
+      "Label": "8-11",
+      "From": 8,
+      "To": 11,
       "weight": 0
     },
     {
-      "id": 11,
-      "label": "5-4",
-      "from": 5,
-      "to": 4,
+      "Id": 26,
+      "Label": "11-7",
+      "From": 11,
+      "To": 7,
       "weight": 0
     },
     {
-      "id": 12,
-      "label": "4-6",
-      "from": 4,
-      "to": 6,
+      "Id": 27,
+      "Label": "11-9",
+      "From": 11,
+      "To": 9,
       "weight": 0
     },
     {
-      "id": 13,
-      "label": "0-6",
-      "from": 0,
-      "to": 6,
+      "Id": 28,
+      "Label": "11-6",
+      "From": 11,
+      "To": 6,
       "weight": 0
     },
     {
-      "id": 14,
-      "label": "1-7",
-      "from": 1,
-      "to": 7,
+      "Id": 29,
+      "Label": "11-5",
+      "From": 11,
+      "To": 5,
       "weight": 0
     },
     {
-      "id": 15,
-      "label": "1-8",
-      "from": 1,
-      "to": 8,
+      "Id": 31,
+      "Label": "13-12",
+      "From": 13,
+      "To": 12,
       "weight": 0
     },
     {
-      "id": 16,
-      "label": "2-8",
-      "from": 2,
-      "to": 8,
+      "Id": 32,
+      "Label": "15-13",
+      "From": 15,
+      "To": 13,
       "weight": 0
     },
     {
-      "id": 17,
-      "label": "2-9",
-      "from": 2,
-      "to": 9,
+      "Id": 33,
+      "Label": "17-15",
+      "From": 17,
+      "To": 15,
       "weight": 0
     },
     {
-      "id": 18,
-      "label": "3-9",
-      "from": 3,
-      "to": 9,
+      "Id": 34,
+      "Label": "17-16",
+      "From": 17,
+      "To": 16,
       "weight": 0
     },
     {
-      "id": 19,
-      "label": "0-7",
-      "from": 0,
-      "to": 7,
+      "Id": 35,
+      "Label": "14-16",
+      "From": 14,
+      "To": 16,
       "weight": 0
     },
     {
-      "id": 20,
-      "label": "10-1",
-      "from": 10,
-      "to": 1,
+      "Id": 36,
+      "Label": "12-14",
+      "From": 12,
+      "To": 14,
       "weight": 0
     },
     {
-      "id": 21,
-      "label": "10-2",
-      "from": 10,
-      "to": 2,
+      "Id": 37,
+      "Label": "19-13",
+      "From": 19,
+      "To": 13,
       "weight": 0
     },
     {
-      "id": 22,
-      "label": "3-10",
-      "from": 3,
-      "to": 10,
+      "Id": 38,
+      "Label": "20-12",
+      "From": 20,
+      "To": 12,
       "weight": 0
     },
     {
-      "id": 23,
-      "label": "4-10",
-      "from": 4,
-      "to": 10,
+      "Id": 39,
+      "Label": "14-21",
+      "From": 14,
+      "To": 21,
       "weight": 0
     },
     {
-      "id": 24,
-      "label": "0-10",
-      "from": 0,
-      "to": 10,
+      "Id": 40,
+      "Label": "16-22",
+      "From": 16,
+      "To": 22,
       "weight": 0
     },
     {
-      "id": 25,
-      "label": "8-11",
-      "from": 8,
-      "to": 11,
+      "Id": 41,
+      "Label": "17-23",
+      "From": 17,
+      "To": 23,
       "weight": 0
     },
     {
-      "id": 26,
-      "label": "11-7",
-      "from": 11,
-      "to": 7,
+      "Id": 59,
+      "Label": "30-15",
+      "From": 30,
+      "To": 15,
       "weight": 0
     },
     {
-      "id": 27,
-      "label": "11-9",
-      "from": 11,
-      "to": 9,
+      "Id": 61,
+      "Label": "35-21",
+      "From": 35,
+      "To": 21,
       "weight": 0
     },
     {
-      "id": 28,
-      "label": "11-6",
-      "from": 11,
-      "to": 6,
+      "Id": 62,
+      "Label": "34-20",
+      "From": 34,
+      "To": 20,
       "weight": 0
     },
     {
-      "id": 29,
-      "label": "11-5",
-      "from": 11,
-      "to": 5,
+      "Id": 63,
+      "Label": "33-19",
+      "From": 33,
+      "To": 19,
       "weight": 0
     },
     {
-      "id": 31,
-      "label": "13-12",
-      "from": 13,
-      "to": 12,
+      "Id": 64,
+      "Label": "32-30",
+      "From": 32,
+      "To": 30,
       "weight": 0
     },
     {
-      "id": 32,
-      "label": "15-13",
-      "from": 15,
-      "to": 13,
+      "Id": 65,
+      "Label": "31-23",
+      "From": 31,
+      "To": 23,
       "weight": 0
     },
     {
-      "id": 33,
-      "label": "17-15",
-      "from": 17,
-      "to": 15,
+      "Id": 66,
+      "Label": "36-22",
+      "From": 36,
+      "To": 22,
       "weight": 0
     },
     {
-      "id": 34,
-      "label": "17-16",
-      "from": 17,
-      "to": 16,
+      "Id": 67,
+      "Label": "37-12",
+      "From": 37,
+      "To": 12,
       "weight": 0
     },
     {
-      "id": 35,
-      "label": "14-16",
-      "from": 14,
-      "to": 16,
+      "Id": 68,
+      "Label": "37-14",
+      "From": 37,
+      "To": 14,
       "weight": 0
     },
     {
-      "id": 36,
-      "label": "12-14",
-      "from": 12,
-      "to": 14,
+      "Id": 69,
+      "Label": "37-16",
+      "From": 37,
+      "To": 16,
       "weight": 0
     },
     {
-      "id": 37,
-      "label": "19-13",
-      "from": 19,
-      "to": 13,
+      "Id": 70,
+      "Label": "37-17",
+      "From": 37,
+      "To": 17,
       "weight": 0
     },
     {
-      "id": 38,
-      "label": "20-12",
-      "from": 20,
-      "to": 12,
+      "Id": 71,
+      "Label": "37-15",
+      "From": 37,
+      "To": 15,
       "weight": 0
     },
     {
-      "id": 39,
-      "label": "14-21",
-      "from": 14,
-      "to": 21,
+      "Id": 72,
+      "Label": "37-13",
+      "From": 37,
+      "To": 13,
       "weight": 0
     },
     {
-      "id": 40,
-      "label": "16-22",
-      "from": 16,
-      "to": 22,
+      "Id": 73,
+      "Label": "4-37",
+      "From": 4,
+      "To": 37,
       "weight": 0
     },
     {
-      "id": 41,
-      "label": "17-23",
-      "from": 17,
-      "to": 23,
+      "Id": 74,
+      "Label": "37-4",
+      "From": 37,
+      "To": 4,
       "weight": 0
     },
     {
-      "id": 59,
-      "label": "30-15",
-      "from": 30,
-      "to": 15,
+      "Id": 75,
+      "Label": "37-4",
+      "From": 37,
+      "To": 4,
       "weight": 0
     },
     {
-      "id": 61,
-      "label": "35-21",
-      "from": 35,
-      "to": 21,
+      "Id": 76,
+      "Label": "4-37",
+      "From": 4,
+      "To": 37,
       "weight": 0
     },
     {
-      "id": 62,
-      "label": "34-20",
-      "from": 34,
-      "to": 20,
+      "Id": 77,
+      "Label": "37-4",
+      "From": 37,
+      "To": 4,
       "weight": 0
     },
     {
-      "id": 63,
-      "label": "33-19",
-      "from": 33,
-      "to": 19,
-      "weight": 0
-    },
-    {
-      "id": 64,
-      "label": "32-30",
-      "from": 32,
-      "to": 30,
-      "weight": 0
-    },
-    {
-      "id": 65,
-      "label": "31-23",
-      "from": 31,
-      "to": 23,
-      "weight": 0
-    },
-    {
-      "id": 66,
-      "label": "36-22",
-      "from": 36,
-      "to": 22,
-      "weight": 0
-    },
-    {
-      "id": 67,
-      "label": "37-12",
-      "from": 37,
-      "to": 12,
-      "weight": 0
-    },
-    {
-      "id": 68,
-      "label": "37-14",
-      "from": 37,
-      "to": 14,
-      "weight": 0
-    },
-    {
-      "id": 69,
-      "label": "37-16",
-      "from": 37,
-      "to": 16,
-      "weight": 0
-    },
-    {
-      "id": 70,
-      "label": "37-17",
-      "from": 37,
-      "to": 17,
-      "weight": 0
-    },
-    {
-      "id": 71,
-      "label": "37-15",
-      "from": 37,
-      "to": 15,
-      "weight": 0
-    },
-    {
-      "id": 72,
-      "label": "37-13",
-      "from": 37,
-      "to": 13,
-      "weight": 0
-    },
-    {
-      "id": 73,
-      "label": "4-37",
-      "from": 4,
-      "to": 37,
-      "weight": 0
-    },
-    {
-      "id": 74,
-      "label": "37-4",
-      "from": 37,
-      "to": 4,
-      "weight": 0
-    },
-    {
-      "id": 75,
-      "label": "37-4",
-      "from": 37,
-      "to": 4,
-      "weight": 0
-    },
-    {
-      "id": 76,
-      "label": "4-37",
-      "from": 4,
-      "to": 37,
-      "weight": 0
-    },
-    {
-      "id": 77,
-      "label": "37-4",
-      "from": 37,
-      "to": 4,
-      "weight": 0
-    },
-    {
-      "id": 78,
-      "label": "4-37",
-      "from": 4,
-      "to": 37,
+      "Id": 78,
+      "Label": "4-37",
+      "From": 4,
+      "To": 37,
       "weight": 0
     }
   ],
-  "nodes": [
+  "Nodes": [
     {
-      "id": 0,
-      "label": "0",
-      "classId": 0,
-      "point": {
+      "Id": 0,
+      "Label": "0",
+      "ClassId": 0,
+      "Point": {
         "position": {
           "x": 8.4269437789917,
           "y": 0.8376911282539368,
@@ -438,7 +453,7 @@
           "z": -4.558862087833404e-7
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -450,7 +465,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -464,10 +479,10 @@
       }
     },
     {
-      "id": 1,
-      "label": "1",
-      "classId": 0,
-      "point": {
+      "Id": 1,
+      "Label": "1",
+      "ClassId": 0,
+      "Point": {
         "position": {
           "x": 10.786102294921875,
           "y": 2.0047714710235597,
@@ -479,7 +494,7 @@
           "z": -2.1979251130233025e-7
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -491,7 +506,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -505,10 +520,10 @@
       }
     },
     {
-      "id": 2,
-      "label": "2",
-      "classId": 0,
-      "point": {
+      "Id": 2,
+      "Label": "2",
+      "ClassId": 0,
+      "Point": {
         "position": {
           "x": 9.371943473815918,
           "y": 2.8810672760009767,
@@ -520,7 +535,7 @@
           "z": 0.0
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -532,7 +547,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -546,10 +561,10 @@
       }
     },
     {
-      "id": 3,
-      "label": "3",
-      "classId": 3,
-      "point": {
+      "Id": 3,
+      "Label": "3",
+      "ClassId": 3,
+      "Point": {
         "position": {
           "x": 6.307492256164551,
           "y": 2.143339157104492,
@@ -561,7 +576,7 @@
           "z": -4.436836036347813e-7
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -573,7 +588,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -587,10 +602,10 @@
       }
     },
     {
-      "id": 4,
-      "label": "4",
-      "classId": 0,
-      "point": {
+      "Id": 4,
+      "Label": "4",
+      "ClassId": 0,
+      "Point": {
         "position": {
           "x": 3.3270742893218996,
           "y": -0.6792325377464294,
@@ -602,7 +617,7 @@
           "z": 0.0
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -614,7 +629,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -628,10 +643,10 @@
       }
     },
     {
-      "id": 5,
-      "label": "5",
-      "classId": 0,
-      "point": {
+      "Id": 5,
+      "Label": "5",
+      "ClassId": 0,
+      "Point": {
         "position": {
           "x": 5.974920749664307,
           "y": 3.482492446899414,
@@ -643,7 +658,7 @@
           "z": 0.0
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -655,7 +670,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -669,10 +684,10 @@
       }
     },
     {
-      "id": 6,
-      "label": "6",
-      "classId": 0,
-      "point": {
+      "Id": 6,
+      "Label": "6",
+      "ClassId": 0,
+      "Point": {
         "position": {
           "x": 7.400379657745361,
           "y": 2.7950026988983156,
@@ -684,7 +699,7 @@
           "z": 0.00003553120404831134
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -696,7 +711,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -710,10 +725,10 @@
       }
     },
     {
-      "id": 7,
-      "label": "7",
-      "classId": 3,
-      "point": {
+      "Id": 7,
+      "Label": "7",
+      "ClassId": 3,
+      "Point": {
         "position": {
           "x": 10.486650466918946,
           "y": 3.5280632972717287,
@@ -725,7 +740,7 @@
           "z": 0.0
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -737,7 +752,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -751,10 +766,10 @@
       }
     },
     {
-      "id": 8,
-      "label": "8",
-      "classId": 0,
-      "point": {
+      "Id": 8,
+      "Label": "8",
+      "ClassId": 0,
+      "Point": {
         "position": {
           "x": 10.857051849365235,
           "y": 4.78571891784668,
@@ -766,7 +781,7 @@
           "z": 0.00001028767837851774
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -778,7 +793,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -792,10 +807,10 @@
       }
     },
     {
-      "id": 9,
-      "label": "9",
-      "classId": 0,
-      "point": {
+      "Id": 9,
+      "Label": "9",
+      "ClassId": 0,
+      "Point": {
         "position": {
           "x": 8.193129539489746,
           "y": 4.8634843826293949,
@@ -807,7 +822,7 @@
           "z": 0.0
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -819,7 +834,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -833,10 +848,10 @@
       }
     },
     {
-      "id": 10,
-      "label": "10",
-      "classId": 1,
-      "point": {
+      "Id": 10,
+      "Label": "10",
+      "ClassId": 1,
+      "Point": {
         "position": {
           "x": 7.764101028442383,
           "y": 0.6628495454788208,
@@ -848,7 +863,7 @@
           "z": 0.0000031091412893147209
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -860,7 +875,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -874,10 +889,10 @@
       }
     },
     {
-      "id": 11,
-      "label": "11",
-      "classId": 1,
-      "point": {
+      "Id": 11,
+      "Label": "11",
+      "ClassId": 1,
+      "Point": {
         "position": {
           "x": 8.728798866271973,
           "y": 5.107810974121094,
@@ -889,7 +904,7 @@
           "z": 0.0
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -901,7 +916,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -915,10 +930,10 @@
       }
     },
     {
-      "id": 12,
-      "label": "12",
-      "classId": 1,
-      "point": {
+      "Id": 12,
+      "Label": "12",
+      "ClassId": 1,
+      "Point": {
         "position": {
           "x": -7.859921455383301,
           "y": -6.13266134262085,
@@ -930,7 +945,7 @@
           "z": 0.0
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -942,7 +957,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -956,10 +971,10 @@
       }
     },
     {
-      "id": 13,
-      "label": "13",
-      "classId": 1,
-      "point": {
+      "Id": 13,
+      "Label": "13",
+      "ClassId": 1,
+      "Point": {
         "position": {
           "x": -6.076813697814941,
           "y": -9.616789817810059,
@@ -971,7 +986,7 @@
           "z": -2.6980993084180229e-7
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -983,7 +998,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -997,10 +1012,10 @@
       }
     },
     {
-      "id": 14,
-      "label": "14",
-      "classId": 1,
-      "point": {
+      "Id": 14,
+      "Label": "14",
+      "ClassId": 1,
+      "Point": {
         "position": {
           "x": -8.257880210876465,
           "y": -3.701568603515625,
@@ -1012,7 +1027,7 @@
           "z": 0.0000010398982794868062
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1024,7 +1039,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1038,10 +1053,10 @@
       }
     },
     {
-      "id": 15,
-      "label": "15",
-      "classId": 1,
-      "point": {
+      "Id": 15,
+      "Label": "15",
+      "ClassId": 1,
+      "Point": {
         "position": {
           "x": -4.146608352661133,
           "y": -10.137321472167969,
@@ -1053,7 +1068,7 @@
           "z": -2.695843193123437e-7
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1065,7 +1080,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1079,10 +1094,10 @@
       }
     },
     {
-      "id": 16,
-      "label": "16",
-      "classId": 1,
-      "point": {
+      "Id": 16,
+      "Label": "16",
+      "ClassId": 1,
+      "Point": {
         "position": {
           "x": -6.50129508972168,
           "y": -4.3217692375183109,
@@ -1094,7 +1109,7 @@
           "z": 0.0
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1106,7 +1121,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1120,10 +1135,10 @@
       }
     },
     {
-      "id": 17,
-      "label": "17",
-      "classId": 1,
-      "point": {
+      "Id": 17,
+      "Label": "17",
+      "ClassId": 1,
+      "Point": {
         "position": {
           "x": -4.3661370277404789,
           "y": -7.505671501159668,
@@ -1135,7 +1150,7 @@
           "z": 0.0
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1147,7 +1162,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1161,10 +1176,10 @@
       }
     },
     {
-      "id": 19,
-      "label": "19",
-      "classId": 1,
-      "point": {
+      "Id": 19,
+      "Label": "19",
+      "ClassId": 1,
+      "Point": {
         "position": {
           "x": -8.143569946289063,
           "y": -14.312520980834961,
@@ -1176,7 +1191,7 @@
           "z": 0.0
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1188,7 +1203,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1202,10 +1217,10 @@
       }
     },
     {
-      "id": 20,
-      "label": "20",
-      "classId": 3,
-      "point": {
+      "Id": 20,
+      "Label": "20",
+      "ClassId": 3,
+      "Point": {
         "position": {
           "x": -12.499671936035157,
           "y": -6.5892815589904789,
@@ -1217,7 +1232,7 @@
           "z": 0.0
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1229,7 +1244,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1243,10 +1258,10 @@
       }
     },
     {
-      "id": 21,
-      "label": "21",
-      "classId": 2,
-      "point": {
+      "Id": 21,
+      "Label": "21",
+      "ClassId": 2,
+      "Point": {
         "position": {
           "x": -13.378512382507325,
           "y": -1.134678840637207,
@@ -1258,7 +1273,7 @@
           "z": 9.623151981941192e-7
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1270,7 +1285,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1284,10 +1299,10 @@
       }
     },
     {
-      "id": 22,
-      "label": "22",
-      "classId": 2,
-      "point": {
+      "Id": 22,
+      "Label": "22",
+      "ClassId": 2,
+      "Point": {
         "position": {
           "x": -9.073251724243164,
           "y": -2.6866395473480226,
@@ -1299,7 +1314,7 @@
           "z": 0.000004344386070442852
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1311,7 +1326,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1325,10 +1340,10 @@
       }
     },
     {
-      "id": 23,
-      "label": "23",
-      "classId": 2,
-      "point": {
+      "Id": 23,
+      "Label": "23",
+      "ClassId": 2,
+      "Point": {
         "position": {
           "x": -4.022023677825928,
           "y": -9.922904014587403,
@@ -1340,7 +1355,7 @@
           "z": 0.000010698721780499909
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1352,7 +1367,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1366,10 +1381,10 @@
       }
     },
     {
-      "id": 30,
-      "label": "30",
-      "classId": 2,
-      "point": {
+      "Id": 30,
+      "Label": "30",
+      "ClassId": 2,
+      "Point": {
         "position": {
           "x": -3.5535335540771486,
           "y": -15.704358100891114,
@@ -1381,7 +1396,7 @@
           "z": 1.3340579307907774e-8
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1393,7 +1408,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1407,10 +1422,10 @@
       }
     },
     {
-      "id": 31,
-      "label": "31",
-      "classId": 2,
-      "point": {
+      "Id": 31,
+      "Label": "31",
+      "ClassId": 2,
+      "Point": {
         "position": {
           "x": -3.785288095474243,
           "y": -11.516315460205079,
@@ -1422,7 +1437,7 @@
           "z": 0.0
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1434,7 +1449,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1448,9 +1463,9 @@
       }
     },
     {
-      "id": 32,
-      "label": "32",
-      "point": {
+      "Id": 32,
+      "Label": "32",
+      "Point": {
         "position": {
           "x": -3.165332078933716,
           "y": -19.327871322631837,
@@ -1462,7 +1477,7 @@
           "z": 0.0
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1474,7 +1489,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1488,9 +1503,9 @@
       }
     },
     {
-      "id": 33,
-      "label": "33",
-      "point": {
+      "Id": 33,
+      "Label": "33",
+      "Point": {
         "position": {
           "x": -9.505993843078614,
           "y": -17.362886428833009,
@@ -1502,7 +1517,7 @@
           "z": 0.000002352816409256775
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1514,7 +1529,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1528,9 +1543,9 @@
       }
     },
     {
-      "id": 34,
-      "label": "34",
-      "point": {
+      "Id": 34,
+      "Label": "34",
+      "Point": {
         "position": {
           "x": -15.529796600341797,
           "y": -6.877872943878174,
@@ -1542,7 +1557,7 @@
           "z": 0.0
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1554,7 +1569,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1568,9 +1583,9 @@
       }
     },
     {
-      "id": 35,
-      "label": "35",
-      "point": {
+      "Id": 35,
+      "Label": "35",
+      "Point": {
         "position": {
           "x": -16.714399337768556,
           "y": 0.5235284566879273,
@@ -1582,7 +1597,7 @@
           "z": -5.410145149653545e-7
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1594,7 +1609,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1608,9 +1623,9 @@
       }
     },
     {
-      "id": 36,
-      "label": "36",
-      "point": {
+      "Id": 36,
+      "Label": "36",
+      "Point": {
         "position": {
           "x": -10.738471984863282,
           "y": -1.6506948471069337,
@@ -1622,7 +1637,7 @@
           "z": 0.0
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1634,7 +1649,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1648,9 +1663,9 @@
       }
     },
     {
-      "id": 37,
-      "label": "37",
-      "point": {
+      "Id": 37,
+      "Label": "37",
+      "Point": {
         "position": {
           "x": -2.9607255458831789,
           "y": -4.962265968322754,
@@ -1662,7 +1677,7 @@
           "z": 0.0
         }
       },
-      "vpoint": {
+      "VPoint": {
         "velocity": {
           "x": 0.0,
           "y": 0.0,
@@ -1674,7 +1689,7 @@
           "z": 0.0
         }
       },
-      "apoint": {
+      "APoint": {
         "acceleration": {
           "x": 0.0,
           "y": 0.0,
@@ -1688,31 +1703,39 @@
       }
     }
   ],
-  "classes": [
+  "NodeClasses": [
     {
-      "id": 0,
+      "Id": 0,
       "name": "Yellow",
       "texturePath": ".\\data\\textures\\yellow.jpg",
       "shape": "Cube"
     },
     {
-      "id": 1,
+      "Id": 1,
       "name": "YellowBig",
       "texturePath": ".\\data\\textures\\yellow.jpg",
       "shape": "Cube",
       "scale": 3
     },
     {
-      "id": 2,
+      "Id": 2,
       "name": "green",
       "texturePath": ".\\data\\textures\\green.jpg",
       "shape": "Capsule"
     },
     {
-      "id": 3,
+      "Id": 3,
       "name": "github",
       "texturePath": ".\\data\\textures\\github.png",
       "shape": "Cylinder"
+    }
+  ],
+  "edgeClasses": [
+    {
+      "Id": 0,
+      "name": "Green",
+      "texturePath": ".\\data\\textures\\green.jpg",
+      "Thickness": 3.0
     }
   ]
 }

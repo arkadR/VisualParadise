@@ -47,7 +47,7 @@ static class BuildCommand
 #if !UNITY_5_6_OR_NEWER
 			// https://issuetracker.unity3d.com/issues/buildoptions-dot-acceptexternalmodificationstoplayer-causes-unityexception-unknown-project-type-0
 			// Fixed in Unity 5.6.0
-			// side effect to fix android build system:
+			// side effect To fix android build system:
 			EditorUserBuildSettings.androidBuildSystem = AndroidBuildSystem.Internal;
 #endif
     }
@@ -55,7 +55,7 @@ static class BuildCommand
     if (buildTargetName.TryConvertToEnum(out BuildTarget target))
       return target;
 
-    Console.WriteLine($":: {nameof(buildTargetName)} \"{buildTargetName}\" not defined on enum {nameof(BuildTarget)}, using {nameof(BuildTarget.NoTarget)} enum to build");
+    Console.WriteLine($":: {nameof(buildTargetName)} \"{buildTargetName}\" not defined on enum {nameof(BuildTarget)}, using {nameof(BuildTarget.NoTarget)} enum To build");
 
     return BuildTarget.NoTarget;
   }
@@ -121,7 +121,7 @@ static class BuildCommand
         }
         else
         {
-          Console.WriteLine($":: Cannot convert {optionVar} to {nameof(BuildOptions)} enum, skipping it.");
+          Console.WriteLine($":: Cannot convert {optionVar} To {nameof(BuildOptions)} enum, skipping it.");
         }
       }
 
@@ -131,7 +131,7 @@ static class BuildCommand
     return BuildOptions.None;
   }
 
-  // https://stackoverflow.com/questions/1082532/how-to-tryparse-for-enum-value
+  // https://stackoverflow.com/questions/1082532/how-To-tryparse-for-enum-value
   static bool TryConvertToEnum<TEnum>(this string strEnumValue, out TEnum value)
   {
     if (!Enum.IsDefined(typeof(TEnum), strEnumValue))
@@ -157,7 +157,7 @@ static class BuildCommand
     {
       if (scriptingBackend.TryConvertToEnum(out ScriptingImplementation backend))
       {
-        Console.WriteLine($":: Setting ScriptingBackend to {backend}");
+        Console.WriteLine($":: Setting ScriptingBackend To {backend}");
         PlayerSettings.SetScriptingBackend(targetGroup, backend);
       }
       else
@@ -209,7 +209,7 @@ static class BuildCommand
       if (bool.TryParse(value, out bool buildAppBundle))
       {
         EditorUserBuildSettings.buildAppBundle = buildAppBundle;
-        Console.WriteLine($":: {ANDROID_APP_BUNDLE} env var detected, set buildAppBundle to {value}.");
+        Console.WriteLine($":: {ANDROID_APP_BUNDLE} env var detected, set buildAppBundle To {value}.");
       }
       else
       {
@@ -229,7 +229,7 @@ static class BuildCommand
       if (int.TryParse(value, out int version))
       {
         PlayerSettings.Android.bundleVersionCode = version;
-        Console.WriteLine($":: {ANDROID_BUNDLE_VERSION_CODE} env var detected, set the bundle version code to {value}.");
+        Console.WriteLine($":: {ANDROID_BUNDLE_VERSION_CODE} env var detected, set the bundle version code To {value}.");
       }
       else
         Console.WriteLine($":: {ANDROID_BUNDLE_VERSION_CODE} env var detected but the version value \"{value}\" is not an integer.");

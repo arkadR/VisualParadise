@@ -9,11 +9,12 @@ namespace Assets.Scripts.Edges
   public class SegmentGroup
   {
     readonly GameObject[] _segments;
+    const float c_segmentAdditionalLength = 0.01f;
 
     public SegmentGroup(GameObject[] segments)
     {
       if (segments == null || segments.Length < 1)
-        throw new ArgumentException("At least one segment has to be provided");
+        throw new ArgumentException("At least one segment has To be provided");
 
       _segments = segments;
     }
@@ -53,10 +54,9 @@ namespace Assets.Scripts.Edges
       var distance = direction.magnitude;
       var (scaleX, scaleY, scaleZ) = segment.transform.localScale;
 
-      segment.transform.localScale = new Vector3(scaleX, distance / 2, scaleZ);
+      segment.transform.localScale = new Vector3(scaleX, distance / 2 + c_segmentAdditionalLength, scaleZ);
       segment.transform.position = (point1 + point2) / 2;
       segment.transform.rotation = Quaternion.FromToRotation(Vector3.up, direction);
     }
-
   }
 }

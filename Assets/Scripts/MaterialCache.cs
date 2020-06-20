@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Assets.Scripts.Model;
 using UnityEngine;
 
@@ -9,37 +11,40 @@ namespace Assets.Scripts
   {
     const string c_defaultTexturePath = "Textures/node/sand_01_diff_1k.jpg";
 
-    public IDictionary<int, Material> cache = new Dictionary<int, Material>();
+    public IDictionary<string, Material> cache = new Dictionary<string, Material>();
 
-    public void Load(IEnumerable<NodeClass> classes)
+    public Lazy<Material> DefaultMaterial = new Lazy<Material>(
+      () => new Material(Shader.Find("Standard")) { mainTexture = LoadDefaultTexture() });
+    
+    public void Load(IEnumerable<NodeClass> nodeClasses, IEnumerable<EdgeClass> edgeClasses)
     {
-      foreach (var nodeClass in classes)
+      var texturePaths = nodeClasses
+        .Select(c => c.TexturePath)
+        .Union(edgeClasses.Select(c => c.TexturePath))
+        .Where(tp => string.IsNullOrEmpty(tp) == false);
+
+      foreach (var texturePath in texturePaths)
       {
         var texture = new Texture2D(2, 2);
-        if (nodeClass.texturePath == null)
-          texture = LoadDefaultTexture();
-        else if (File.Exists(nodeClass.texturePath))
+        if (File.Exists(texturePath))
         {
-          var fileData = File.ReadAllBytes(nodeClass.texturePath);
+          var fileData = File.ReadAllBytes(texturePath);
           texture.LoadImage(fileData);
         }
         else
         {
-          Log($"Texture {nodeClass.texturePath} was not found!");
+          Log($"Texture {texturePath} was not found!");
           texture = LoadDefaultTexture();
         }
-
-        var material = new Material(Shader.Find("Standard"))
-        {
-          mainTexture = texture
-        };
-        cache.Add(nodeClass.id, material);
+        var material = new Material(Shader.Find("Standard")) { mainTexture = texture };
+        cache.Add(texturePath, material);
       }
     }
 
-    public Material GetByClassId(int id) => cache[id];
+    public Material GetByTexturePath(string texturePath) =>
+      string.IsNullOrEmpty(texturePath) ? DefaultMaterial.Value : cache[texturePath];
 
-    Texture2D LoadDefaultTexture() => Resources.Load<Texture2D>(c_defaultTexturePath);
+    static Texture2D LoadDefaultTexture() => Resources.Load<Texture2D>(c_defaultTexturePath);
 
     void Log(string message)
     {

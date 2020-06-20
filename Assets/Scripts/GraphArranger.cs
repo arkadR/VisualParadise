@@ -46,16 +46,16 @@ namespace Assets.Scripts
     }
 
     /// <summary>
-    ///   Repel each Node from every other node
+    ///   Repel each Node From every other node
     /// </summary>
     void Repel()
     {
-      for (var i = 0; i < _graphService.Graph.nodes.Count; i++)
+      for (var i = 0; i < _graphService.Graph.Nodes.Count; i++)
       {
-        for (var j = i + 1; j < _graphService.Graph.nodes.Count; j++)
+        for (var j = i + 1; j < _graphService.Graph.Nodes.Count; j++)
         {
-          var node1 = _graphService.Graph.nodes[i];
-          var node2 = _graphService.Graph.nodes[j];
+          var node1 = _graphService.Graph.Nodes[i];
+          var node2 = _graphService.Graph.Nodes[j];
 
           var direction = node1.Position - node2.Position;
           var distance = direction.magnitude;
@@ -72,18 +72,18 @@ namespace Assets.Scripts
     float CalculateRepelVelocityMagnitude(float distance) => _repelFunCoefficient / distance;
 
     /// <summary>
-    ///   Attract two nodes if there is an edge to connect them
+    ///   Attract two Nodes if there is an edge To connect them
     /// </summary>
     void Attract()
     {
-      var uniqueEdges = _graphService.Graph.edges
-        .GroupBy(e => new {e.from, e.to})
+      var uniqueEdges = _graphService.Graph.Edges
+        .GroupBy(e => new {@from = e.From, to = e.To})
         .Select(g => g.First());
 
       foreach (var e in uniqueEdges)
       {
-        var node1 = _graphService.FindNodeById(e.from);
-        var node2 = _graphService.FindNodeById(e.to);
+        var node1 = _graphService.FindNodeById(e.From);
+        var node2 = _graphService.FindNodeById(e.To);
 
         var direction = node1.Position - node2.Position;
         var distance = direction.magnitude;
@@ -100,8 +100,8 @@ namespace Assets.Scripts
 
     private void SquashTo2D()
     {
-      var avgY = _graphService.Graph.nodes.Average(n => n.Position.y);
-      foreach(var n in _graphService.Graph.nodes)
+      var avgY = _graphService.Graph.Nodes.Average(n => n.Position.y);
+      foreach(var n in _graphService.Graph.Nodes)
       {
         var distanceY = Mathf.Abs(n.Position.y - avgY);
         if (distanceY < 0.005)

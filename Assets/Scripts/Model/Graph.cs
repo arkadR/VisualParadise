@@ -2,55 +2,50 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Assets.Scripts.Model
 {
   [Serializable]
   public class Graph
   {
-    public List<Node> nodes = new List<Node>();
-    public List<Edge> edges = new List<Edge>();
-    public List<NodeClass> classes = new List<NodeClass>();
+    [JsonProperty] public List<Node> Nodes { get; private set; } = new List<Node>();
+    [JsonProperty] public List<Edge> Edges { get; private set; } = new List<Edge>();
+    [JsonProperty] public List<NodeClass> NodeClasses { get; private set; } = new List<NodeClass>();
+    [JsonProperty] public List<EdgeClass> EdgeClasses { get; private set; } = new List<EdgeClass>();
     
     [OnDeserialized]
     public void OnDeserializedMethod(StreamingContext context)
     {
-      if (nodes == null)
-        nodes = new List<Node>();
-
-      if (edges == null)
-        edges = new List<Edge>();
-
-      if (classes == null)
-        classes = new List<NodeClass>();
-
-      foreach (var edge in edges)
+      foreach (var edge in Edges)
       {
-        edge.nodeFrom = nodes.Single(n => n.id == edge.from);
-        edge.nodeTo = nodes.Single(n => n.id == edge.to);
+        edge.nodeFrom = Nodes.Single(n => n.Id == edge.From);
+        edge.nodeTo = Nodes.Single(n => n.Id == edge.To);
+        if (edge.ClassId != null)
+          edge.Class = EdgeClasses.Single(c => c.Id == edge.ClassId);
       }
 
-      foreach (var node in nodes)
+      foreach (var node in Nodes)
       {
-        if (node.classId != null)
-          node.nodeClass = classes.Single(c => c.id == node.classId);
+        if (node.ClassId != null)
+          node.nodeClass = NodeClasses.Single(c => c.Id == node.ClassId);
       }
     }
 
     public IList<Edge> FindEdgesByNodes(Node node1, Node node2) =>
-      edges
+      Edges
         .Where(edge =>
           (edge.nodeFrom == node1 && edge.nodeTo == node2) || 
           (edge.nodeFrom == node2 && edge.nodeTo == node1)
         ).ToList();
 
     public IList<Edge> FindNodeEdges(Node node) =>
-      edges.Where(e => e.from == node.id || e.to == node.id).ToList();
+      Edges.Where(e => e.From == node.Id || e.To == node.Id).ToList();
 
     public IDictionary<HashSet<Node>, List<Edge>> GetEdgesGroupedByNodes()
     {
       var groups = new Dictionary<HashSet<Node>, List<Edge>>();
-      foreach (var edge in edges)
+      foreach (var edge in Edges)
       {
         var nodesSet = new HashSet<Node> {edge.nodeFrom, edge.nodeTo};
         var existing = groups

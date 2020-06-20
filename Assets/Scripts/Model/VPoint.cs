@@ -6,7 +6,7 @@ namespace Assets.Scripts.Model
   [Serializable]
   public class VPoint
   {
-    public Vector3 velocity;
-    public Vector3 angularVelocity;
+    public Vector3 Velocity { get; set; }
+    public Vector3 AngularVelocity { get; set; }
   }
 }

@@ -24,8 +24,7 @@ namespace Assets.Scripts.Tools
 
     public bool CanInteractWith(RaycastHit hitInfo) =>
       _graphService.IsNode(hitInfo.collider.gameObject) || 
-      (hitInfo.collider.transform.parent != null && _graphService.IsEdge(hitInfo.collider.transform.parent.gameObject) && 
-      _previouslyHitNode == null);
+      (_graphService.IsEdge(hitInfo.collider.gameObject) && _previouslyHitNode == null);
 
     public void UpdateRaycast(bool isHit, RaycastHit hitInfo) { }
 
@@ -73,11 +72,11 @@ namespace Assets.Scripts.Tools
         return;
       }
 
-      if (!isHit || raycastHit.collider.transform.parent == null || 
-        raycastHit.collider.transform.parent.gameObject.tag != Constants.PhysicalEdgeTag) 
+      if (!isHit || _graphService.IsEdge(raycastHit.collider.gameObject) == false) 
         return;
 
-      FindObjectOfType<EdgeMenuHandler>().OpenContextMenu(raycastHit.collider.transform.parent.gameObject);
+      var edge = _graphService.FindEdgeByGameObject(raycastHit.collider.gameObject);
+      FindObjectOfType<EdgeMenuHandler>().OpenContextMenu(edge);
     }
 
     public void OnLeftMouseButtonHeld(Transform cameraTransform) { }

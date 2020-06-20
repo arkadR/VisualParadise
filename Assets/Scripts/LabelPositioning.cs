@@ -17,13 +17,13 @@ namespace Assets.Scripts
     }
 
     /// <summary>
-    /// Sets correct position of labels. Without that, text is stuck on screen in one place.
+    /// Sets correct Position of labels. Without that, text is stuck on screen in one place.
     /// </summary>
     void UpdateLabelPositions()
     {
       var camera = Camera.main;
-      graphService.Graph?.nodes.ForEach(n => n.UpdateTextPosition(camera));
-      graphService.Graph?.edges.ForEach(e => e.UpdateTextPosition(camera));
+      graphService.Graph?.Nodes.ForEach(n => n.UpdateTextPosition(camera));
+      graphService.Graph?.Edges.ForEach(e => e.UpdateTextPosition(camera));
     }
   }
 }
