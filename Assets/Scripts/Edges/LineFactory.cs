@@ -14,7 +14,7 @@ namespace Assets.Scripts.Edges
     public DebugSphereFactory debugSphereFactory;
 
     /// <summary>
-    ///   Returns a list of points that make up a curved, rotated edge when <paramref Name="numberOfLines" /> > 1
+    ///   Returns a list of points that make up a curved, rotated edge when <paramref name="numberOfLines" /> > 1
     ///   and a straight, two points line when it is == 1
     /// </summary>
     public IList<IList<Vector3>> GetLinePositionsFor(Vector3 startingPoint, Vector3 endingPoint, int numberOfLines)

@@ -2,17 +2,17 @@
 
 namespace Assets.Scripts.Common.Utils
 {
-  //https://stackoverflow.com/questions/6413804/why-does-casting-int-To-invalid-enum-value-not-throw-exception
+  //https://stackoverflow.com/questions/6413804/why-does-casting-int-to-invalid-enum-value-not-throw-exception
   /// <summary>
-  ///   Utility methods for enum values. This static type will fail To initialize
+  ///   Utility methods for enum values. This static type will fail to initialize
   ///   (throwing a <see cref="ArgumentException" />) if
-  ///   you try To provide a value that is not an enum.
+  ///   you try to provide a value that is not an enum.
   /// </summary>
-  /// <typeparam Name="T">An enum type. </typeparam>
-  public static class EnumUtils<T> where T : struct, IConvertible // Try To get as much of a static check as we can.
+  /// <typeparam name="T">An enum type. </typeparam>
+  public static class EnumUtils<T> where T : struct, IConvertible // Try to get as much of a static check as we can.
   {
     // The .NET framework doesn't provide a compile-checked
-    // way To ensure that a type is an enum, so we have To check when the type
+    // way to ensure that a type is an enum, so we have to check when the type
     // is statically invoked.
     static EnumUtils()
     {

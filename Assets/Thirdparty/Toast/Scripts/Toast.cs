@@ -55,7 +55,7 @@ public class Toast : MonoBehaviour {
 	/// <summary>
 	/// make a toast with a message.
 	/// </summary>
-	/// <param Name="text">(string), toast message.</param>
+	/// <param name="text">(string), toast message.</param>
 	public void Show(string text){
 		toastColorImage.color = co [0];
 		toastText.text = text;
@@ -67,8 +67,8 @@ public class Toast : MonoBehaviour {
 	/// <summary>
 	/// make a toast with a message & duration.
 	/// </summary>
-	/// <param Name="text">(string), toast message.</param>
-	/// <param Name="duration">(float), toast duration in seconds.</param>
+	/// <param name="text">(string), toast message.</param>
+	/// <param name="duration">(float), toast duration in seconds.</param>
 	public void Show(string text, float duration){
 		toastColorImage.color = co [0];
 		toastText.text = text;
@@ -80,9 +80,9 @@ public class Toast : MonoBehaviour {
 	/// <summary>
 	/// make a toast with a message, duration & color.
 	/// </summary>
-	/// <param Name="text">(string), toast message.</param>
-	/// <param Name="duration">(float), toast duration in seconds.</param>
-	/// <param Name="color">(Toast.ToastColor), toast background color, ex: Toast.ToastColor.Green .</param>
+	/// <param name="text">(string), toast message.</param>
+	/// <param name="duration">(float), toast duration in seconds.</param>
+	/// <param name="color">(Toast.ToastColor), toast background color, ex: Toast.ToastColor.Green .</param>
 	public void Show(string text, float duration, ToastColor color){
 		toastColorImage.color = co [0];
 		toastColorImage.color = co [(int)color];

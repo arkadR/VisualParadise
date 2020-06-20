@@ -56,11 +56,6 @@ namespace Assets.Scripts
         }
       }
 
-      // foreach (var edge in Graph.Edges)
-      // {
-      //   edge.Text .GetComponentInChildren<Text>().text = edge.Label;
-      // }
-
       LabelVisibility = false;
     }
 
@@ -143,7 +138,7 @@ namespace Assets.Scripts
     }
 
     /// <summary>
-    /// Update Edges positions based on corresponding Nodes
+    /// Update edges positions based on corresponding nodes
     /// </summary>
     public void FixEdges()
     {

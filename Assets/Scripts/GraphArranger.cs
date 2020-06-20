@@ -46,7 +46,7 @@ namespace Assets.Scripts
     }
 
     /// <summary>
-    ///   Repel each Node From every other node
+    ///   Repel each Node from every other node
     /// </summary>
     void Repel()
     {
@@ -72,7 +72,7 @@ namespace Assets.Scripts
     float CalculateRepelVelocityMagnitude(float distance) => _repelFunCoefficient / distance;
 
     /// <summary>
-    ///   Attract two Nodes if there is an edge To connect them
+    ///   Attract two Nodes if there is an edge to connect them
     /// </summary>
     void Attract()
     {

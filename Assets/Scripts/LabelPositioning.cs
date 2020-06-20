@@ -17,7 +17,7 @@ namespace Assets.Scripts
     }
 
     /// <summary>
-    /// Sets correct Position of labels. Without that, text is stuck on screen in one place.
+    /// Sets correct position of labels. Without that, text is stuck on screen in one place.
     /// </summary>
     void UpdateLabelPositions()
     {
