@@ -4,6 +4,7 @@
   {
     None,
     Arrow,
+    ArrowFull,
     Oval,
     Diamond,
     DiamondThin,
