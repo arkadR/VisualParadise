@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Common;
-using Assets.Scripts.Common.Utils;
+﻿using Assets.Scripts.Common.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,29 +6,24 @@ namespace Assets.Scripts.StartMenu
 {
   public class SettingsMenu : MonoBehaviour
   {
-    private const string c_playerMovement = "Player movement";
+    const string c_playerMovement = "Player movement";
 
     public Text playerMovementText;
 
-    private int PlayerMovementModeValue
-    {
-      get => PlayerPrefs.GetInt(Constants.PlayerMovementModeKey);
-      set => PlayerPrefs.SetInt(Constants.PlayerMovementModeKey, value);
-    }
+    public SettingsManager settingsManager;
 
-    void Start() => SetPlayerMovementText(EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(PlayerMovementModeValue));
+    void Start()
+    {
+      settingsManager = FindObjectOfType<SettingsManager>();
+      playerMovementText.text =
+        $"{c_playerMovement}: {EnumUtils<PlayerMovementMode>.GetName(settingsManager.PlayerMovementMode)}";
+    }
 
     public void PlayerMovement_OnClick()
     {
-      PlayerMovementModeValue = EnumUtils<PlayerMovementMode>.GetNextValue(PlayerMovementModeValue);
-      Debug.Log("PlayerMovementModeKey: " + PlayerMovementModeValue);
-      SetPlayerMovementText(EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(PlayerMovementModeValue));
-    }
-
-    private void SetPlayerMovementText(PlayerMovementMode value)
-    {
+      var nextPlayerMovementMode = settingsManager.ChangeToNextPlayerMovementMode();
       playerMovementText.text =
-        $"{c_playerMovement}: {EnumUtils<PlayerMovementMode>.GetName(value)}";
+        $"{c_playerMovement}: {EnumUtils<PlayerMovementMode>.GetName(nextPlayerMovementMode)}";
     }
   }
 }

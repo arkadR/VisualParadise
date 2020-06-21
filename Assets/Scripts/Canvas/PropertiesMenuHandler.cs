@@ -9,26 +9,19 @@ namespace Assets.Scripts.Canvas
 {
   public class PropertiesMenuHandler : MonoBehaviour
   {
-    List<NodeClass> _nodeClasses;
-    GraphService _graphService;
-
     const string c_noneClassLabel = "None";
 
-    private GameObject _previousMenu;
+    APointContainer _aPointContainerObject;
+    GraphService _graphService;
 
-    private PointContainer _pointContainerObject;
+    Node _node;
+    List<NodeClass> _nodeClasses;
 
-    private VPointContainer _vPointContainerObject;
+    PointContainer _pointContainerObject;
 
-    private APointContainer _aPointContainerObject;
+    GameObject _previousMenu;
 
-    private Node _node;
-
-    public GameObject propertiesMenu;
-
-    public GameObject pointContainer;
-
-    public GameObject vPointContainer;
+    VPointContainer _vPointContainerObject;
 
     public GameObject aPointContainer;
 
@@ -36,12 +29,18 @@ namespace Assets.Scripts.Canvas
 
     public Dropdown nodeClassDropdown;
 
+    public GameObject pointContainer;
+
+    public GameObject propertiesMenu;
+
     public Button saveButton;
 
-    private bool IsInputCorrect() =>
-      _pointContainerObject.IsInputCorrect() && 
-      _vPointContainerObject.IsInputCorrect() && 
-      _aPointContainerObject.IsInputCorrect() && 
+    public GameObject vPointContainer;
+
+    bool IsInputCorrect() =>
+      _pointContainerObject.IsInputCorrect() &&
+      _vPointContainerObject.IsInputCorrect() &&
+      _aPointContainerObject.IsInputCorrect() &&
       labelInput.text.Length > 0;
 
     public void Start()
@@ -50,7 +49,7 @@ namespace Assets.Scripts.Canvas
       _vPointContainerObject = vPointContainer.GetComponent<VPointContainer>();
       _aPointContainerObject = aPointContainer.GetComponent<APointContainer>();
 
-      labelInput.onValueChanged.AddListener((text) => new LabelValidator(labelInput).OnValueChanged());
+      labelInput.onValueChanged.AddListener(text => new LabelValidator(labelInput).OnValueChanged());
 
       propertiesMenu.SetActive(false);
     }
@@ -63,11 +62,12 @@ namespace Assets.Scripts.Canvas
         if (_graphService != null)
         {
           var classes = _graphService.Graph.NodeClasses;
-          _nodeClasses = new List<NodeClass> { null }.Union(classes).ToList();
+          _nodeClasses = new List<NodeClass> {null}.Union(classes).ToList();
           nodeClassDropdown.ClearOptions();
           nodeClassDropdown.AddOptions(_nodeClasses.Select(n => n?.Name ?? c_noneClassLabel).ToList());
         }
       }
+
       saveButton.interactable = IsInputCorrect();
     }
 

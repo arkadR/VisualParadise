@@ -3119,6 +3119,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1938434610}
   - component: {fileID: 1938434611}
+  - component: {fileID: 1938434612}
   m_Layer: 5
   m_Name: SettingsMenu
   m_TagString: Untagged
@@ -3161,6 +3162,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovementText: {fileID: 2125174433}
+  settingsManager: {fileID: 1938434612}
+--- !u!114 &1938434612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938434609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11397429c50942b0903c1a12bd7a26e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2013769956
 GameObject:
   m_ObjectHideFlags: 0
