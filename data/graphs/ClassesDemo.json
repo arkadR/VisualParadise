@@ -6,7 +6,9 @@
       "From": 0,
       "To": 4,
       "weight": 0,
-      "EdgeClassId": 0
+      "EdgeClassId": 0,
+      "StartClassId": 4,
+      "EndClassId": 4
     },
     {
       "Id": 1,
@@ -1728,6 +1730,10 @@
       "name": "github",
       "texturePath": ".\\data\\textures\\github.png",
       "shape": "Cylinder"
+    },
+    {
+      "Id": 4,
+      "LineEnding": "Arrow"
     }
   ]
 }

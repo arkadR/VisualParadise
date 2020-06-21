@@ -9,14 +9,25 @@ namespace Assets.Scripts.Edges
   public class SegmentGroup
   {
     readonly GameObject[] _segments;
+    readonly GameObject _lineStart;
+    readonly GameObject _lineEnd;
     const float c_segmentAdditionalLength = 0.01f;
 
-    public SegmentGroup(GameObject[] segments)
+    public SegmentGroup(GameObject lineStart, IEnumerable<GameObject> segments, GameObject lineEnd)
     {
-      if (segments == null || segments.Length < 1)
+      var segmentArr = segments as GameObject[] ?? segments.ToArray();
+      if (segments == null || segmentArr.Any() == false)
         throw new ArgumentException("At least one segment has To be provided");
 
-      _segments = segments;
+      if (lineStart == null)
+        throw new ArgumentException(nameof(lineStart));
+
+      if (lineEnd == null)
+        throw new ArgumentException(nameof(lineEnd));
+
+      _segments = segmentArr.ToArray();
+      _lineStart = lineStart;
+      _lineEnd = lineEnd;
     }
 
     public GameObject MiddleSegment => _segments[_segments.Length / 2];
@@ -24,18 +35,15 @@ namespace Assets.Scripts.Edges
 
     public void PlaceAlongPoints(IList<Vector3> points)
     {
-      if (points.Count - 1 != _segments.Length)
+      if (points.Count - 3 != _segments.Length)
         throw new ArgumentException("Number of _segments and provided points don't match up");
 
-      // TODO: Consider optimizing
-      var pointsWithoutFirst = points.Skip(1);
-      var pointsWithoutLast = points.SkipLast(1);
-      var pointPairs = pointsWithoutFirst.Zip(pointsWithoutLast, (p1, p2) => (p1, p2)).ToList();
-      for (var i = 0; i < _segments.Length; i++)
+      PlaceBetweenPoints(_lineStart, points[1], points[0]);
+      for (int i = 0; i < _segments.Length; i++)
       {
-        var (p1, p2) = pointPairs[i];
-        PlaceBetweenPoints(_segments[i], p1, p2);
+        PlaceBetweenPoints(_segments[i], points[i+1], points[i+2]);
       }
+      PlaceBetweenPoints(_lineEnd, points[points.Count-2], points[points.Count-1]);
     }
 
     public bool Contains(GameObject gameObject) => _segments.Contains(gameObject);
@@ -46,6 +54,8 @@ namespace Assets.Scripts.Edges
       {
         UnityEngine.Object.Destroy(gameObject);
       }
+      UnityEngine.Object.Destroy(_lineStart);
+      UnityEngine.Object.Destroy(_lineEnd);
     }
 
     private void PlaceBetweenPoints(GameObject segment, Vector3 point1, Vector3 point2)

@@ -13,6 +13,9 @@ namespace Assets.Scripts.Model
     [JsonProperty] public PrimitiveType? Shape { get; private set; }
     [JsonProperty] public string TexturePath { get; private set; }
     [JsonProperty] public float? Scale { get; private set; }
+    [JsonProperty] public LineEnding? LineEnding { get; private set; }
+
+    public GameObject LineEndingPrefab { get; set; }
 
 
     [OnDeserialized]

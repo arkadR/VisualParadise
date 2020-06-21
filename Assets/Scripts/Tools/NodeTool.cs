@@ -41,7 +41,7 @@ namespace Assets.Scripts.Tools
     public string ToolName => "Node";
     
     public bool CanInteractWith(RaycastHit hitInfo) => 
-      _graphService.IsNode(hitInfo.collider.gameObject) && hitInfo.distance <= c_maxInteractDistance;
+      _graphService.IsNode(hitInfo.collider?.gameObject) && hitInfo.distance <= c_maxInteractDistance;
 
     public void UpdateRaycast(bool isHit, RaycastHit hitInfo) => 
       _lastCanInteractWithResult = isHit && CanInteractWith(hitInfo);

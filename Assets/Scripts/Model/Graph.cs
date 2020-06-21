@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Assets.Scripts.Model
 {
@@ -32,6 +33,15 @@ namespace Assets.Scripts.Model
       {
         if (node.ClassId != null)
           node.nodeClass = Classes.Single(c => c.Id == node.ClassId);
+      }
+
+      foreach (var @class in Classes)
+      {
+        if (@class.LineEnding != null)
+        {
+          var prefabPath = $"Prefabs/LineEndings/{@class.LineEnding}";
+          @class.LineEndingPrefab = Resources.Load<GameObject>(prefabPath);
+        }
       }
     }
 

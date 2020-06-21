@@ -41,8 +41,8 @@ namespace Assets.Scripts.Model
     {
       var edge = new Edge(id, label, node1.Id, node2.Id, null)
       {
-        nodeTo = node1, 
-        nodeFrom = node2
+        nodeFrom = node1, 
+        nodeTo = node2
       };
       return edge;
     }

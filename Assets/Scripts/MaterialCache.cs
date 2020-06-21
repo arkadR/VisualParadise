@@ -16,9 +16,9 @@ namespace Assets.Scripts
     public Lazy<Material> DefaultMaterial = new Lazy<Material>(
       () => new Material(Shader.Find("Standard")) { mainTexture = LoadDefaultTexture() });
     
-    public void Load(IEnumerable<GraphElementClass> nodeClasses)
+    public void Load(IEnumerable<GraphElementClass> classes)
     {
-      var texturePaths = nodeClasses
+      var texturePaths = classes
         .Select(c => c.TexturePath)
         .Where(tp => string.IsNullOrEmpty(tp) == false)
         .Distinct()
