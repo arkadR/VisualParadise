@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Common.Extensions;
 using Assets.Scripts.Model;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,9 +51,9 @@ namespace Assets.Scripts.Edges
       return this;
     }
 
-    public IEdgeBuilder WithLabel(Func<GameObject> labelFactory, string label, bool visibility)
+    public IEdgeBuilder WithLabel(Func<GameObject> labelFactoryMethod, string label, bool visibility)
     {
-      _label = labelFactory();
+      _label = labelFactoryMethod();
       _label.GetComponentInChildren<Text>().text = label;
       _label.GetComponentInChildren<Text>().enabled = visibility;
       return this;
@@ -67,32 +68,16 @@ namespace Assets.Scripts.Edges
     public IEdgeBuilder WithStartLineClass(GraphElementClass @class)
     {
       if (@class?.LineEndingPrefab != null)
-      {
-        _lineStart = _instantiateMethod(@class.LineEndingPrefab);
-        var material = _materialCache.GetByTexturePath(@class.TexturePath);
-        var renderers = _lineStart.GetComponentsInChildren<Renderer>()
-          .Union(_lineStart.GetComponents<Renderer>());
-        foreach (var renderer in renderers)
-        {
-          renderer.material = material;
-        }
-      }
+        _lineStart = CreateLineEnding(@class);
+
       return this;
     }
 
     public IEdgeBuilder WithEndLineClass(GraphElementClass @class)
     {
       if (@class?.LineEndingPrefab != null)
-      {
-        _lineEnd = _instantiateMethod(@class.LineEndingPrefab);
-        var material = _materialCache.GetByTexturePath(@class.TexturePath);
-        var renderers = _lineEnd.GetComponentsInChildren<Renderer>()
-          .Union(_lineEnd.GetComponents<Renderer>());
-        foreach (var renderer in renderers)
-        {
-          renderer.material = material;
-        }
-      }
+        _lineEnd = CreateLineEnding(@class); 
+      
       return this;
     }
 
@@ -105,20 +90,14 @@ namespace Assets.Scripts.Edges
 
       _intermediatePoints = _lineFactory.GetIntermediatePoints(_startingNode.Value, _endingNode.Value, _rotation);
 
-      var segments = new List<GameObject>();
       if (_lineStart == null)
-      {
-        _lineStart = CreateCylinder(_class?.Scale ?? 1f);
-        var material = _materialCache.GetByTexturePath(edge.EdgeClass?.TexturePath);
-        _lineStart.GetComponent<Renderer>().material = material;
-      }
+        _lineStart = CreateDefaultLineEnding(edge.EdgeClass?.TexturePath);
+
       if (_lineEnd == null)
-      {
-        _lineEnd = CreateCylinder(_class?.Scale ?? 1f);
-        var material = _materialCache.GetByTexturePath(edge.EdgeClass?.TexturePath);
-        _lineEnd.GetComponent<Renderer>().material = material;
-      }
-      for (int i = 1; i < _intermediatePoints.Count - 2; i++)
+        _lineEnd = CreateDefaultLineEnding(edge.EdgeClass?.TexturePath);
+
+      var segments = new List<GameObject>();
+      for (int i = 0; i < _intermediatePoints.Count - 1; i++)
       {
         var segment = CreateCylinder(_class?.Scale ?? 1f);
         var material = _materialCache.GetByTexturePath(edge.EdgeClass?.TexturePath);
@@ -140,6 +119,34 @@ namespace Assets.Scripts.Edges
         1,
         c_edgeThicknessMultiplier * thickness);
       return cylinder;
+    }
+
+    private GameObject CreateDefaultLineEnding(string texturePath)
+    {
+      var lineEnding = CreateCylinder(_class?.Scale ?? 1f);
+      var material = _materialCache.GetByTexturePath(texturePath);
+      lineEnding.GetComponent<Renderer>().material = material;
+      return lineEnding;
+    }
+
+    private GameObject CreateLineEnding(GraphElementClass @class)
+    {
+      var gameObject = _instantiateMethod(@class.LineEndingPrefab);
+      var material = _materialCache.GetByTexturePath(@class.TexturePath);
+      var renderers = gameObject.GetAllComponentsOfType<Renderer>();
+      foreach (var renderer in renderers)
+      {
+        renderer.material = material;
+      }
+
+      if (@class.Scale != null)
+      {
+        var (scaleX, scaleY, scaleZ) = gameObject.transform.localScale;
+        gameObject.transform.localScale
+          = new Vector3(scaleX * @class.Scale.Value, scaleY, scaleZ * @class.Scale.Value);
+      }
+
+      return gameObject;
     }
   }
 }

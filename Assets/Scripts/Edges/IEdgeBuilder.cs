@@ -9,7 +9,7 @@ namespace Assets.Scripts.Edges
     IEdgeBuilder BetweenNodes(Node node1, Node node2);
     IEdgeBuilder OnOneNode(Node node);
     IEdgeBuilder Curved(float rotation);
-    IEdgeBuilder WithLabel(Func<GameObject> labelFactory, string label, bool visibility);
+    IEdgeBuilder WithLabel(Func<GameObject> labelFactoryMethod, string label, bool visibility);
     IEdgeBuilder WithClass(GraphElementClass @class);
     IEdgeBuilder WithStartLineClass(GraphElementClass @class);
     IEdgeBuilder WithEndLineClass(GraphElementClass @class);

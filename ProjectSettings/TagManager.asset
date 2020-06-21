@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PHYSICAL_NODE_TAG
   - PHYSICAL_EDGE_TAG
+  - CUSTOM_LINE_ENDING
   layers:
   - Default
   - TransparentFX

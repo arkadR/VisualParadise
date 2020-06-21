@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Common;
 using Assets.Scripts.Common.Extensions;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace Assets.Scripts.Edges
     readonly GameObject[] _segments;
     readonly GameObject _lineStart;
     readonly GameObject _lineEnd;
+
     const float c_segmentAdditionalLength = 0.01f;
 
     public SegmentGroup(GameObject lineStart, IEnumerable<GameObject> segments, GameObject lineEnd)
@@ -35,13 +37,13 @@ namespace Assets.Scripts.Edges
 
     public void PlaceAlongPoints(IList<Vector3> points)
     {
-      if (points.Count - 3 != _segments.Length)
+      if (points.Count - 1 != _segments.Length)
         throw new ArgumentException("Number of _segments and provided points don't match up");
 
       PlaceBetweenPoints(_lineStart, points[1], points[0]);
       for (int i = 0; i < _segments.Length; i++)
       {
-        PlaceBetweenPoints(_segments[i], points[i+1], points[i+2]);
+        PlaceBetweenPoints(_segments[i], points[i], points[i+1]);
       }
       PlaceBetweenPoints(_lineEnd, points[points.Count-2], points[points.Count-1]);
     }
@@ -60,12 +62,22 @@ namespace Assets.Scripts.Edges
 
     private void PlaceBetweenPoints(GameObject segment, Vector3 point1, Vector3 point2)
     {
+      var isCustomEnding = segment.tag == Constants.CustomLineEndingTag;
       var direction = point2 - point1;
       var distance = direction.magnitude;
       var (scaleX, scaleY, scaleZ) = segment.transform.localScale;
+      var desiredScaleY = distance / 2 + c_segmentAdditionalLength;
 
-      segment.transform.localScale = new Vector3(scaleX, distance / 2 + c_segmentAdditionalLength, scaleZ);
-      segment.transform.position = (point1 + point2) / 2;
+      if (isCustomEnding)
+      {
+        segment.transform.position = point2;
+      }
+      else
+      {
+        segment.transform.localScale = new Vector3(scaleX, desiredScaleY, scaleZ);
+        segment.transform.position = (point1 + point2) / 2;
+      }
+
       segment.transform.rotation = Quaternion.FromToRotation(Vector3.up, direction);
     }
   }

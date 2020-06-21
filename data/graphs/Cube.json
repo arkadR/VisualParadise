@@ -413,7 +413,8 @@
     {
       "Id": 4,
       "LineEnding": "Arrow",
-      "texturePath": ".\\data\\textures\\green.jpg"
+      "texturePath": ".\\data\\textures\\green.jpg",
+      "scale": 2
     }
   ]
 }

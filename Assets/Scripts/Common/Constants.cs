@@ -4,6 +4,7 @@
   {
     public static readonly string PhysicalNodeTag = "PHYSICAL_NODE_TAG";
     public static readonly string PhysicalEdgeTag = "PHYSICAL_EDGE_TAG";
+    public static readonly string CustomLineEndingTag = "CUSTOM_LINE_ENDING";
     public static readonly string GraphFilePathKey = "graphFilePath";
     public static readonly string GraphFolder = "data/graphs/";
     public static readonly string PlayerMovementModeKey = "PlayerMovementMode";

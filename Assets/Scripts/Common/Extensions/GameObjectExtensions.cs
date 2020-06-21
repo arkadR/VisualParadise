@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts.Common.Extensions
 {
@@ -41,6 +43,14 @@ namespace Assets.Scripts.Common.Extensions
     private static Material LookupMaterial(UnityEngine.GameObject gameObject)
     {
       return gameObject.GetComponent<Renderer>().material;
+    }
+
+    public static T[] GetAllComponentsOfType<T>(this GameObject gameObject)
+    {
+      return gameObject
+        .GetComponentsInChildren<T>()
+        .Union(gameObject.GetComponents<T>())
+        .ToArray();
     }
   }
 }
