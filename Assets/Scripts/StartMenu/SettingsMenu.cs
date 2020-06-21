@@ -8,22 +8,28 @@ namespace Assets.Scripts.StartMenu
   {
     const string c_playerMovement = "Player movement";
 
-    public Text playerMovementText;
+    SettingsManager _settingsManager;
 
-    public SettingsManager settingsManager;
+    public Slider mouseSensitivitySlider;
+
+    public Text playerMovementText;
 
     void Start()
     {
-      settingsManager = FindObjectOfType<SettingsManager>();
+      _settingsManager = new SettingsManager();
       playerMovementText.text =
-        $"{c_playerMovement}: {EnumUtils<PlayerMovementMode>.GetName(settingsManager.PlayerMovementMode)}";
+        $"{c_playerMovement}: {EnumUtils<PlayerMovementMode>.GetName(_settingsManager.PlayerMovementMode)}";
+      mouseSensitivitySlider.value = _settingsManager.MouseSensitivity;
+      mouseSensitivitySlider.onValueChanged.AddListener(MouseSensitivity_OnSlide);
     }
 
     public void PlayerMovement_OnClick()
     {
-      var nextPlayerMovementMode = settingsManager.ChangeToNextPlayerMovementMode();
+      var nextPlayerMovementMode = _settingsManager.ChangeToNextPlayerMovementMode();
       playerMovementText.text =
         $"{c_playerMovement}: {EnumUtils<PlayerMovementMode>.GetName(nextPlayerMovementMode)}";
     }
+
+    void MouseSensitivity_OnSlide(float sliderValue) => _settingsManager.MouseSensitivity = sliderValue;
   }
 }

@@ -4,9 +4,11 @@ namespace Assets.Scripts
 {
   public class PlayerMovement : MonoBehaviour
   {
-    public SettingsManager _settingsManager;
+    SettingsManager _settingsManager;
     public CharacterController controller;
     public float speed = 12f;
+
+    public void Start() => _settingsManager = new SettingsManager();
 
     public void Update()
     {

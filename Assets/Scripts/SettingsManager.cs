@@ -4,20 +4,23 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-  public class SettingsManager : MonoBehaviour
+  public class SettingsManager
   {
-    int _playerMovementModeValue;
+    public float MouseSensitivity
+    {
+      get => PlayerPrefs.GetFloat(Constants.MouseSensitivityKey, 100f);
+      set => PlayerPrefs.SetFloat(Constants.MouseSensitivityKey, value);
+    }
 
     public PlayerMovementMode PlayerMovementMode =>
-      EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(_playerMovementModeValue);
+      EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(PlayerPrefs.GetInt(Constants.PlayerMovementModeKey));
 
-    public void Start() => _playerMovementModeValue = PlayerPrefs.GetInt(Constants.PlayerMovementModeKey);
 
     public PlayerMovementMode ChangeToNextPlayerMovementMode()
     {
-      var next = EnumUtils<PlayerMovementMode>.GetNextValue(_playerMovementModeValue);
-      _playerMovementModeValue = next;
-      PlayerPrefs.SetInt(Constants.PlayerMovementModeKey, _playerMovementModeValue);
+      var playerMovementKey = PlayerPrefs.GetInt(Constants.PlayerMovementModeKey);
+      var next = EnumUtils<PlayerMovementMode>.GetNextValue(playerMovementKey);
+      PlayerPrefs.SetInt(Constants.PlayerMovementModeKey, next);
       return PlayerMovementMode;
     }
   }
