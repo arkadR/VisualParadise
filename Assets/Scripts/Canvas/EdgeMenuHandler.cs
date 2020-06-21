@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Model;
+﻿using Assets.Scripts.Model;
 using UnityEngine;
 
 namespace Assets.Scripts.Canvas
@@ -14,7 +9,7 @@ namespace Assets.Scripts.Canvas
 
     private GraphService _graphService;
 
-    public UnityEngine.GameObject edgeMenu;
+    public GameObject edgeMenu;
 
     public void Start()
     {
@@ -22,9 +17,8 @@ namespace Assets.Scripts.Canvas
       edgeMenu.SetActive(false);
     }
 
-    public void OpenContextMenu(UnityEngine.GameObject gameObjectHit)
+    public void OpenContextMenu(Edge edge)
     {
-      var edge = _graphService.FindEdgeByGameObject(gameObjectHit);
       _edge = edge;
       edgeMenu.SetActive(true);
       GameService.Instance.PauseGameWithoutResume();

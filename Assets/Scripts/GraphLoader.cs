@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using Assets.Scripts.Common;
 using Assets.Scripts.Model;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -15,9 +17,9 @@ namespace Assets.Scripts
       var graphFilePath = PlayerPrefs.GetString(Constants.GraphFilePathKey);
       var graph = LoadGraph(graphFilePath) ?? new Graph();
 
-      FindObjectOfType<MaterialCache>().Load(graph.classes);
+      FindObjectOfType<MaterialCache>().Load(graph.NodeClasses, graph.EdgeClasses);
 
-      Debug.Log($"Nodes count: {graph.nodes.Count}\nEdges count: {graph.edges.Count}");
+      Debug.Log($"Nodes count: {graph.Nodes.Count}\nEdges count: {graph.Edges.Count}");
       graphService.SetGraph(graph);
     }
 
@@ -25,7 +27,11 @@ namespace Assets.Scripts
     {
       //TODO: Try/catch file for bad formats.
       var graphJson = File.ReadAllText(filePath);
-      var graph = JsonConvert.DeserializeObject<Graph>(graphJson);
+      var graph = JsonConvert.DeserializeObject<Graph>(graphJson, new JsonSerializerSettings
+      {
+        ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
+        Converters = new List<JsonConverter> { new StringEnumConverter() }
+      });
       return graph;
     }
   }

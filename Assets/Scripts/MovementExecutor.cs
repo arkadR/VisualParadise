@@ -43,7 +43,7 @@ namespace Assets.Scripts
 
     void Accelerate()
     {
-      foreach (var n in graphService.Graph.nodes)
+      foreach (var n in graphService.Graph.Nodes)
       {
         var newVelocity = n.Velocity + (n.Acceleration * Time.deltaTime);
         var newAngularVelocity = n.AngularVelocity + (n.AngularAcceleration * Time.deltaTime);
@@ -55,7 +55,7 @@ namespace Assets.Scripts
 
     void Move()
     {
-      foreach (var n in graphService.Graph.nodes)
+      foreach (var n in graphService.Graph.Nodes)
       {
         n.Position += n.Velocity * Time.deltaTime * _velocityModifier;
         n.Rotation += n.AngularVelocity * Time.deltaTime * _velocityModifier;

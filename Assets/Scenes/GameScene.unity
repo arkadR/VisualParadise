@@ -13000,7 +13000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e0ae1a201224aefb268e1bd6454230b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  edgePrefab: {fileID: 6955056186729139999, guid: edcfaedcc49f0fe41a1bdddc4c863ce7,
+  labelPrefab: {fileID: 6533530558405086692, guid: 8944b41376a9e3641a08ac2d2763f81a,
     type: 3}
   lineFactory: {fileID: 1919699936}
 --- !u!114 &1919699933

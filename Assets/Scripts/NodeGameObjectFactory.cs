@@ -28,13 +28,13 @@ namespace Assets.Scripts
       if (node.nodeClass == null)
         return CreateDefaultNode(node.Position, Quaternion.Euler(node.Rotation));
 
-      var material = _materialCache.GetByClassId(node.nodeClass.id);
+      var material = _materialCache.GetByTexturePath(node.nodeClass.TexturePath);
 
-      var gameObject = node.nodeClass.shape == null
+      var gameObject = node.nodeClass.Shape == null
         ? GameObject.CreatePrimitive(c_defaultNodeType)
-        : GameObject.CreatePrimitive(node.nodeClass.shape.Value);
+        : GameObject.CreatePrimitive(node.nodeClass.Shape.Value);
 
-      gameObject.transform.localScale = Vector3.one * (node.nodeClass.scale ?? 1);
+      gameObject.transform.localScale = Vector3.one * (node.nodeClass.Scale ?? 1);
       gameObject.transform.position = node.Position;
       gameObject.transform.rotation = Quaternion.Euler(node.Rotation);
       gameObject.tag = Constants.PhysicalNodeTag;
