@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Edges
 {
-  public class BezierCurveFactory : MonoBehaviour
+  public class BezierCurveFactory 
   {
     public List<Vector3> BezierCurve3(Vector3 startingPoint, Vector3 middlePoint, Vector3 endingPoint, int linePoints)
     {

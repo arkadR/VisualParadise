@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Common;
 using Assets.Scripts.Common.Extensions;
 using UnityEngine;
 
@@ -9,14 +10,26 @@ namespace Assets.Scripts.Edges
   public class SegmentGroup
   {
     readonly GameObject[] _segments;
+    readonly GameObject _lineStart;
+    readonly GameObject _lineEnd;
+
     const float c_segmentAdditionalLength = 0.01f;
 
-    public SegmentGroup(GameObject[] segments)
+    public SegmentGroup(GameObject lineStart, IEnumerable<GameObject> segments, GameObject lineEnd)
     {
-      if (segments == null || segments.Length < 1)
+      var segmentArr = segments as GameObject[] ?? segments.ToArray();
+      if (segments == null || segmentArr.Any() == false)
         throw new ArgumentException("At least one segment has To be provided");
 
-      _segments = segments;
+      if (lineStart == null)
+        throw new ArgumentException(nameof(lineStart));
+
+      if (lineEnd == null)
+        throw new ArgumentException(nameof(lineEnd));
+
+      _segments = segmentArr.ToArray();
+      _lineStart = lineStart;
+      _lineEnd = lineEnd;
     }
 
     public GameObject MiddleSegment => _segments[_segments.Length / 2];
@@ -27,15 +40,12 @@ namespace Assets.Scripts.Edges
       if (points.Count - 1 != _segments.Length)
         throw new ArgumentException("Number of _segments and provided points don't match up");
 
-      // TODO: Consider optimizing
-      var pointsWithoutFirst = points.Skip(1);
-      var pointsWithoutLast = points.SkipLast(1);
-      var pointPairs = pointsWithoutFirst.Zip(pointsWithoutLast, (p1, p2) => (p1, p2)).ToList();
-      for (var i = 0; i < _segments.Length; i++)
+      PlaceBetweenPoints(_lineStart, points[1], points[0]);
+      for (int i = 0; i < _segments.Length; i++)
       {
-        var (p1, p2) = pointPairs[i];
-        PlaceBetweenPoints(_segments[i], p1, p2);
+        PlaceBetweenPoints(_segments[i], points[i], points[i+1]);
       }
+      PlaceBetweenPoints(_lineEnd, points[points.Count-2], points[points.Count-1]);
     }
 
     public bool Contains(GameObject gameObject) => _segments.Contains(gameObject);
@@ -46,16 +56,28 @@ namespace Assets.Scripts.Edges
       {
         UnityEngine.Object.Destroy(gameObject);
       }
+      UnityEngine.Object.Destroy(_lineStart);
+      UnityEngine.Object.Destroy(_lineEnd);
     }
 
     private void PlaceBetweenPoints(GameObject segment, Vector3 point1, Vector3 point2)
     {
+      var isCustomEnding = segment.tag == Constants.CustomLineEndingTag;
       var direction = point2 - point1;
       var distance = direction.magnitude;
       var (scaleX, scaleY, scaleZ) = segment.transform.localScale;
+      var desiredScaleY = distance / 2 + c_segmentAdditionalLength;
 
-      segment.transform.localScale = new Vector3(scaleX, distance / 2 + c_segmentAdditionalLength, scaleZ);
-      segment.transform.position = (point1 + point2) / 2;
+      if (isCustomEnding)
+      {
+        segment.transform.position = point2;
+      }
+      else
+      {
+        segment.transform.localScale = new Vector3(scaleX, desiredScaleY, scaleZ);
+        segment.transform.position = (point1 + point2) / 2;
+      }
+
       segment.transform.rotation = Quaternion.FromToRotation(Vector3.up, direction);
     }
   }

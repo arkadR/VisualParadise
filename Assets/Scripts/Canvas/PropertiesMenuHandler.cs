@@ -9,7 +9,7 @@ namespace Assets.Scripts.Canvas
 {
   public class PropertiesMenuHandler : MonoBehaviour
   {
-    List<NodeClass> _nodeClasses;
+    List<GraphElementClass> _nodeClasses;
     GraphService _graphService;
 
     const string c_noneClassLabel = "None";
@@ -62,8 +62,8 @@ namespace Assets.Scripts.Canvas
         _graphService = FindObjectOfType<GraphService>();
         if (_graphService != null)
         {
-          var classes = _graphService.Graph.NodeClasses;
-          _nodeClasses = new List<NodeClass> { null }.Union(classes).ToList();
+          var classes = _graphService.Graph.Classes;
+          _nodeClasses = new List<GraphElementClass> { null }.Union(classes).ToList();
           nodeClassDropdown.ClearOptions();
           nodeClassDropdown.AddOptions(_nodeClasses.Select(n => n?.Name ?? c_noneClassLabel).ToList());
         }

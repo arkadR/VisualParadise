@@ -14,11 +14,15 @@ namespace Assets.Scripts.Model
     [JsonProperty] public string Label { get; private set; }
     [JsonProperty] public int From { get; private set; }
     [JsonProperty] public int To { get; private set; }
-    [JsonProperty] public int? ClassId { get; private set; }
+    [JsonProperty] public int? EdgeClassId { get; private set; }
+    [JsonProperty] public int? StartClassId { get; private set; }
+    [JsonProperty] public int? EndClassId { get; private set; }
 
     public int weight;
 
-    [NonSerialized] public EdgeClass Class;
+    [NonSerialized] public GraphElementClass EdgeClass;
+    [NonSerialized] public GraphElementClass StartClass;
+    [NonSerialized] public GraphElementClass EndClass;
     [NonSerialized] public GameObject labelGameObject;
     [NonSerialized] public Node nodeFrom;
     [NonSerialized] public Node nodeTo;
@@ -30,15 +34,15 @@ namespace Assets.Scripts.Model
       From = from;
       To = to;
       Label = string.IsNullOrEmpty(label) ? DefaultLabel : label;
-      ClassId = classId;
+      EdgeClassId = classId;
     }
 
     public static Edge BetweenNodes(int id, string label, Node node1, Node node2)
     {
       var edge = new Edge(id, label, node1.Id, node2.Id, null)
       {
-        nodeTo = node1, 
-        nodeFrom = node2
+        nodeFrom = node1, 
+        nodeTo = node2
       };
       return edge;
     }

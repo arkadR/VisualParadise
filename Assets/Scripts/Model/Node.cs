@@ -18,7 +18,7 @@ namespace Assets.Scripts.Model
     [JsonProperty] public APoint APoint { get; private set; }
 
     [NonSerialized] public GameObject gameObject;
-    [NonSerialized] public NodeClass nodeClass;
+    [NonSerialized] public GraphElementClass nodeClass;
 
     [OnDeserialized]
     internal void OnDeserialized(StreamingContext context)
