@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Settings;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -6,7 +7,6 @@ namespace Assets.Scripts
   {
     SettingsManager _settingsManager;
     public CharacterController controller;
-    public float speed = 12f;
 
     public void Start() => _settingsManager = new SettingsManager();
 
@@ -14,6 +14,7 @@ namespace Assets.Scripts
     {
       if (GameService.Instance.IsPaused)
         return;
+
 
       switch (_settingsManager.PlayerMovementMode)
       {
@@ -37,7 +38,7 @@ namespace Assets.Scripts
       var z = Input.GetAxis("Vertical");
 
       var offset = (transform.right * x) + (transform.up * y) + (transform.forward * z);
-      controller.Move(offset * speed * Time.deltaTime);
+      controller.Move(offset * _settingsManager.MovementSpeed * Time.deltaTime);
     }
 
     void ApplyMovementFollowCamera()
@@ -47,7 +48,7 @@ namespace Assets.Scripts
       var z = Input.GetAxis("Vertical");
 
       var offset = (transform.right * x) + (transform.up * y) + (Camera.main.transform.forward * z);
-      controller.Move(offset * speed * Time.deltaTime);
+      controller.Move(offset * _settingsManager.MovementSpeed * Time.deltaTime);
     }
   }
 }

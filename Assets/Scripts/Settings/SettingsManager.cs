@@ -2,14 +2,20 @@
 using Assets.Scripts.Common.Utils;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Settings
 {
   public class SettingsManager
   {
     public float MouseSensitivity
     {
-      get => PlayerPrefs.GetFloat(Constants.MouseSensitivityKey, 100f);
+      get => PlayerPrefs.GetFloat(Constants.MouseSensitivityKey, Constants.c_defaultMouseSensitivity);
       set => PlayerPrefs.SetFloat(Constants.MouseSensitivityKey, value);
+    }
+
+    public float MovementSpeed
+    {
+      get => PlayerPrefs.GetFloat(Constants.MovementSpeedKey, Constants.c_defaultMovementSpeed);
+      set => PlayerPrefs.SetFloat(Constants.MovementSpeedKey, value);
     }
 
     public PlayerMovementMode PlayerMovementMode =>
