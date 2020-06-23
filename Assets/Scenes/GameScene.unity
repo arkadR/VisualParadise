@@ -14700,7 +14700,6 @@ GameObject:
   - component: {fileID: 1919699930}
   - component: {fileID: 1919699931}
   - component: {fileID: 1919699933}
-  - component: {fileID: 1919699932}
   - component: {fileID: 1919699934}
   m_Layer: 8
   m_Name: Graph
@@ -14774,21 +14773,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   labelPrefab: {fileID: 6533530558405086692, guid: 8944b41376a9e3641a08ac2d2763f81a,
     type: 3}
-  edgeGameObjectFactory: {fileID: 1919699932}
   nodeGameObjectFactory: {fileID: 1919699933}
---- !u!114 &1919699932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1919699926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e0ae1a201224aefb268e1bd6454230b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _materialCache: {fileID: 0}
 --- !u!114 &1919699933
 MonoBehaviour:
   m_ObjectHideFlags: 0

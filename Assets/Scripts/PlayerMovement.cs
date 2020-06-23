@@ -38,7 +38,7 @@ namespace Assets.Scripts
       var z = Input.GetAxis("Vertical");
 
       var offset = (transform.right * x) + (transform.up * y) + (transform.forward * z);
-      controller.Move(offset * _settingsManager.MovementSpeed * Time.deltaTime);
+      controller.Move(offset * (_settingsManager.MovementSpeed * Time.deltaTime));
     }
 
     void ApplyMovementFollowCamera()
@@ -48,7 +48,7 @@ namespace Assets.Scripts
       var z = Input.GetAxis("Vertical");
 
       var offset = (transform.right * x) + (transform.up * y) + (Camera.main.transform.forward * z);
-      controller.Move(offset * _settingsManager.MovementSpeed * Time.deltaTime);
+      controller.Move(offset * (_settingsManager.MovementSpeed * Time.deltaTime));
     }
   }
 }
