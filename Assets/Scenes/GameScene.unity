@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -632,7 +632,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter om_theta
+  m_Text: Enter omega theta
 --- !u!222 &92007476
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1861,7 +1861,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'om psi:'
+  m_Text: 'omega psi:'
 --- !u!222 &258601066
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2165,7 +2165,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter alpha_phi
+  m_Text: Enter alpha phi
 --- !u!222 &290156249
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2993,7 +2993,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter om_phi
+  m_Text: Enter omega phi
 --- !u!222 &410905985
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5236,7 +5236,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter alpha_psi
+  m_Text: Enter alpha psi
 --- !u!222 &645924892
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6700,7 +6700,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter om_psi
+  m_Text: Enter omega psi
 --- !u!222 &787441094
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9840,7 +9840,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'om theta:'
+  m_Text: 'omega theta:'
 --- !u!222 &1362828965
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13309,7 +13309,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'om phi:'
+  m_Text: 'omega phi:'
 --- !u!222 &1927203391
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15021,7 +15021,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter alpha_theta
+  m_Text: Enter alpha theta
 --- !u!222 &2083562753
 CanvasRenderer:
   m_ObjectHideFlags: 0
