@@ -428,13 +428,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e73acb0ddf60594ba49891cbc40932b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  propertiesMenu: {fileID: 846006837}
+  pointContainer: {fileID: 1299598800}
+  vPointContainer: {fileID: 432882625}
   aPointContainer: {fileID: 1131774830}
   labelInput: {fileID: 658091601}
   nodeClassDropdown: {fileID: 768086537}
-  pointContainer: {fileID: 1299598800}
-  propertiesMenu: {fileID: 846006837}
   saveButton: {fileID: 640607219}
-  vPointContainer: {fileID: 432882625}
 --- !u!114 &43330760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14702,8 +14702,6 @@ GameObject:
   - component: {fileID: 1919699933}
   - component: {fileID: 1919699932}
   - component: {fileID: 1919699934}
-  - component: {fileID: 1919699936}
-  - component: {fileID: 1919699935}
   m_Layer: 8
   m_Name: Graph
   m_TagString: Untagged
@@ -14774,8 +14772,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44105ae75500197469093db6fb6c9b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  labelPrefab: {fileID: 6533530558405086692, guid: 8944b41376a9e3641a08ac2d2763f81a,
+    type: 3}
   edgeGameObjectFactory: {fileID: 1919699932}
-  lineFactory: {fileID: 1919699936}
   nodeGameObjectFactory: {fileID: 1919699933}
 --- !u!114 &1919699932
 MonoBehaviour:
@@ -14789,9 +14788,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e0ae1a201224aefb268e1bd6454230b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelPrefab: {fileID: 6533530558405086692, guid: 8944b41376a9e3641a08ac2d2763f81a,
-    type: 3}
-  lineFactory: {fileID: 1919699936}
   _materialCache: {fileID: 0}
 --- !u!114 &1919699933
 MonoBehaviour:
@@ -14823,33 +14819,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed78965b6f96d0d459e55266c41cc501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1919699935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1919699926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 662c09e2baa84e45bf7cbf2265566cb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1919699936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1919699926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3bc0b5f47694599b7c52e94f89281bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bezierCurveFactory: {fileID: 1919699935}
-  debug: 0
-  debugSphereFactory: {fileID: 2051443774}
 --- !u!1 &1926056950
 GameObject:
   m_ObjectHideFlags: 0

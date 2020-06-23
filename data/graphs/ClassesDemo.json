@@ -6,7 +6,9 @@
       "From": 0,
       "To": 4,
       "weight": 0,
-      "ClassId": 0
+      "EdgeClassId": 0,
+      "StartClassId": 4,
+      "EndClassId": 4
     },
     {
       "Id": 1,
@@ -14,7 +16,7 @@
       "From": 1,
       "To": 0,
       "weight": 0,
-      "ClassId": 0
+      "EdgeClassId": 0
     },
     {
       "Id": 2,
@@ -22,7 +24,7 @@
       "From": 2,
       "To": 1,
       "weight": 0,
-      "ClassId": 0
+      "EdgeClassId": 0
     },
     {
       "Id": 3,
@@ -30,7 +32,7 @@
       "From": 3,
       "To": 2,
       "weight": 0,
-      "ClassId": 0
+      "EdgeClassId": 0
     },
     {
       "Id": 4,
@@ -38,7 +40,7 @@
       "From": 4,
       "To": 3,
       "weight": 0,
-      "ClassId": 0
+      "EdgeClassId": 0
     },
     {
       "Id": 5,
@@ -46,7 +48,7 @@
       "From": 6,
       "To": 5,
       "weight": 0,
-      "ClassId": 0
+      "EdgeClassId": 0
     },
     {
       "Id": 6,
@@ -54,7 +56,7 @@
       "From": 7,
       "To": 6,
       "weight": 0,
-      "ClassId": 0
+      "EdgeClassId": 0
     },
     {
       "Id": 7,
@@ -62,7 +64,7 @@
       "From": 8,
       "To": 7,
       "weight": 0,
-      "ClassId": 0
+      "EdgeClassId": 0
     },
     {
       "Id": 8,
@@ -70,7 +72,7 @@
       "From": 9,
       "To": 5,
       "weight": 0,
-      "ClassId": 0
+      "EdgeClassId": 0
     },
     {
       "Id": 9,
@@ -78,7 +80,7 @@
       "From": 8,
       "To": 9,
       "weight": 0,
-      "ClassId": 0
+      "EdgeClassId": 0
     },
     {
       "Id": 10,
@@ -86,7 +88,7 @@
       "From": 3,
       "To": 5,
       "weight": 0,
-      "ClassId": 0
+      "EdgeClassId": 0
     },
     {
       "Id": 11,
@@ -94,7 +96,7 @@
       "From": 5,
       "To": 4,
       "weight": 0,
-      "ClassId": 0
+      "EdgeClassId": 0
     },
     {
       "Id": 12,
@@ -102,7 +104,7 @@
       "From": 4,
       "To": 6,
       "weight": 0,
-      "ClassId": 0
+      "EdgeClassId": 0
     },
     {
       "Id": 13,
@@ -110,7 +112,7 @@
       "From": 0,
       "To": 6,
       "weight": 0,
-      "ClassId": 0
+      "EdgeClassId": 0
     },
     {
       "Id": 14,
@@ -118,7 +120,7 @@
       "From": 1,
       "To": 7,
       "weight": 0,
-      "ClassId": 0
+      "EdgeClassId": 0
     },
     {
       "Id": 15,
@@ -1703,7 +1705,7 @@
       }
     }
   ],
-  "NodeClasses": [
+  "Classes": [
     {
       "Id": 0,
       "name": "Yellow",
@@ -1728,14 +1730,10 @@
       "name": "github",
       "texturePath": ".\\data\\textures\\github.png",
       "shape": "Cylinder"
-    }
-  ],
-  "edgeClasses": [
+    },
     {
-      "Id": 0,
-      "name": "Green",
-      "texturePath": ".\\data\\textures\\green.jpg",
-      "Thickness": 3.0
+      "Id": 4,
+      "LineEnding": "Arrow"
     }
   ]
 }
