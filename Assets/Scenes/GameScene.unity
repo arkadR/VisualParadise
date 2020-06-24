@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -632,7 +632,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter om_theta
+  m_Text: Enter omega theta
 --- !u!222 &92007476
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1861,7 +1861,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'om psi:'
+  m_Text: 'omega psi:'
 --- !u!222 &258601066
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2165,7 +2165,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter alpha_phi
+  m_Text: Enter alpha phi
 --- !u!222 &290156249
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2993,7 +2993,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter om_phi
+  m_Text: Enter omega phi
 --- !u!222 &410905985
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3882,7 +3882,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 75c6dd3077c268f4b912660591e410a8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 75c6dd3077c268f4b912660591e410a8,
         type: 3}
@@ -4021,7 +4021,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 1bc2a4f315c21bd48bf858793366fb88,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 1bc2a4f315c21bd48bf858793366fb88,
         type: 3}
@@ -4061,22 +4061,22 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 1bc2a4f315c21bd48bf858793366fb88,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4293551092024144603, guid: 1bc2a4f315c21bd48bf858793366fb88,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4542935624842794462, guid: 1bc2a4f315c21bd48bf858793366fb88,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8980229857594684672, guid: 1bc2a4f315c21bd48bf858793366fb88,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bc2a4f315c21bd48bf858793366fb88, type: 3}
@@ -4807,7 +4807,7 @@ GameObject:
   - component: {fileID: 629395037}
   - component: {fileID: 629395039}
   - component: {fileID: 629395038}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: ToolgunModeInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5236,7 +5236,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter alpha_psi
+  m_Text: Enter alpha psi
 --- !u!222 &645924892
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6700,7 +6700,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter om_psi
+  m_Text: Enter omega psi
 --- !u!222 &787441094
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7615,7 +7615,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1847
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -7638,6 +7638,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 1.672, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1832517880}
   - {fileID: 1317531162}
   - {fileID: 1989424588}
   m_Father: {fileID: 1515649761}
@@ -7738,7 +7739,7 @@ GameObject:
   - component: {fileID: 969613249}
   - component: {fileID: 969613251}
   - component: {fileID: 969613250}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: ToolgunModeLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9839,7 +9840,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'om theta:'
+  m_Text: 'omega theta:'
 --- !u!222 &1362828965
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10132,7 +10133,7 @@ GameObject:
   - component: {fileID: 1451145814}
   - component: {fileID: 1451145816}
   - component: {fileID: 1451145815}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Dot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10205,7 +10206,7 @@ GameObject:
   - component: {fileID: 1454458438}
   - component: {fileID: 1454458440}
   - component: {fileID: 1454458439}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: ToolgunModeName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10677,7 +10678,7 @@ GameObject:
   - component: {fileID: 1520164289}
   - component: {fileID: 1520164288}
   - component: {fileID: 1520164287}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: CrosshairCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10697,7 +10698,7 @@ RectTransform:
   m_Children:
   - {fileID: 1451145814}
   m_Father: {fileID: 1989424588}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -12651,6 +12652,141 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1800274979}
   m_CullTransparentMesh: 0
+--- !u!1 &1832517879
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1832517880}
+  - component: {fileID: 1832517885}
+  - component: {fileID: 1832517881}
+  m_Layer: 8
+  m_Name: Toolgun Camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1832517880
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832517879}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 963194228}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1832517881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832517879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeTrigger: {fileID: 1832517880}
+  volumeLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  stopNaNPropagation: 1
+  finalBlitToCameraTarget: 0
+  antialiasingMode: 0
+  temporalAntialiasing:
+    jitterSpread: 0.75
+    sharpness: 0.25
+    stationaryBlending: 0.95
+    motionBlending: 0.85
+  subpixelMorphologicalAntialiasing:
+    quality: 2
+  fastApproximateAntialiasing:
+    fastMode: 0
+    keepAlpha: 0
+  fog:
+    enabled: 1
+    excludeSkybox: 1
+  debugLayer:
+    lightMeter:
+      width: 512
+      height: 256
+      showCurves: 1
+    histogram:
+      width: 512
+      height: 256
+      channel: 3
+    waveform:
+      exposure: 0.12
+      height: 256
+    vectorscope:
+      size: 256
+      exposure: 0.12
+    overlaySettings:
+      linearDepth: 0
+      motionColorIntensity: 4
+      motionGridSize: 64
+      colorBlindnessType: 0
+      colorBlindnessStrength: 1
+  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
+  m_ShowToolkit: 0
+  m_ShowCustomSorter: 0
+  breakBeforeColorGrading: 0
+  m_BeforeTransparentBundles: []
+  m_BeforeStackBundles: []
+  m_AfterStackBundles: []
+--- !u!20 &1832517885
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832517879}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 3
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!1 &1847473474
 GameObject:
   m_ObjectHideFlags: 0
@@ -12985,7 +13121,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   labelPrefab: {fileID: 6533530558405086692, guid: 8944b41376a9e3641a08ac2d2763f81a,
     type: 3}
-  edgeGameObjectFactory: {fileID: 1919699932}
   nodeGameObjectFactory: {fileID: 1919699933}
 --- !u!114 &1919699932
 MonoBehaviour:
@@ -13174,7 +13309,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'om phi:'
+  m_Text: 'omega phi:'
 --- !u!222 &1927203391
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13666,7 +13801,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 232cd1a584cfaf742a4e92af354c9513,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 232cd1a584cfaf742a4e92af354c9513,
         type: 3}
@@ -13721,7 +13856,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 232cd1a584cfaf742a4e92af354c9513,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 232cd1a584cfaf742a4e92af354c9513, type: 3}
@@ -14306,7 +14441,7 @@ GameObject:
   - component: {fileID: 2040796853}
   - component: {fileID: 2040796852}
   - component: {fileID: 2040796851}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14886,7 +15021,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter alpha_theta
+  m_Text: Enter alpha theta
 --- !u!222 &2083562753
 CanvasRenderer:
   m_ObjectHideFlags: 0
