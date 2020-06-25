@@ -8,13 +8,13 @@ namespace Assets.Scripts.Settings
   {
     public float MouseSensitivity
     {
-      get => PlayerPrefs.GetFloat(Constants.MouseSensitivityKey, Constants.c_defaultMouseSensitivity);
+      get => PlayerPrefs.GetFloat(Constants.MouseSensitivityKey, Constants.DefaultMouseSensitivity);
       set => PlayerPrefs.SetFloat(Constants.MouseSensitivityKey, value);
     }
 
     public float MovementSpeed
     {
-      get => PlayerPrefs.GetFloat(Constants.MovementSpeedKey, Constants.c_defaultMovementSpeed);
+      get => PlayerPrefs.GetFloat(Constants.MovementSpeedKey, Constants.DefaultMovementSpeed);
       set => PlayerPrefs.SetFloat(Constants.MovementSpeedKey, value);
     }
 

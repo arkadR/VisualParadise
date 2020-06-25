@@ -2,8 +2,8 @@
 {
   public static class Constants
   {
-    public const float c_defaultMovementSpeed = 12f;
-    public const float c_defaultMouseSensitivity = 100f;
+    public const float DefaultMovementSpeed = 12f;
+    public const float DefaultMouseSensitivity = 100f;
     public static readonly string PhysicalNodeTag = "PHYSICAL_NODE_TAG";
     public static readonly string PhysicalEdgeTag = "PHYSICAL_EDGE_TAG";
     public static readonly string CustomLineEndingTag = "CUSTOM_LINE_ENDING";
