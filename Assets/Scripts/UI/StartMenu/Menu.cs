@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.StartMenu
+namespace Assets.Scripts.UI.StartMenu
 {
   public class Menu : MonoBehaviour
   {
@@ -10,10 +10,7 @@ namespace Assets.Scripts.StartMenu
     public GameObject settingsMenu;
 
     // Start is called before the first frame update
-    public void Start()
-    {
-      LoadMainMenu();
-    }
+    public void Start() => LoadMainMenu();
 
     public void LoadMainMenu()
     {

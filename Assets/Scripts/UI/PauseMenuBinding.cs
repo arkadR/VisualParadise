@@ -3,9 +3,9 @@ using Assets.Scripts.Common;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.UI
 {
-  public class PauseMenu : MonoBehaviour
+  public class PauseMenuBinding : MonoBehaviour
   {
     bool _isSaved;
     GraphService graphService;

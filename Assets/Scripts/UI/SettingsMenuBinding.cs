@@ -1,8 +1,9 @@
 ﻿using Assets.Scripts.Common.Utils;
+using Assets.Scripts.Settings;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Settings
+namespace Assets.Scripts.UI
 {
   public class SettingsMenuBinding : MonoBehaviour
   {
