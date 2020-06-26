@@ -44,6 +44,7 @@ namespace Assets.Scripts.Model
 
     public string DefaultLabel => Id.ToString();
 
+    [JsonIgnore]
     public Text Text => gameObject.GetComponentInChildren<Text>();
 
     public void UpdateTextPosition(Camera camera) => Text.SetPositionOnScreen(camera.WorldToScreenPoint(Position));
@@ -54,6 +55,7 @@ namespace Assets.Scripts.Model
       Text.text = label;
     }
 
+    [JsonIgnore]
     public Vector3 Position
     {
       get => Point.Position;
@@ -64,6 +66,7 @@ namespace Assets.Scripts.Model
       }
     }
 
+    [JsonIgnore]
     public Vector3 Rotation
     {
       get => Point.Rotation;
@@ -74,24 +77,28 @@ namespace Assets.Scripts.Model
       }
     }
 
+    [JsonIgnore]
     public Vector3 Velocity
     {
       get => VPoint.Velocity;
       set => VPoint.Velocity = value;
     }
 
+    [JsonIgnore]
     public Vector3 AngularVelocity
     {
       get => VPoint.AngularVelocity;
       set => VPoint.AngularVelocity = value;
     }
 
+    [JsonIgnore]
     public Vector3 Acceleration
     {
       get => APoint.Acceleration;
       set => APoint.Acceleration = value;
     }
 
+    [JsonIgnore]
     public Vector3 AngularAcceleration
     {
       get => APoint.AngularAcceleration;
