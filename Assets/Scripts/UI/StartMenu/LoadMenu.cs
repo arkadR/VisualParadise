@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.StartMenu
+namespace Assets.Scripts.UI.StartMenu
 {
   public class LoadMenu : MonoBehaviour
   {
-    public UnityEngine.GameObject buttonParent;
-    public UnityEngine.GameObject uiButtonPrefab;
+    public GameObject buttonParent;
+    public GameObject uiButtonPrefab;
 
     void Start()
     {
@@ -25,7 +25,7 @@ namespace Assets.Scripts.StartMenu
       }
     }
 
-    private void OnClick(string filePath)
+    void OnClick(string filePath)
     {
       PlayerPrefs.SetString(Constants.GraphFilePathKey, filePath);
       SceneManager.LoadScene(Constants.GameScene, new LoadSceneParameters());

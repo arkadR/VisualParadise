@@ -1,27 +1,22 @@
-﻿using Assets.Scripts.Common;
-using Assets.Scripts.Common.Utils;
+﻿using Assets.Scripts.Settings;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
   public class PlayerMovement : MonoBehaviour
   {
-    PlayerMovementMode _movementMode;
+    SettingsManager _settingsManager;
     public CharacterController controller;
-    public float speed = 12f;
 
-    public void Start()
-    {
-      var playerMovementModeValue = PlayerPrefs.GetInt(Constants.PlayerMovementModeKey);
-      _movementMode = EnumUtils<PlayerMovementMode>.DefinedOrDefaultCast(playerMovementModeValue);
-    }
+    public void Start() => _settingsManager = new SettingsManager();
 
     public void Update()
     {
       if (GameService.Instance.IsPaused)
         return;
 
-      switch (_movementMode)
+
+      switch (_settingsManager.PlayerMovementMode)
       {
         case PlayerMovementMode.AxisBased:
         {
@@ -41,9 +36,9 @@ namespace Assets.Scripts
       var x = Input.GetAxis("Horizontal");
       var y = Input.GetAxis("Up");
       var z = Input.GetAxis("Vertical");
-      
+
       var offset = (transform.right * x) + (transform.up * y) + (transform.forward * z);
-      controller.Move(offset * speed * Time.deltaTime);
+      controller.Move(offset * (_settingsManager.MovementSpeed * Time.deltaTime));
     }
 
     void ApplyMovementFollowCamera()
@@ -53,7 +48,7 @@ namespace Assets.Scripts
       var z = Input.GetAxis("Vertical");
 
       var offset = (transform.right * x) + (transform.up * y) + (Camera.main.transform.forward * z);
-      controller.Move(offset * speed * Time.deltaTime);
+      controller.Move(offset * (_settingsManager.MovementSpeed * Time.deltaTime));
     }
   }
 }

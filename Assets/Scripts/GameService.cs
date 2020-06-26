@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.UI;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -6,10 +7,10 @@ namespace Assets.Scripts
   {
     public static GameService Instance;
 
+    PauseMenuBinding _pauseMenu;
+
     public bool isResumableOnKeyPress = true;
 
-    PauseMenu _pauseMenu;
-    
     public bool IsPaused { get; private set; }
 
     public void Awake()
@@ -19,7 +20,7 @@ namespace Assets.Scripts
 
       Instance = this;
 
-      _pauseMenu = FindObjectOfType<PauseMenu>();
+      _pauseMenu = FindObjectOfType<PauseMenuBinding>();
 
       DontDestroyOnLoad(this);
 

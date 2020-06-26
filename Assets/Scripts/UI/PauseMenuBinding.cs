@@ -3,29 +3,39 @@ using Assets.Scripts.Common;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.UI
 {
-  public class PauseMenu : MonoBehaviour
+  public class PauseMenuBinding : MonoBehaviour
   {
+    bool _isSaved;
     GraphService graphService;
     public GameObject pauseMenu;
     public GameObject saveDialog;
-
-    bool _isSaved = false;
+    public GameObject settingsMenu;
 
     public void Start()
     {
       pauseMenu.SetActive(false);
       saveDialog.SetActive(false);
+      settingsMenu.SetActive(false);
       graphService = FindObjectOfType<GraphService>();
     }
 
-    public void SaveButton_OnClick()
+    public void ResumeButton_OnClick() => GameService.Instance.GlobalUnPauseGame();
+
+    public void SaveButton_OnClick() => Save();
+
+    public void SettingsButton_OnClick()
     {
-      Save();
+      pauseMenu.SetActive(false);
+      settingsMenu.SetActive(true);
     }
 
-    public void ResumeButton_OnClick() => GameService.Instance.GlobalUnPauseGame();
+    public void SettingsMenuBack_OnClick()
+    {
+      settingsMenu.SetActive(false);
+      pauseMenu.SetActive(true);
+    }
 
     public void QuitButton_OnClick()
     {
@@ -44,10 +54,7 @@ namespace Assets.Scripts
       Quit();
     }
 
-    public void SaveDialogNo_OnClick()
-    {
-      Quit();
-    }
+    public void SaveDialogNo_OnClick() => Quit();
 
     public void SaveDialogCancel_OnClick()
     {
@@ -67,10 +74,7 @@ namespace Assets.Scripts
       saveDialog.SetActive(false);
     }
 
-    void Quit()
-    {
-      SceneManager.LoadScene(Constants.MainMenuScene);
-    }
+    void Quit() => SceneManager.LoadScene(Constants.MainMenuScene);
 
     void Save()
     {
