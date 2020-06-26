@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Assets.Scripts.Common;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -80,7 +81,8 @@ namespace Assets.Scripts.UI
     {
       var filePath = PlayerPrefs.GetString(Constants.GraphFilePathKey);
       var graph = graphService.Graph;
-      var json = JsonUtility.ToJson(graph, true);
+      //var json = JsonUtility.ToJson(graph, true);
+      var json = JsonConvert.SerializeObject(graph);
       File.WriteAllText(filePath, json);
       Toast.Instance.Show("Graph saved successfully!", 4f, Toast.ToastColor.Green);
       _isSaved = true;
