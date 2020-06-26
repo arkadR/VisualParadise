@@ -47,8 +47,10 @@ namespace Assets.Scripts.Model
       return edge;
     }
 
+    [JsonIgnore]
     public Text Text => labelGameObject.GetComponentInChildren<Text>();
 
+    [JsonIgnore]
     public string DefaultLabel => $"{From}-{To}";
 
     public void SetLabel(string label)

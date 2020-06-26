@@ -15,6 +15,7 @@ namespace Assets.Scripts.Model
     [JsonProperty] public float? Scale { get; private set; }
     [JsonProperty] public LineEnding? LineEnding { get; private set; }
 
+    [JsonIgnore]
     public GameObject LineEndingPrefab { get; set; }
 
 

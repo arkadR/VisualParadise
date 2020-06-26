@@ -60,7 +60,7 @@ namespace Assets.Scripts.Canvas
       if (_nodeClasses == null)
       {
         _graphService = FindObjectOfType<GraphService>();
-        if (_graphService != null)
+        if (_graphService != null && _graphService.Graph != null)
         {
           var classes = _graphService.Graph.Classes;
           _nodeClasses = new List<GraphElementClass> { null }.Union(classes).ToList();
